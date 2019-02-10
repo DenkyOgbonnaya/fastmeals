@@ -48,6 +48,21 @@ deleteMeal(req, res){
             res.status(200).send({message: 'meal deleted'});
         })
         .catch(err => res.status(500).send(err))
+},
+/**
+ * Get a meal by id
+ * @param req {obj} ....request object
+ * @param res {obj} ....response object
+ * @return {obj} ....meal object.
+ * route '/meals:mealId'
+ */
+getMeal(req, res){
+    const mealId = req.params.mealId;
+    Meals.findById(mealId)
+        .then(meal => {
+            res.status(200).send({meal});
+        })
+        .catch(err => res.status(500).send(err))
 }
 }
 
