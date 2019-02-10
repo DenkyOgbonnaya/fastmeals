@@ -41,6 +41,14 @@ updateMeal(req, res){
  * @return {obj} ....json res
  * route '/meals:mealId'
  */
+deleteMeal(req, res){
+    const mealId = req.params.mealId;
+    Meals.findByIdAndRemove(mealId)
+        .then(() => {
+            res.status(200).send({message: 'meal deleted'});
+        })
+        .catch(err => res.status(500).send(err))
+}
 }
 
 module.exports = mealController;
