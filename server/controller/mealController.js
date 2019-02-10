@@ -77,6 +77,23 @@ getMeals(req, res){
         res.status(200).send({meals});
     })
     .catch(err => res.status(500).send(err))
+},
+/**
+ * Get meals by category
+ * @param req {obj} ....request object
+ * @param res {obj} ....response object
+ * @return {obj} ....meals object.
+ * route '/:category/meals'
+ */
+getMealsByCat(req, res){
+    const mealCategory = req.params.category;
+    Meals.find({category: mealCategory})
+        .then(meals => {
+            if(!meals)
+                return res.status(204).send({message: 'There are no meals at the moment'});
+            res.status(200).send({meals})
+        })
+        .catch(err => res.status(500).send(err))
 }
 }
 
