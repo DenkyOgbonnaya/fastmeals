@@ -63,6 +63,20 @@ getMeal(req, res){
             res.status(200).send({meal});
         })
         .catch(err => res.status(500).send(err))
+},
+/**
+ * Get all meals
+ * @param req {obj} ....request object
+ * @param res {obj} ....response object
+ * @return {obj} ....meals object.
+ * route '/meals:meals'
+ */
+getMeals(req, res){
+    Meals.find({})
+    .then(meals => {
+        res.status(200).send({meals});
+    })
+    .catch(err => res.status(500).send(err))
 }
 }
 
