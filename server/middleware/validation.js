@@ -1,4 +1,5 @@
 const Users = require('../model/userModel');
+const mongoose = require('mongoose');
 
 const validation = {
 
@@ -84,8 +85,22 @@ const validation = {
             errorMessage.push('A proper category name is required');
         
         if(errorMessage.length > 0 )
-            return res.status(443).send({message: errorMessage})
+            return res.status(406).send({message: errorMessage})
 
+        next();
+   },
+   /**
+    * validates the meal id
+    * @param req .....request object
+    * @param res .....response object
+    * @param next ....next middleware
+    */
+   validateMealId(req, res, next){
+       const mealId = req.params.mealId;
+       const isValidId = mongoose.Types.ObjectId.isValid(mealId);
+
+       if(!isValidId)
+            return res.status(422).send({message: 'not a valid meal id'});
         next();
    }
 }

@@ -16,7 +16,7 @@ const mealController = {
         })
         .catch(err => res.status(500).send(err));
         
-    }
+    },
 
  /**
  * Modify a meal
@@ -25,6 +25,14 @@ const mealController = {
  * @return {obj} ....json object
  * route '/meals:mealId'
  */
+updateMeal(req, res){
+    const mealId = req.params.mealId;
+    Meals.findByIdAndUpdate(mealId, {$set : req.body})
+        .then(() => {
+            res.status(200).send({message: 'meal updated'})
+        })
+        .catch(err => res.status(500).send(err));
+},
 
  /**
  * Delete a meal from the db
