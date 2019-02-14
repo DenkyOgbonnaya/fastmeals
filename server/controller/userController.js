@@ -8,18 +8,17 @@ const authController = {
 
     /** 
     * Add a new user to the db
-    * @param req{obj} ...request 
-    * @param res{obj} ...response
-    * @return {obj} .....jwt
+    * @param req{obj} request 
+    * @param res{obj} response
+    * @return {obj} jwt
     * @route '/signup'
     */
     createUser(req, res){
-        const{firstName, lastName, email, password} = req.body;
+        const{userName, email, password} = req.body;
         const hashedPassword = bcrypt.hashSync(password, 8);
 
         Users.create({
-            firstName,
-            lastName,
+            userName,
             email,
             password: hashedPassword
         })
@@ -38,9 +37,9 @@ const authController = {
     },
     /** 
     * login user
-    * @param req{obj} .... request
-    * @param req{obj} .... request
-    * @return {obj} .......jwt
+    * @param req{obj} request
+    * @param req{obj} request
+    * @return {obj} jwt
     * @route '/login'
     */
    loginUser(req, res){
@@ -74,7 +73,25 @@ const authController = {
                message: 'login successfull'
            })  
        }).catch(err => res.status(500).send(err))
-    }
+    },
+    /** 
+    * add a contact details to a user
+    * @param req{obj} request
+    * @param req{obj} request
+    * @route '/userId'
+    */
+    addUserContact(req, res){
+        const contact = req.body
+
+        Users.findById(req.params.userId)
+        .then(user => {
+            user.contact = contact;
+            return user.save();
+        })
+        .then((user) => res.status(200).send({message: 'çontact added', contact: user.contact}))
+        .catch(err => res.status(500).send(err) )
+    },
+    
 
 }
 module.exports= authController;

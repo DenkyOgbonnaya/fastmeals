@@ -22,8 +22,13 @@ const mealSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        toLowerCase: true
+        lowercase: true
     },
+    description: String,
+    image: {
+        type: String,
+        required: true
+    }
 })
 const Meal = mongoose.model('Meal', mealSchema);
 

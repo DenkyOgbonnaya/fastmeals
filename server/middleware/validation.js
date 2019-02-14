@@ -5,19 +5,16 @@ const validation = {
 
     /**
     * validates the signup data
-    * @param req .....request object
-    * @param res .....response object
-    * @param next ....next middleware
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
     */
     validateUserInput(req, res, next){
-        const{firstName, lastName, email, password} = req.body;
+        const{userName, email, password} = req.body;
         const errorMessage = [];
 
-        if(firstName.length === 0)
-            errorMessage.push('first name can not be blank')
-            
-        if(lastName.length === 0)
-            errorMessage.push('last name can not be blank');
+        if(userName.length === 0)
+            errorMessage.push('userName can not be blank');
         if(!/\w+@./.test(email))
             errorMessage.push('valid email required');
         if(password.length === 0 )
@@ -28,12 +25,27 @@ const validation = {
 
         next();
     },
+    /** 
+    *check if userName already exist
+    *  @param req request object
+    *  @param res response object
+    *  @param next next middleware
+    */
+   checkUsernameExist(req, res, next){
+    Users.findOne({userName: req.body.userName})
+    .then(user =>{
+        if(user)
+            return res.status(443).send({authenticated: false, message: 'The userName already exist'});
+
+        next();
+    })
+   },
 
     /** 
     *check if email already exist
-    *  @param req ....request object
-    *  @param res .....response object
-    *  @param next ....next middleware
+    *  @param req request object
+    *  @param res response object
+    *  @param next next middleware
     */
    checkEmailExist(req, res, next){
     Users.findOne({email: req.body.email})
@@ -47,9 +59,9 @@ const validation = {
 
    /**
     * validates the login data
-    * @param req .....request object
-    * @param res .....response object
-    * @param next ....next middleware
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
     */
    validateLoginInput(req, res, next){
        const{email, password} = req.body;
@@ -67,9 +79,9 @@ const validation = {
     },
     /**
     * validates the meal data
-    * @param req .....request object
-    * @param res .....response object
-    * @param next ....next middleware
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
     */
    validateMealInput(req, res, next){
        const{name, price, quantity, category} = req.body;
@@ -91,9 +103,9 @@ const validation = {
    },
    /**
     * validates the meal id
-    * @param req .....request object
-    * @param res .....response object
-    * @param next ....next middleware
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
     */
    validateMealId(req, res, next){
        const mealId = req.params.mealId;
@@ -102,6 +114,34 @@ const validation = {
        if(!isValidId)
             return res.status(422).send({message: 'not a valid meal id'});
         next();
-   }
+   },
+   /**
+    * validates contact data
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
+    */
+   validateContactInput(req, res, next){
+    const{firstName, lastName, phone, street, town, state} = req.body;
+    const errorMessage = [];
+
+    if(firstName.length < 3)
+        errorMessage.push('first name is too short');
+     if(firstName.length < 3 )
+        errorMessage.push('last name too short');
+     if(!/[0-9]{11}/.test(phone))
+        errorMessage.push('Enter 11 digits phone number');
+     if(street.length < 7)
+        errorMessage.push('street is too short');
+    if(town.length < 5)
+        errorMessage.push('town is too short');
+    if(state.length < 4)
+        errorMessage.push('state is too short');
+
+     if(errorMessage.length > 0 )
+         return res.status(406).send({message: errorMessage})
+
+     next();
+},
 }
 module.exports = validation;

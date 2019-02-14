@@ -1,12 +1,29 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = mongoose.Schema({
-    firstName : {
+const contactSchema = Schema({
+    firstName: {
         type: String,
-        required: true,
-        trim: true
     },
     lastName: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
+    street: {
+        type: String,
+    },
+    town: {
+        type: String,
+    },
+    state: {
+        type: String,
+    },
+})
+
+const userSchema = new Schema({
+    userName: {
         type: String,
         required: true,
         trim: true
@@ -21,9 +38,20 @@ const userSchema = mongoose.Schema({
         required: true
     },
     isAdmin: {
-        type: Boolean,
-        default: false,
-    }
+        type: Number,
+        default: 0,
+    },
+    isBanned: {
+        type: Number,
+        default: 0,
+    },
+    contact: {
+        type: contactSchema,
+        default: {}
+    },
+    orders: [{
+        type: Schema.Types.ObjectId, ref: 'Order'
+    }]
 }, 
 {timestamps: true})
 

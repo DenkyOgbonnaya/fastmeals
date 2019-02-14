@@ -1,4 +1,5 @@
 const Meals = require('../model/mealsModel');
+const Category = require('../model/categoryModel')
 
 const mealController = {
 /**
@@ -85,16 +86,19 @@ getMeals(req, res){
  * @return {obj} ....meals object.
  * route '/:category/meals'
  */
-getMealsByCat(req, res){
-    const mealCategory = req.params.category;
-    Meals.find({category: mealCategory})
+    getMealsByCat(req, res){
+        const mealCategory = req.params.category;
+        Category.findOne({title: mealCategory})
+        .then(category => {
+            return  Meals.find({category: category.title})
+        })
         .then(meals => {
             if(!meals)
                 return res.status(204).send({message: 'There are no meals at the moment'});
             res.status(200).send({meals})
         })
         .catch(err => res.status(500).send(err))
-}
+    }
 }
 
 module.exports = mealController;
