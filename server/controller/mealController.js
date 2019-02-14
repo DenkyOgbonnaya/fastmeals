@@ -1,5 +1,5 @@
 const Meals = require('../model/mealsModel');
-const Category = require('../model/categoryModel')
+const Category = require('../model/categoryModel');
 
 const mealController = {
 /**
@@ -10,8 +10,16 @@ const mealController = {
  * route '/meals'
  */
     addMeal(req, res){
-        const meal = req.body;
-        Meals.create(meal)
+        const{name, price, quantity, category, description} = req.body;
+       
+        Meals.create({
+            name,
+            price,
+            quantity,
+            category,
+            description,
+            image: `public/images/meals/${req.file.filename}`
+        })
         .then(() => {
             res.status(201).send({message: 'meal added'})
         })

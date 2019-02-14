@@ -7,6 +7,7 @@ const CartRouter = require('./server/routes/cartRoutes')
 
 const app = express();
 app.use(express.json());
+app.use(express.static(__dirname + 'public'))
 app.use(UserRouter);
 app.use(MealRouter);
 app.use(CartRouter);

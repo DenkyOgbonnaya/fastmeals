@@ -175,7 +175,7 @@ isAdmin(req, res, next){
     const decoded = jwt.decode(token);
     console.log(decoded.currentUser)
 
-    if(decoded.currentUser.isAdmin === 0)
+    if(decoded.currentUser.isAdmin === 1)
         return res.status(403).send({message: 'unauthorized user'})
 
     next();
