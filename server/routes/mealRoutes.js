@@ -11,15 +11,19 @@ const{
     getMeals,
     getMealsByCat
 } = mealController;
-const{validateMealInput, validateMealId} = validation;
+const{validateMealInput,
+    validateMealId,
+    isLoggedIn,
+    isAdmin
+} = validation;
 
 mealRouter.route('/meals')
-    .post(validateMealInput, addMeal)
+    .post(isLoggedIn, isAdmin, validateMealInput, addMeal)
     .get(getMeals)
 
 mealRouter.route('/meals/:mealId')
-    .put(validateMealInput, validateMealId, updateMeal)
-    .delete(validateMealId, deleteMeal)
+    .put(isLoggedIn, isAdmin, validateMealInput, validateMealId, updateMeal)
+    .delete(isLoggedIn, isAdmin, validateMealId, deleteMeal)
     .get(validateMealId, getMeal)
 
 mealRouter.get('/:category/meals', getMealsByCat)

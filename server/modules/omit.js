@@ -1,11 +1,13 @@
 const omit = (user) => {
-    const{_id, firstName, lastName, email} = user;
+    const{_id, userName, contact, email,isAdmin, isBanned} = user;
 
     const newUser = {
         _id,
-        firstName,
-        lastName,
-        email
+        userName,
+        contact,
+        email,
+        isAdmin,
+        isBanned
     }
     return newUser;
 }

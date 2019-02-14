@@ -9,17 +9,18 @@ const{validateUserInput,
     checkEmailExist,
     checkUsernameExist,
     validateLoginInput,
-    validateContactInput
+    validateContactInput,
+    isLoggedIn
 } = valadation;
 const{createOrder, getOrder} = orderController
 
 userRouter.post('/signup', validateUserInput, checkEmailExist, checkUsernameExist, createUser);
 userRouter.post('/login', validateLoginInput, loginUser)
 userRouter.route('/:userId/orders')
-    .post(createOrder)
-    .get(getOrder)
+    .post(isLoggedIn, createOrder)
+    .get(isLoggedIn, getOrder)
 
 userRouter.route('/:userId')
-    .put(validateContactInput, addUserContact)
+    .put(isLoggedIn, validateContactInput, addUserContact)
 
 module.exports = userRouter;

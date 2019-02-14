@@ -1,5 +1,7 @@
 const Users = require('../model/userModel');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const validation = {
 
@@ -143,5 +145,40 @@ const validation = {
 
      next();
 },
+/**
+    * checks if it's an authorized user
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
+    */
+isLoggedIn(req, res, next){
+    const token = req.headers['authorization'].substring(7).replace(/"/g, '');
+    console.log(token)
+
+    if(!token) return res.status(403 ).send({message: 'unauthorized user'})
+
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
+        if(err) 
+            return res.status(403).send({message: 'unauthorized user.'})
+    
+        next();
+    });
+},
+/**
+    * checks if logged in user is admin
+    * @param req request object
+    * @param res response object
+    * @param next next middleware
+    */
+isAdmin(req, res, next){
+    const token = req.headers['authorization'].substring(7).replace(/"/g, '');
+    const decoded = jwt.decode(token);
+    console.log(decoded.currentUser)
+
+    if(decoded.currentUser.isAdmin === 0)
+        return res.status(403).send({message: 'unauthorized user'})
+
+    next();
+}
 }
 module.exports = validation;
