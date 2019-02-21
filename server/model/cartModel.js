@@ -7,7 +7,8 @@ const cartSchema = Schema({
     price: Number,
     subTotal: Number,
     quantity: Number,
-    cartFor: String
+    cartFor: String,
+    image: String
 })
 const Cart = mongoose.model('Cart', cartSchema);
 

@@ -1,4 +1,5 @@
 const Cart = require('../model/cartModel');
+const crypto = require('crypto');
 
 const cartController = {
     /**
@@ -7,7 +8,7 @@ const cartController = {
      * @param {obj} res response object
      */
     addToCart(req, res){
-        const{name, price, mealId, cartId } = req.body;
+        const{name, price, mealId, cartId, image } = req.body;
         //checks if there is a meal in the users cart
         Cart.countDocuments({})
         .then(count => {
@@ -18,7 +19,8 @@ const cartController = {
                     price,
                     subTotal: price*1,
                     quantity: 1,
-                    cartFor: cartId
+                    cartFor: cartId,
+                    image
                 })
                 .then(meal => res.status(201).send({message: 'meal added to cart', meal}))
             }else{
@@ -38,7 +40,8 @@ const cartController = {
                             price,
                             subTotal: price*1,
                             quantity: 1,
-                            cartFor: cartId
+                            cartFor: cartId,
+                            image
                         })
                     }
                 })
@@ -58,8 +61,8 @@ const cartController = {
      */
     removeFromCart(req, res){
         const{mealId, cartId} = req.params;
-        Cart.findOneAndRemove({mealId, cartFor: cartId})
-        .then(() => res.status(200).send({message: 'meal removed from cart'}))
+        Cart.findOneAndRemove({mealId: mealId, cartFor: cartId})
+        .then((meal) => res.status(200).send({message: 'meal removed from cart'}))
         .catch(err => res.status(500).send(err))
     },
     /**
@@ -72,6 +75,10 @@ const cartController = {
         Cart.find({cartFor: req.params.cartId})
         .then(cart => res.status(200).send({cart}))
         .catch(err => res.status(500).send(err))
+    },
+    genCartId(req, res){
+        const cartId = crypto.randomBytes(16).toString('hex');
+        res.status(200).send({cartId});
     }
 }
 module.exports = cartController;

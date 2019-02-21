@@ -3,19 +3,23 @@ const cors = require('cors');
 const connectToDb = require('./server/model/dataBase');
 const UserRouter = require('./server/routes/userRoutes');
 const MealRouter = require('./server/routes/mealRoutes');
-const CartRouter = require('./server/routes/cartRoutes')
+const CartRouter = require('./server/routes/cartRoutes');
+const CategRouter = require('./server/routes/categoRoutes')
 
 const app = express();
 app.use(express.json());
-app.use(express.static(__dirname + 'public'))
+app.use(cors({credentials:true, origin: 'http://localhost:3000'}))
+app.use(express.static(__dirname + '/public'))
 app.use(UserRouter);
 app.use(MealRouter);
 app.use(CartRouter);
+app.use(CategRouter);
 
 app.options('*', cors());
 app.use('/api/users', UserRouter);
 app.use('/api', MealRouter);
 app.use('/api', CartRouter);
+app.use('/api', CategRouter);
 
 const PORT = process.env.PORT || 8080;
 

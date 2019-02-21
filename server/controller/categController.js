@@ -1,0 +1,49 @@
+const Category = require('../model/categoryModel');
+
+categoryController = {
+    /**
+ * Get categories
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} categories 
+ * @route '/category'
+ */
+    getCategories(req, res){
+        Category.find({})
+        .then(categories => {
+            const titles = categories.map(category => {
+                return {title: category.title, id: category._id}
+            })
+            console.log(titles)
+            res.status(200).send({categories: titles});
+        })
+        .catch(err => res.status(500).send(err))
+    },
+    /**
+ * Get meals by category
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} meals 
+ * @route '/:category/category'
+ */
+getMealsByCat(req, res){
+    const mealCategory = req.params.category;
+    Category.findOne({title: mealCategory})
+    .populate('meals')
+    .then(category => {
+        res.status(200).send({meals: category.meals})
+    })
+    .catch(err => res.status(500).send(err))
+},
+addCategory(req, res){
+    const title = req.body.title;
+    if(!title)
+        return res.status(403).send({message: 'specify a title'})
+    Category.create(req.body)
+    .then(() => {
+        res.status(200).send({message: 'new category added'});
+    })
+    .catch(err => res.status(500).send(err))
+}
+}
+module.exports = categoryController

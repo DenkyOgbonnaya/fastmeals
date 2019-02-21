@@ -4,35 +4,39 @@ const Category = require('../model/categoryModel');
 const mealController = {
 /**
  * Add a meal to the db
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....json object
- * route '/meals'
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} json object
+ * @route '/meals'
  */
-    addMeal(req, res){
-        const{name, price, quantity, category, description} = req.body;
-       
-        Meals.create({
-            name,
-            price,
-            quantity,
-            category,
-            description,
-            image: `public/images/meals/${req.file.filename}`
-        })
-        .then(() => {
+addMeal(req, res){
+    const{name, price, quantity, category, description} = req.body;
+    Meals.create({
+        name,
+        price,
+        quantity,
+        category,
+        description,
+        image: `/uploads/${req.file.filename}`
+    })
+    .then((meal) => {
+        Category.findOne({title: category})
+        .then(cat => {
+            cat.meals.push(meal._id)
+            cat.save();
             res.status(201).send({message: 'meal added'})
         })
-        .catch(err => res.status(500).send(err));
+    })
+    .catch(err => res.status(500).send(err));
         
-    },
+},
 
  /**
  * Modify a meal
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....json object
- * route '/meals:mealId'
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} json object
+ * @route '/meals:mealId'
  */
 updateMeal(req, res){
     const mealId = req.params.mealId;
@@ -45,10 +49,10 @@ updateMeal(req, res){
 
  /**
  * Delete a meal from the db
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....json res
- * route '/meals:mealId'
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} json res
+ * @route '/meals:mealId'
  */
 deleteMeal(req, res){
     const mealId = req.params.mealId;
@@ -60,10 +64,10 @@ deleteMeal(req, res){
 },
 /**
  * Get a meal by id
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....meal object.
- * route '/meals:mealId'
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} meal object.
+ * @route '/meals:mealId'
  */
 getMeal(req, res){
     const mealId = req.params.mealId;
@@ -75,10 +79,10 @@ getMeal(req, res){
 },
 /**
  * Get all meals
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....meals object.
- * route '/meals:meals'
+ * @param req {obj} request object
+ * @param res {obj} response object
+ * @return {obj} meals object.
+ * @route '/meals:meals'
  */
 getMeals(req, res){
     Meals.find({})
@@ -87,26 +91,7 @@ getMeals(req, res){
     })
     .catch(err => res.status(500).send(err))
 },
-/**
- * Get meals by category
- * @param req {obj} ....request object
- * @param res {obj} ....response object
- * @return {obj} ....meals object.
- * route '/:category/meals'
- */
-    getMealsByCat(req, res){
-        const mealCategory = req.params.category;
-        Category.findOne({title: mealCategory})
-        .then(category => {
-            return  Meals.find({category: category.title})
-        })
-        .then(meals => {
-            if(!meals)
-                return res.status(204).send({message: 'There are no meals at the moment'});
-            res.status(200).send({meals})
-        })
-        .catch(err => res.status(500).send(err))
-    }
+
 }
 
 module.exports = mealController;

@@ -27,6 +27,5 @@ mealRouter.route('/meals/:mealId')
     .delete(isLoggedIn, isAdmin, validateMealId, deleteMeal)
     .get(validateMealId, getMeal)
 
-mealRouter.get('/:category/meals', getMealsByCat)
 
 module.exports = mealRouter;
