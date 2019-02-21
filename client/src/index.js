@@ -9,7 +9,8 @@ import * as serviceWorker from './serviceWorker';
 
 setGlobal({
     cart: [],
-    mealId: ''
+    mealId: '',
+    showSideNav: false
 })
 ReactDOM.render(
     <Router> 

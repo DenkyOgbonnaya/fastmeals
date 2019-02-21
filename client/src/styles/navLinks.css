@@ -1,0 +1,9 @@
+ul {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+ul > li {
+    display: inline-block;
+    float: none;
+}

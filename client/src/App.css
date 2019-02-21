@@ -1,0 +1,30 @@
+.Wrapper {
+    display: flex;
+}
+.showSideNav{
+    border: 1px solid grey;
+    padding: 5px;
+    color: #ccc;
+    width: 300px;
+    height:100vh;
+    position: sticky;
+    z-index: 1;
+    overflow-y: hidden;
+    transition: 0.5s;
+    display: fixed;
+}
+.Wrapper > .hideSideNav{
+    width: 0px;
+}
+.Content{
+width: 100%;
+}
+.NavBar{
+    position: fixed;
+    z-index: 2;
+    background: #8bc34a;
+    width: 100%
+}
+.NavLinks{
+    margin-top: 80px;
+}
