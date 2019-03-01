@@ -88,7 +88,14 @@ const authController = {
             user.contact = contact;
             return user.save();
         })
-        .then((user) => res.status(200).send({message: 'çontact added', contact: user.contact}))
+        .then(user => {
+            const token = jwt.sign(
+                {currentUser: omit(user)},
+                process.env.SECRET_KEY,
+                {expiresIn: '24h'}
+            )
+            res.status(200).send({message: 'contact added', token})
+        })
         .catch(err => res.status(500).send(err) )
     },
     

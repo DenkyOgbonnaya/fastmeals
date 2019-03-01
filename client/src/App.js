@@ -4,12 +4,21 @@ import NavBar from './components/utils/navBar';
 import Container from './components/container';
 import NavLinks from './components/utils/navLinks';
 import SideNav from './components/utils/sideNav';
+import jwt from 'jsonwebtoken';
 import './App.css';
 
 const App = () => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
+    const[currentUser, setCurrentUser] = useGlobal('currentUser');
+
     useEffect( () => {
         const cartId = localStorage.cartId || '';
+        const userToken = localStorage.userToken || '';
+
+        if(userToken){
+            const decoded = jwt.decode(userToken);
+            setCurrentUser(decoded.currentUser);
+        }
         if(!cartId)
             fetch('api/cart')
             .then(res => {

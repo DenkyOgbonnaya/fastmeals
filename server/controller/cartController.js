@@ -79,6 +79,10 @@ const cartController = {
     genCartId(req, res){
         const cartId = crypto.randomBytes(16).toString('hex');
         res.status(200).send({cartId});
+    },
+    emptyCart(req, res){
+        Cart.findOneAndRemove({cartFor: req.params.cartId})
+        
     }
 }
 module.exports = cartController;

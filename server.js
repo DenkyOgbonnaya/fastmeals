@@ -4,7 +4,8 @@ const connectToDb = require('./server/model/dataBase');
 const UserRouter = require('./server/routes/userRoutes');
 const MealRouter = require('./server/routes/mealRoutes');
 const CartRouter = require('./server/routes/cartRoutes');
-const CategRouter = require('./server/routes/categoRoutes')
+const CategRouter = require('./server/routes/categoRoutes');
+const ordeerRouter = require('./server/routes/orderRoutes');
 
 const app = express();
 app.use(express.json());
@@ -14,12 +15,14 @@ app.use(UserRouter);
 app.use(MealRouter);
 app.use(CartRouter);
 app.use(CategRouter);
+app.use(ordeerRouter);
 
 app.options('*', cors());
 app.use('/api/users', UserRouter);
 app.use('/api', MealRouter);
 app.use('/api', CartRouter);
 app.use('/api', CategRouter);
+app.use('/api', ordeerRouter);
 
 const PORT = process.env.PORT || 8080;
 

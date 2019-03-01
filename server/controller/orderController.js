@@ -1,5 +1,6 @@
 const Order = require('../model/orderModel');
-const User = require('../model/userModel')
+const User = require('../model/userModel');
+const Cart = require('../model/cartModel');
 
 const orderController = {
 /**
@@ -10,8 +11,9 @@ const orderController = {
  * @route '/:userId/orders'
  */
     createOrder(req, res){
-        const customerId = req.params.userId;
+        const userId = req.params.userId;
         const{cart} = req.body;
+        console.log('vvhggg',cart)
 
         const order = cart.map(meal => {
            return {
@@ -27,15 +29,18 @@ const orderController = {
             totalPrice
         })
         .then(order =>{
-            User.findById(customerId)
+            User.findById(userId)
             .then(user => {
                 user.orders.push(order._id);
                return user.save()
             })
             .then(() => {
+                return Cart.deleteMany({cartFor: cart[0].cartFor}).exec()
+            })
+            .then(()=> {
                 return res.status(201).send({message: 'you order has been placed', order})
             })
-            .catch(err => res.status(500).send(err))   
+            .catch(err => {console.log(err), res.status(500).send(err)})   
         })
 
     },

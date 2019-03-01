@@ -17,7 +17,7 @@ const validation = {
 
         if(userName.length === 0)
             errorMessage.push('userName can not be blank');
-        if(!/\w+@./.test(email))
+        if(!/\S+@\S+\.\S+/.test(email))
             errorMessage.push('valid email required');
         if(password.length === 0 )
             errorMessage.push('password can not be blank');
@@ -69,8 +69,8 @@ const validation = {
        const{email, password} = req.body;
        const errorMessage = [];
        
-       if(!/\w+@./.test(email))
-            errorMessage.push('valid email required');
+       if(!/\S+@\S+\.\S+/.test(email))
+            errorMessage.push('valid emailssed required');
         if(password.length === 0 )
             errorMessage.push('password can not be blank');
 
@@ -153,7 +153,6 @@ const validation = {
     */
 isLoggedIn(req, res, next){
     const token = req.headers['authorization'].substring(7).replace(/"/g, '');
-    console.log(token)
 
     if(!token) return res.status(403 ).send({message: 'unauthorized user'})
 

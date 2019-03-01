@@ -8,9 +8,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 setGlobal({
+    currentUser : {},
+    isAuthUser: false,
     cart: [],
     mealId: '',
-    showSideNav: false
+    showSideNav: false,
+    showContactModal: false,
+    showAddContact: false
 })
 ReactDOM.render(
     <Router> 

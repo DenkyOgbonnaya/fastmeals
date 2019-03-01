@@ -1,9 +1,15 @@
 import React, {useEffect} from 'react';
-import {useGlobal} from 'reactn'
+import {useGlobal} from 'reactn';
+import ContactModal from './utils/contactModal';
+import AddContact from './utils/addContact';
 import { Table, Button, ButtonGroup} from 'reactstrap';
 
-const Cart = () => {
+const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
+  const[currentUser] = useGlobal('currentUser');
+  const[showContactModal, setShowContactModal] = useGlobal('showContactModal');
+  const[showAddContact, setShowAddContact] = useGlobal('showAddContact');
+
   useEffect( () => {
       const cartId = localStorage.cartId;
       fetch(`cart/${cartId}`)
@@ -30,8 +36,23 @@ const Cart = () => {
       })
       .catch(err => console.log(err))
   }
+  const CheckOutOrder = cart => {
+        if(currentUser && currentUser.contact != null) {
+          setShowContactModal(true);
+        }else
+        if(currentUser && currentUser.contact === null){
+            setShowAddContact(true)
+        } else
+        props.history.push('/login')
+    }
     return (
     <div>
+        {
+            showContactModal ? <ContactModal cart = {cart}/> : ''
+        }
+        {
+            showAddContact ? <AddContact cart = {cart} />  : ''
+        }
       <Table responsive >
         <thead>
 
@@ -63,7 +84,7 @@ const Cart = () => {
         </tbody>
       </Table>
       <div>Total: N{getTotalPrice()}   </div>
-      <Button> CheckOut </Button>
+      <Button onClick = { () => CheckOutOrder(cart) } > CheckOut </Button>
       </div>
     );
   }
