@@ -8,16 +8,16 @@ const SideNav = () => {
         <div> 
             <Nav vertical > 
                 <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
+                    <NavLink to= '/cart' tag= {RRNavLink}> My cart </NavLink>
                 </NavItem>
                 <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
+                    <NavLink to= '/' tag= {RRNavLink}> My orders </NavLink>
                 </NavItem>
                 <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
+                    <NavLink to= '/addMeals' tag= {RRNavLink}> Add meals </NavLink>
                 </NavItem>
                 <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
+                    <NavLink to= '/' tag= {RRNavLink}> Add meal Category</NavLink>
                 </NavItem>
                 <NavItem> 
                     <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
