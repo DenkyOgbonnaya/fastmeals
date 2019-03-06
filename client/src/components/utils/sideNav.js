@@ -1,9 +1,12 @@
 import React from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
+import {useGlobal} from 'reactn'
 import Swal from 'sweetalert2'
 
 const SideNav = () => {
+    const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
+    const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
 
     const addCategory = () => {
         Swal.fire({
@@ -60,6 +63,12 @@ const SideNav = () => {
                 </NavItem>
                 <NavItem> 
                     <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } > Add meal Category</NavLink>
+                </NavItem>
+                <NavItem> 
+                    <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} > Update meals </NavLink>
+                </NavItem>
+                <NavItem> 
+                    <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)}  > Delete meals </NavLink>
                 </NavItem>
                 <NavItem> 
                     <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>

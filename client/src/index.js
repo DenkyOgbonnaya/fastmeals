@@ -14,7 +14,10 @@ setGlobal({
     mealId: '',
     showSideNav: false,
     showContactModal: false,
-    showAddContact: false
+    showAddContact: false,
+    renderUpdatemealModal: false,
+    showUpdateMealsButton: false,
+    showDeleteMealsButton: false
 })
 ReactDOM.render(
     <Router> 

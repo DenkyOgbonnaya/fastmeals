@@ -1,9 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, 
+        CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup 
+    } from 'reactstrap';
+import {useGlobal} from 'reactn';
+import UpdateMeal from '../updateMeal';
 
 const useGetMeals = (api) => {
-    const[meals, setMeals] = useState([])
+    const[meals, setMeals] = useState([]);
+    const[meal, setMeal] = useState({})
+    const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
+    const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
+    const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
 
     useEffect( () => {
         fetch(api)
@@ -38,8 +45,28 @@ const useGetMeals = (api) => {
         })
         .catch(err => console.log(err))
     }
+    const deleteMeal = id => {
+        fetch(`api/meals/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.userToken}`
+            }
+        })
+        .then(res => {
+            if(res.status === 200 ){
+                alert('meal deleted')
+            }
+        })
+        .catch(err => console.log(err))
+    }
+    const updateMeal = (meal) => {
+        setMeal(meal);
+        setRenderUpdateMealModal(true);
+    }
     return(
         <div> 
+            {renderUpdateMealModal ? <UpdateMeal meal= {meal}/> : null }
+            
             <Container> 
                 <Row>
                 {meals.map(meal =>
@@ -49,8 +76,12 @@ const useGetMeals = (api) => {
                         <CardBody>
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>N{meal.price} </CardSubtitle>
-                            <CardText> <small className='text-muted'> {meal.description} </small> </CardText>
-                            <Button onClick= {() => addToCart(meal)} >Buy Now</Button>
+                            <CardText> <small className='text-muted'> {meal.description.substring(0, 50)} </small> </CardText>
+                            <ButtonGroup >
+                            <Button onClick= {() => addToCart(meal)} >Buy</Button>
+                            {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal) }> Update </Button> : null} 
+                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id)} > Delet </Button> : null}
+                            </ButtonGroup>
                         </CardBody>
                     </Card>
                     <br />
