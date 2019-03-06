@@ -49,7 +49,7 @@ const useGetMeals = (api) => {
                         <CardBody>
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>N{meal.price} </CardSubtitle>
-                            <CardText> <small className='text-muted'> {meal.description.substring(0, 50)} </small> </CardText>
+                            <CardText> <small className='text-muted'> {meal.description} </small> </CardText>
                             <Button onClick= {() => addToCart(meal)} >Buy Now</Button>
                         </CardBody>
                     </Card>

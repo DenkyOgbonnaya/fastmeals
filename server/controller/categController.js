@@ -38,10 +38,15 @@ getMealsByCat(req, res){
 addCategory(req, res){
     const title = req.body.title;
     if(!title)
-        return res.status(403).send({message: 'specify a title'})
-    Category.create(req.body)
-    .then(() => {
-        res.status(200).send({message: 'new category added'});
+        return res.status(400).send({message: 'specify a title'})
+    Category.findOne(req.body)
+    .then(category => {
+        if(category)
+            return res.status(208).send({message: 'Category already exist'});
+        return Category.create(req.body)
+    })
+    .then( () => {
+        return res.status(200).send({message: 'New Category added'});
     })
     .catch(err => res.status(500).send(err))
 }
