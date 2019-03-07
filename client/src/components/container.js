@@ -5,6 +5,7 @@ import CategoryView from './categoryView';
 import CartView from './cartView';
 import LoginForm from './userAuth/loginForm';
 import AddMeals from './addMeals';
+import Orders from './orderView';
 
 const Container = () => 
     <Switch> 
@@ -13,6 +14,7 @@ const Container = () =>
         <Route exact path = '/Snacks' component = {CategoryView} />
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/addMeals' component = {AddMeals} />
+        <Route exact path = '/orders' component = {Orders} />
     </Switch>
 
 export default Container;

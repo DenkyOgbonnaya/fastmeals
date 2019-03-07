@@ -14,7 +14,6 @@ categoryController = {
             const titles = categories.map(category => {
                 return {title: category.title, id: category._id}
             })
-            console.log(titles)
             res.status(200).send({categories: titles});
         })
         .catch(err => res.status(500).send(err))

@@ -56,7 +56,7 @@ const SideNav = () => {
                     <NavLink to= '/cart' tag= {RRNavLink}> My cart </NavLink>
                 </NavItem>
                 <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> My orders </NavLink>
+                    <NavLink to= '/orders' tag= {RRNavLink}> My orders </NavLink>
                 </NavItem>
                 <NavItem> 
                     <NavLink to= '/addMeals' tag= {RRNavLink}> Add meals </NavLink>
