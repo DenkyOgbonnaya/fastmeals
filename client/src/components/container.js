@@ -11,10 +11,11 @@ const Container = () =>
     <Switch> 
         <Route exact path = '/' component = {MealsView} />
         <Route exact path = '/cart' component = {CartView} />
-        <Route exact path = '/Snacks' component = {CategoryView} />
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/addMeals' component = {AddMeals} />
         <Route exact path = '/orders' component = {Orders} />
+        <Route exact path = {`${window.location.pathname}`} component = {CategoryView} />
+        
     </Switch>
 
 export default Container;

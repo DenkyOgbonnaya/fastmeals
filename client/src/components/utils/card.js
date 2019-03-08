@@ -11,7 +11,7 @@ const useGetMeals = (api) => {
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
-
+    
     useEffect( () => {
         fetch(api)
         .then(res => {
@@ -23,7 +23,7 @@ const useGetMeals = (api) => {
         })
         .catch(err => console.log(err))
         
-    }, []);
+    }, [api]);
     const addToCart = (meal) => {
         fetch('api/cart', {
             method: 'POST',
@@ -72,11 +72,11 @@ const useGetMeals = (api) => {
                 {meals.map(meal =>
                 <Col md = '3' key ={meal._id}> 
                     <Card  >
-                        <CardImg top width="100%" height="30%" src= {meal.image} alt="Card image cap" />
+                        <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
                         <CardBody>
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>N{meal.price} </CardSubtitle>
-                            <CardText> <small className='text-muted'> {meal.description.substring(0, 50)} </small> </CardText>
+                            <CardText> <small className='text-muted'> {meal.description.substring(0, 30)} </small> </CardText>
                             <ButtonGroup >
                             <Button onClick= {() => addToCart(meal)} >Buy</Button>
                             {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal) }> Update </Button> : null} 

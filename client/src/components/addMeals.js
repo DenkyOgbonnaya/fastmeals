@@ -83,7 +83,7 @@ const AddMeals = () => {
         </Row>
         <FormGroup>
           <Label for="description">Description</Label>
-          <Input type="textarea" name="phone"  placeholder="A breif description about the meal" value ={description}
+          <Input type="textarea" name="description"  placeholder="A breif description about the meal" value ={description}
           onChange = {e => setDescription(e.target.value)} />
         </FormGroup>
         <FormGroup>
