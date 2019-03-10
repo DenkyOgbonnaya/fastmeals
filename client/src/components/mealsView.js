@@ -1,9 +1,10 @@
-import useGetMeals from './utils/card';
-    
+import React from 'react';
+import Cards from './utils/card';
+
 const Meals = () => {
     const api = 'api/meals'
-    const meals = useGetMeals(api)
+    //const meals = useGetMeals(api)
 
-    return meals
+    return (< Cards api = {api} />)
 }
 export default Meals;

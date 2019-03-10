@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from 'react';
+import {useGlobal} from 'reactn';
+import {withRouter} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
         CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup 
     } from 'reactstrap';
-import {useGlobal} from 'reactn';
 import UpdateMeal from '../updateMeal';
 
-const useGetMeals = (api) => {
+const Cards = (props) => {
     const[meals, setMeals] = useState([]);
-    const[meal, setMeal] = useState({})
+    const[meal, setMeal] = useState({});
+    const[mealId, setMealId] = useGlobal('mealId')
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
-        fetch(api)
+        fetch(props.api)
         .then(res => {
             if(res.status === 200)
             return res.json()
@@ -23,7 +25,7 @@ const useGetMeals = (api) => {
         })
         .catch(err => console.log(err))
         
-    }, [api]);
+    }, [props.api]);
     const addToCart = (meal) => {
         fetch('api/cart', {
             method: 'POST',
@@ -63,6 +65,10 @@ const useGetMeals = (api) => {
         setMeal(meal);
         setRenderUpdateMealModal(true);
     }
+    const viewMeal = id => {
+        setMealId(id);
+        props.history.push('/meal')
+    }
     return(
         <div> 
             {renderUpdateMealModal ? <UpdateMeal meal= {meal}/> : null }
@@ -71,7 +77,7 @@ const useGetMeals = (api) => {
                 <Row>
                 {meals.map(meal =>
                 <Col md = '3' key ={meal._id}> 
-                    <Card  >
+                    <Card onClick = { () => viewMeal(meal._id)} >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
                         <CardBody>
                             <CardTitle> {meal.name} </CardTitle>
@@ -92,4 +98,4 @@ const useGetMeals = (api) => {
         </div>
     )
 }
-export default useGetMeals;
+export default withRouter(Cards);

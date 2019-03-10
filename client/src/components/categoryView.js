@@ -1,9 +1,10 @@
-import useGetMeals from './utils/card';
+import React from 'react';
+import Cards from './utils/card';
 
 const CategoryView = () => {
     const api = `api/${window.location.pathname}/category`
-    const meals = useGetMeals(api);
+   // const meals = useGetMeals(api);
     
-    return meals
+    return (<Cards api = {api} />)
 }
 export default CategoryView;

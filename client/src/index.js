@@ -17,7 +17,7 @@ setGlobal({
     showAddContact: false,
     renderUpdatemealModal: false,
     showUpdateMealsButton: false,
-    showDeleteMealsButton: false
+    showDeleteMealsButton: false,
 })
 ReactDOM.render(
     <Router> 

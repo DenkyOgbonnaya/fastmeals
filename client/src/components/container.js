@@ -6,6 +6,7 @@ import CartView from './cartView';
 import LoginForm from './userAuth/loginForm';
 import AddMeals from './addMeals';
 import Orders from './orderView';
+import ViewMeal from './viewMeal';
 
 const Container = () => 
     <Switch> 
@@ -14,6 +15,7 @@ const Container = () =>
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/addMeals' component = {AddMeals} />
         <Route exact path = '/orders' component = {Orders} />
+        <Route exact path = '/meal' component = {ViewMeal} />
         <Route exact path = {`${window.location.pathname}`} component = {CategoryView} />
         
     </Switch>
