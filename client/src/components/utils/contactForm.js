@@ -1,49 +1,44 @@
 import React,{useState} from 'react';
 import {useGlobal} from 'reactn';
-import jwt from 'jsonwebtoken';
 import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
-const userContactForm = ({userContact, userId}) => {
-    const[firstName, setFirstName] = useState(userContact.firstName);
-    const[lastName, setLastName] = useState(userContact.lastName);
-    const[phone, setPhone] = useState(userContact.phone);
-    const[street, setStreet] = useState(userContact.street);
-    const[town, setTown] = useState(userContact.town);
-    const[state, setState] = useState(userContact.state);
-
-    const[currentUser, setCurrentUser] = useGlobal('currentUser');
+const userContactForm = ({user, cart}) => {
+    const[name, setName] = useState(user.userName);
+    const[email, setEmail] = useState(user.email);
+    const[phone, setPhone] = useState('');
+    const[street, setStreet] = useState('');
+    const[city, setCity] = useState('');
+    const[state, setState] = useState('');
+    const[showContactModal, setShowContactModal] = useGlobal('showContactModal');
 
     const submitForm = e => {
       e.preventDefault();
-      const userToken = localStorage.userToken || '';
+      const userToken = localStorage.userToken;
 
-      fetch(`api/users/${userId}`, {
-        method: 'PUT',
+      fetch(`api/order/${user._id}`, {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${userToken}`
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          phone,
-          street,
-          town,
-          state
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone,
+          deliveryAddress: {
+            street,
+            city,
+            state
+          },
+          cart
         })
 
       })
       .then(res => {
-        if(res.status === 200)
-          return res.json();
-      })
-      .then(data => {
-        alert(data.message);
-        localStorage.userToken = data.token;
-        const decoded = jwt.decode(data.token)
-
-        setCurrentUser(decoded.currentUser);
+        if(res.status === 201)
+          alert('order placed');
+          setShowContactModal(!showContactModal);
       })
       .catch(err => console.log(err))
     }
@@ -52,16 +47,16 @@ const userContactForm = ({userContact, userId}) => {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for="exampleEmail">FirstName</Label>
-              <Input type="text" name="firstName"  placeholder="enter first name" value={firstName}
-              onChange = {e => setFirstName(e.target.value)} />
+              <Label for="name">Name</Label>
+              <Input type="text" name="name"  placeholder="enter name" value={name}
+              onChange = {e => setName(e.target.value)} />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label for="lastName">lastName</Label>
-              <Input type="text" name="lastName"  placeholder="enter last name" value = {lastName}
-              onChange = {e => setLastName(e.target.value)} />
+              <Label for="email">Email</Label>
+              <Input type="email" name="email"  placeholder="enter email" value = {email}
+              onChange = {e => setEmail(e.target.value)} />
             </FormGroup>
           </Col>
         </Row>
@@ -70,6 +65,7 @@ const userContactForm = ({userContact, userId}) => {
           <Input type="text" name="phone"  placeholder="enter phone" value ={phone}
           onChange = {e => setPhone(e.target.value)} />
         </FormGroup>
+        <div>Delivery Address </div>
         <FormGroup>
           <Label for="street">street</Label>
           <Input type="text" name="street"  placeholder="123 Main Street" value = {street}
@@ -78,9 +74,9 @@ const userContactForm = ({userContact, userId}) => {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              <Label for="town">City/Town</Label>
-              <Input type="text" name="town" value = {town}
-              onChange = {e => setTown(e.target.value)} />
+              <Label for="city">City/Town</Label>
+              <Input type="text" name="city" value = {city}
+              onChange = {e => setCity(e.target.value)} />
             </FormGroup>
           </Col>
           <Col md={4}>
@@ -91,7 +87,7 @@ const userContactForm = ({userContact, userId}) => {
             </FormGroup>
           </Col>
         </Row>
-        <Button > Save </Button>
+        <Button > Place Order </Button>
       </Form>
     )
 }

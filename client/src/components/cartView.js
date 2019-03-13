@@ -37,11 +37,8 @@ const Cart = (props) => {
       .catch(err => console.log(err))
   }
   const CheckOutOrder = cart => {
-        if(currentUser && currentUser.contact != null) {
+        if(currentUser) {
           setShowContactModal(true);
-        }else
-        if(currentUser && currentUser.contact === null){
-            setShowAddContact(true)
         } else
         props.history.push('/login')
     }
@@ -49,9 +46,6 @@ const Cart = (props) => {
     <div>
         {
             showContactModal ? <ContactModal cart = {cart}/> : ''
-        }
-        {
-            showAddContact ? <AddContact cart = {cart} />  : ''
         }
       <Table responsive >
         <thead>

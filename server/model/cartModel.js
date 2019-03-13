@@ -8,8 +8,11 @@ const cartSchema = Schema({
     subTotal: Number,
     quantity: Number,
     cartFor: String,
-    image: String
+    image: String,
+    status: {type: String,
+        default: 'Not processed',
+        enum: ['Not processed' , 'Processing', 'Shipped', 'Delivered', 'Cancelled']}
 })
 const Cart = mongoose.model('Cart', cartSchema);
 
-module.exports = Cart;
+module.exports = {Cart, cartSchema};

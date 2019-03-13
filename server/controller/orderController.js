@@ -1,6 +1,6 @@
 const Order = require('../model/orderModel');
 const User = require('../model/userModel');
-const Cart = require('../model/cartModel');
+const Cart = require('../model/cartModel').Cart;
 
 const orderController = {
 /**
@@ -11,38 +11,22 @@ const orderController = {
  * @route '/:userId/orders'
  */
     createOrder(req, res){
-        const userId = req.params.userId;
-        const{cart} = req.body;
-        console.log('vvhggg',cart)
-
-        const order = cart.map(meal => {
-           return {
-                meal: meal.name,
-                quantity: meal.quantity,
-                subTotal: meal.subTotal
-            }
-        })
-        const totalPrice =  cart.map(meal => meal.subTotal ).reduce( (acc, val) =>  acc + val );
+        const {userId} = req.params
+        const{cart, customerName, customerEmail, customerPhone, deliveryAddress} = req.body;
 
         Order.create({
-            order,
-            totalPrice
+            meals: cart,
+            customerName,
+            customerEmail,
+            customerPhone,
+            deliveryAddress,
+            userId
         })
-        .then(order =>{
-            User.findById(userId)
-            .then(user => {
-                user.orders.push(order._id);
-               return user.save()
-            })
-            .then(() => {
-                return Cart.deleteMany({cartFor: cart[0].cartFor}).exec()
-            })
-            .then(()=> {
-                return res.status(201).send({message: 'you order has been placed', order})
-            })
-            .catch(err => {console.log(err), res.status(500).send(err)})   
+        .then((order) => {
+            Cart.deleteMany({cartFor: cart[0].cartFor}).exec();
+            return res.status(201).send({message: 'you order has been placed', order})
         })
-
+        .catch(err => {console.log(err), res.status(500).send(err)})   
     },
     /** 
     * get a users order

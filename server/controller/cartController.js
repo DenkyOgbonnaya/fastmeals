@@ -1,4 +1,4 @@
-const Cart = require('../model/cartModel');
+const Cart = require('../model/cartModel').Cart;
 const crypto = require('crypto');
 
 const cartController = {
