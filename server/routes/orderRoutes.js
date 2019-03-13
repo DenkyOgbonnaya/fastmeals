@@ -7,6 +7,7 @@ orderRouter = express.Router();
 
 orderRouter.route('/order/:userId')
 .post(createOrder)
+orderRouter.route('/order/:orderId')
 .get(getOrder)
 
 module.exports = orderRouter;

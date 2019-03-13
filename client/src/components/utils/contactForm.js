@@ -1,10 +1,11 @@
 import React,{useState} from 'react';
 import {useGlobal} from 'reactn';
+import {withRouter} from 'react-router-dom';
 import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
-const userContactForm = ({user, cart}) => {
-    const[name, setName] = useState(user.userName);
-    const[email, setEmail] = useState(user.email);
+const UserContactForm = (props) => {
+    const[name, setName] = useState(props.user.userName);
+    const[email, setEmail] = useState(props.user.email);
     const[phone, setPhone] = useState('');
     const[street, setStreet] = useState('');
     const[city, setCity] = useState('');
@@ -15,7 +16,7 @@ const userContactForm = ({user, cart}) => {
       e.preventDefault();
       const userToken = localStorage.userToken;
 
-      fetch(`api/order/${user._id}`, {
+      fetch(`api/order/${props.user._id}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -31,14 +32,17 @@ const userContactForm = ({user, cart}) => {
             city,
             state
           },
-          cart
+          cart: props.cart
         })
 
       })
       .then(res => {
         if(res.status === 201)
-          alert('order placed');
-          setShowContactModal(!showContactModal);
+          return res.json();
+      })
+      .then(data => {
+        setShowContactModal(!showContactModal);
+        props.history.push(`/order/${data.orderId}`)
       })
       .catch(err => console.log(err))
     }
@@ -91,4 +95,4 @@ const userContactForm = ({user, cart}) => {
       </Form>
     )
 }
-export default userContactForm;
+export default withRouter(UserContactForm);

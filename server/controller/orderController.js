@@ -20,11 +20,11 @@ const orderController = {
             customerEmail,
             customerPhone,
             deliveryAddress,
-            userId
+            user: userId
         })
         .then((order) => {
             Cart.deleteMany({cartFor: cart[0].cartFor}).exec();
-            return res.status(201).send({message: 'you order has been placed', order})
+            return res.status(201).send({message: 'you order has been placed', orderId: order._id})
         })
         .catch(err => {console.log(err), res.status(500).send(err)})   
     },
@@ -36,12 +36,11 @@ const orderController = {
     * @route '/userId/order'
     */
    getOrder(req, res){
-    User.findById(req.params.userId)
-    .populate('orders')
-    .then(user => {
-        if(user){
-            res.status(200).send({message: 'order found', order: user.orders})
-        }
+    Order.findById(req.params.orderId)
+    .then(order => {
+        if(order)
+           return res.status(200).send({message: 'order found', order})
+        res.status(500).send({message: 'order not found'})
     })
     .catch(err => res.status(500).send(err))
 }

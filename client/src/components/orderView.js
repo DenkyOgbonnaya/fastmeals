@@ -1,40 +1,88 @@
 import React, {useState, useEffect} from 'react';
-import {useGlobal} from 'reactn';
+import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
+    CardTitle, CardText} from 'reactstrap';
+import {Link} from 'react-router-dom';
 
-const Orders = (props) => {
-const[orders, setOrders] = useState([]);
-const[currentUser] = useGlobal('currentUser');
+const Order = (props) => {
+const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });
+useEffect( () => {
+    fetch(`/api/order/${props.match.params.orderId}`)
+    .then(res => {
+        if(res.status === 200)
+            return res.json();
+    })
+    .then(data => {
+        setOrder(data.order)
+    })
+    .catch(err => console.log(err))
+}, []);
 
-    useEffect( () => {
-        const  orderId = props.match.params.orderId
-        fetch(`api/order/${orderId}`)
-        .then(res => {
-            if(res.status === 200)
-                return res.json()
-        })
-        .then(data => {
-            setOrders(data.order)
-            console.log(data.order[0])
-            
-        })
-        .catch(err => console.log(err))
-    }, [])
-    const renderOrders = () => {
-        for(let order of orders){
-            console.log('this',order.order)
-            order.order.map(meal =>
-                <div>{meal.meal} price: {order.totalPrice}</div>
-            )
-        }
-    }
+const getTotalPrice = () => {
+    const totalPrice = order.meals.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 );
+    return totalPrice
+}
 
+if(order)
     return(
         <div> 
+            <div> 
+                <h3> Order Details </h3>
+                <p> Order Code: <b>{order._id} </b> </p>
+                <p> Created On {new Date(order.created).toDateString()} </p>
+                </div>
+            <hr />
+            <Container> 
+                <Row> 
+                    <Col> 
+                        <Table responsive >
+                            <thead>
+
+                                <tr>
+            <th>Meal</th>
+            <th>subTotal</th>
+            <th>status</th>
+          </tr>
+        </thead>
+        <tbody>
             {
-                
-                renderOrders()
-                }
+                order.meals.map(meal =>
+                    <tr key = {meal._id}> 
+                        <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/>
+                         <Link to = {`/meal/${meal._id}`} > {meal.name} </Link> <br />
+                         {`${meal.price} x ${meal.quantity}`}
+                         </td>
+                        <td>{meal.subTotal}</td>
+                        <td>{meal.status}</td>
+                    </tr> 
+                )
+            }
+        </tbody>
+      </Table>
+      <div> <b>Total</b>: {getTotalPrice()} </div> <br />
+                    </Col>
+                    <Col> 
+                    <Card>
+        <CardHeader>
+            Deliver to: <br />
+            <h4> {order.customerName} </h4> <br />
+            {order.customerEmail} <br />
+            {order.customerPhone}
+        </CardHeader>
+        <CardBody>
+          <CardTitle>{order.deliveryAddress.street},</CardTitle>
+          <CardText>{order.deliveryAddress.city}, </CardText>
+          <CardText>{order.deliveryAddress.state}. </CardText>
+          
+        </CardBody>
+        <CardFooter>Thanks for shoping with us, You can track the status of your purchased items on this page.</CardFooter>
+      </Card>
+
+                    </Col>
+                </Row>
+            </Container>
         </div>
+
     )
+    return <div> cant find order </div>
 }
-export default Orders;
+export default Order;
