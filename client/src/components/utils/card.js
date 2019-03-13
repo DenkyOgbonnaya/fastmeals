@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
         CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup 
     } from 'reactstrap';
@@ -9,7 +9,6 @@ import UpdateMeal from '../updateMeal';
 const Cards = (props) => {
     const[meals, setMeals] = useState([]);
     const[meal, setMeal] = useState({});
-    const[mealId, setMealId] = useGlobal('mealId')
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
@@ -65,10 +64,7 @@ const Cards = (props) => {
         setMeal(meal);
         setRenderUpdateMealModal(true);
     }
-    const viewMeal = id => {
-        setMealId(id);
-        props.history.push('/meal')
-    }
+    
     return(
         <div> 
             {renderUpdateMealModal ? <UpdateMeal meal= {meal}/> : null }
@@ -77,12 +73,14 @@ const Cards = (props) => {
                 <Row>
                 {meals.map(meal =>
                 <Col md = '3' key ={meal._id}> 
-                    <Card onClick = { () => viewMeal(meal._id)} >
+                    <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
                         <CardBody>
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>N{meal.price} </CardSubtitle>
-                            <CardText> <small className='text-muted'> {meal.description.substring(0, 30)} </small> </CardText>
+                            <CardText> <small className='text-muted'> {meal.description.substring(0, 20)} 
+                            ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
+                             </CardText>
                             <ButtonGroup >
                             <Button onClick= {() => addToCart(meal)} >Buy</Button>
                             {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal) }> Update </Button> : null} 

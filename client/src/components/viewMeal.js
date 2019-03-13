@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {useGlobal} from 'reactn';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
 
-const ViewMeal = () => {
+const ViewMeal = (props) => {
     const[meal, setMeal] = useState({});
-    const[mealId] = useGlobal('mealId');
 
     useEffect( () => {
-        fetch(`api/meals/${mealId}`)
+        const mealId = props.match.params.mealId;
+        fetch(`/api/meals/${mealId}`)
         .then(res => {
             if(res.status === 200 )
                 return res.json();
@@ -16,7 +15,7 @@ const ViewMeal = () => {
             setMeal(data.meal)
         })
         .catch(err => console.log(err))
-    })
+    }, [])
     const addToCart = (meal) => {
         fetch('api/cart', {
             method: 'POST',
