@@ -26,8 +26,8 @@ categoryController = {
  * @route '/:category/category'
  */
 getMealsByCat(req, res){
-    const mealCategory = req.params.category;
-    Category.findOne({title: mealCategory})
+    const title = req.params.title;
+    Category.findOne({title})
     .populate('meals')
     .then(category => {
         res.status(200).send({meals: category.meals})

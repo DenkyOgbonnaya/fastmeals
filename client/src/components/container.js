@@ -16,7 +16,7 @@ const Container = () =>
         <Route exact path = '/addMeals' component = {AddMeals} />
         <Route exact path = '/order/:orderId' component = {Order} />
         <Route exact path = '/meal' component = {ViewMeal} />
-        <Route exact path = {`${window.location.pathname}`} component = {CategoryView} />
+        <Route exact path = '/category/:title' component = {CategoryView} />
         
     </Switch>
 

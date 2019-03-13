@@ -8,6 +8,6 @@ categRouter.route('/categories')
 .get(getCategories)
 .post(addCategory)
 
-categRouter.get('/:category/category', getMealsByCat);
+categRouter.get('/category/:title', getMealsByCat);
 
 module.exports = categRouter;

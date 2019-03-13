@@ -21,7 +21,7 @@ const NavLinks = () => {
             <li> <NavLink to='/' tag = {RRNavLink}>All </NavLink> </li>
             {categories.map(category => 
               <li key = {category.id} >
-                <NavLink to = {`/${category.title}`} tag = {RRNavLink}
+                <NavLink to = {`/category/${category.title}`} tag = {RRNavLink}
                  >{category.title}</NavLink>
               </li>
             )}

@@ -1,9 +1,9 @@
 import React from 'react';
 import Cards from './utils/card';
 
-const CategoryView = () => {
-    const api = `api/${window.location.pathname}/category`
-   // const meals = useGetMeals(api);
+const CategoryView = (props) => {
+    const title = props.match.params.title;
+    const api = `/api/category/${title}`;
     
     return (<Cards api = {api} />)
 }
