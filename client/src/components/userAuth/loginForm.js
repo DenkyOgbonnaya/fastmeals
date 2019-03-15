@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {Form, Input, Button} from 'reactstrap';
 import {useGlobal} from 'reactn';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input,
+Container, Row, Col } from 'reactstrap';
 import jwt from 'jsonwebtoken';
 
 const LoginForm = (props) => {
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
+    const[isModalOPen, setIsModalOpen] = useState(true)
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
 
     const onInputChange = e => {
@@ -35,16 +37,27 @@ const LoginForm = (props) => {
             const decoded = jwt.decode(data.token);
             setCurrentUser(decoded.currentUser);
 
+            setIsModalOpen(!isModalOPen);
             props.history.push('/');
         })
         .catch(err => console.log(err))
     }
     return(
-        <Form onSubmit = {handleSubmit} > 
-            <Input name='email' placeholder = 'Enter email' onChange={onInputChange} />
-            <Input type = 'password' name='password' placeholder = 'Enter password' onChange={onInputChange} />
-            <Button> login </Button>
-        </Form>
+        <div>
+        <Modal isOpen={isModalOPen} >
+          <ModalHeader >Login</ModalHeader>
+          <ModalBody>
+            <Form onSubmit = {handleSubmit} > 
+                <Input name='email' placeholder = 'Enter email' onChange={onInputChange} />
+                <Input type = 'password' name='password' placeholder = 'Enter password' onChange={onInputChange} />
+                <br />
+                <Button> login </Button> 
+            </Form>
+    
+          </ModalBody>
+        </Modal>
+      </div>
+        
     )
 }
 

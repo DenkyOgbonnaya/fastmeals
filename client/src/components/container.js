@@ -13,7 +13,7 @@ const Container = () =>
     <Switch> 
         <Route exact path = '/' component = {MealsView} />
         <Route exact path = '/cart' component = {CartView} />
-        <Route exact path = '/login' component = {LoginForm} />
+        <Route exact path = '/authenticate' component = {LoginForm} />
         <Route exact path = '/addMeals' component = {AddMeals} />
         <Route exact path = '/profile' component = {Profile} />
         <Route exact path = '/order/:orderId' component = {Order} />
