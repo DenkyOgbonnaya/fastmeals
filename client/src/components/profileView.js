@@ -14,7 +14,6 @@ const Profile = () => {
                 return res.json();
         })
         .then(data => {
-            console.log(data)
             setOrders(data.orders)
         })
     }, []);
@@ -36,7 +35,7 @@ const Profile = () => {
             <h3> Your Orders </h3>
             <div>
             {orders.map(order => 
-            <div> <b>Order: </b>
+            <div key= {order._id}> Order: 
             <Link to = {`/order/${order._id}`}> {order._id} </Link> <br />
             </div>
             )}
