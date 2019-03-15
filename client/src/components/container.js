@@ -7,6 +7,7 @@ import LoginForm from './userAuth/loginForm';
 import AddMeals from './addMeals';
 import Order from './orderView';
 import ViewMeal from './viewMeal';
+import Profile from './profileView';
 
 const Container = () => 
     <Switch> 
@@ -14,6 +15,7 @@ const Container = () =>
         <Route exact path = '/cart' component = {CartView} />
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/addMeals' component = {AddMeals} />
+        <Route exact path = '/profile' component = {Profile} />
         <Route exact path = '/order/:orderId' component = {Order} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />

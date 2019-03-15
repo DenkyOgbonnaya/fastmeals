@@ -53,10 +53,10 @@ const SideNav = () => {
         <div> 
             <Nav vertical > 
                 <NavItem> 
-                    <NavLink to= '/cart' tag= {RRNavLink}> My cart </NavLink>
+                    <NavLink to= '/profile' tag= {RRNavLink}> My Profile </NavLink>
                 </NavItem>
                 <NavItem> 
-                    <NavLink to= '/orders' tag= {RRNavLink}> My orders </NavLink>
+                    <NavLink to= '/cart' tag= {RRNavLink}> My cart </NavLink>
                 </NavItem>
                 <NavItem> 
                     <NavLink to= '/addMeals' tag= {RRNavLink}> Add meals </NavLink>

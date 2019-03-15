@@ -33,7 +33,7 @@ const orderController = {
     * @param req{obj} request
     * @param req{obj} request
     * @returns {obj} orders
-    * @route '/userId/order'
+    * @route '/order/orderId'
     */
    getOrder(req, res){
     Order.findById(req.params.orderId)
@@ -43,7 +43,23 @@ const orderController = {
         res.status(500).send({message: 'order not found'})
     })
     .catch(err => res.status(500).send(err))
-}
+    },
+    /** 
+    * get all users order
+    * @param req{obj} request
+    * @param req{obj} request
+    * @returns {obj} orders
+    * @route '/userId/order'
+    */
+   getOrders(req, res){
+    Order.find({})
+    .then(orders => {
+        if(orders)
+           return res.status(200).send({message: 'order found', orders})
+        res.status(500).send({message: 'order not found'})
+    })
+    .catch(err => res.status(500).send(err))
+    }
 
 }
 module.exports = orderController;
