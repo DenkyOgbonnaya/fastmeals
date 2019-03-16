@@ -48,7 +48,7 @@ if(order)
                 order.meals.map(meal =>
                     <tr key = {meal._id}> 
                         <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/>
-                         <Link to = {`/meal/${meal._id}`} > {meal.name} </Link> <br />
+                         <Link to = {`/meal/${meal.mealId}`} > {meal.name} </Link> <br />
                          {`${meal.price} x ${meal.quantity}`}
                          </td>
                         <td>{meal.subTotal}</td>
