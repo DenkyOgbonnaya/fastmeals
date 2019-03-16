@@ -23,8 +23,8 @@ const logoutUser = () => {
         <Container> 
           <Row> 
           <Col xs = '7' md='10'> </Col>
-            <Col xs = '5' md='2'> { user ? <div><Link to = '/profile'>Profile</Link>  <Link to = '/' onClick = {() => logoutUser()} >Logout</Link></div> : 
-            <div><Link to = '/authenticate'>Login</Link>  <Link to = '/authenticate'>sign Up</Link></div>} </Col>
+            <Col xs = '5' md='2'> { user ? <div><Link to = '/profile'>{user.userName}</Link>  <Link to = '/' onClick = {() => logoutUser()} >Logout</Link></div> : 
+            <div><Link to = '/login'>Login</Link>  <Link to = '/signup'>sign Up</Link></div>} </Col>
             <Col xs = '12' md='12'>
               <Row>
               <Col xs ='2' md= '1'> <img src='images/icons/menu_ic.png' alt='menu' onClick= {() => setShowSideNav(!showSideNav)} />  </Col>
