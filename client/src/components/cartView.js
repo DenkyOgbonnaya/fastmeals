@@ -26,13 +26,14 @@ const Cart = (props) => {
       const totalPrice = cart.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 )
       return totalPrice;
   }
-  const removeFromCart = (mealId, cartId) =>{
+  const removeFromCart = (mealId, index) =>{
+      const cartId = localStorage.cartId;
       fetch(`api/cart/${cartId}/${mealId}`, {
           method: 'DELETE'
       })
       .then(res => {
           if(res.status === 200)
-                alert('meal removed')
+                cart.splice(index, 1);
       })
       .catch(err => console.log(err))
   }
@@ -42,6 +43,31 @@ const Cart = (props) => {
         } else
         props.history.push('/login')
     }
+
+    const updateQuantity = (mealIndex, meal, action) => {
+        const cartId = localStorage.cartId;
+        action === 'inc' ? meal.quantity++ : meal.quantity--
+         console.log(meal.quantity)
+        fetch(`api/cart/${cartId}/${meal.mealId}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-TYpe': 'application/json'
+            },
+            body: JSON.stringify({quantity: meal.quantity})
+        })
+        .then(res => {
+            if(res.status === 200)
+                return res.json();
+        })
+        .then(data => {
+            cart[mealIndex] = data.meal;
+        })
+        .catch(err => console.log(err))
+    }
+
+    if(cart.length === 0)
+        return <div> Your shopping Cart is empty </div>
     return (
     <div>
         {
@@ -60,7 +86,7 @@ const Cart = (props) => {
         </thead>
         <tbody>
             {
-                cart.map(meal =>
+                cart.map((meal, index) =>
                     <tr key = {meal._id}> 
                         <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/> {meal.name} </td>
                         <td>{meal.price}</td>
@@ -68,9 +94,9 @@ const Cart = (props) => {
                         <td>{meal.subTotal}</td>
                         <td>
                         <ButtonGroup>
-                            <Button>+</Button> 
-                            <Button onClick= { () => removeFromCart(meal.mealId, localStorage.cartId)} >Remove</Button> 
-                            <Button>-</Button>
+                            <Button onClick = {() =>  updateQuantity(index, meal, 'inc') }>+</Button> 
+                            <Button onClick= { () => removeFromCart(meal.mealId, index)} >Remove</Button> 
+                            <Button onClick = {() => { if(meal.quantity >=2 )updateQuantity(index, meal, 'dec') } } >-</Button>
                         </ButtonGroup></td>
                     </tr> 
                 )

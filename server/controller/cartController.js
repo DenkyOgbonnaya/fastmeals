@@ -51,8 +51,24 @@ const cartController = {
             }
         })
         .catch(err => res.status(500).send(err))
-        
+    },
+    /**
+     * update meal quantity
+     * @param {obj} req  request object
+     * @param {obj} res response object
+     */
+    updateQuantity(req, res){
+        const{mealId, cartId} = req.params;
+        const{quantity} = req.body;
 
+        Cart.findOne({mealId: mealId, cartFor: cartId})
+        .then(meal => {
+            meal.quantity = quantity ;
+            meal.subTotal = meal.price * quantity;
+            return meal.save();
+        })
+        .then(meal => res.status(200).send({meal}))
+        .catch(err => res.status(500).send(err))
     },
     /**
      * remove meal from cart

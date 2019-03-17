@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
+import addToCart from './utils/addToCart';
 
 const ViewMeal = (props) => {
     const[meal, setMeal] = useState({});
@@ -16,27 +17,6 @@ const ViewMeal = (props) => {
         })
         .catch(err => console.log(err))
     }, [])
-    const addToCart = (meal) => {
-        fetch('api/cart', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: meal.name,
-                price: meal.price,
-                image: meal.image,
-                mealId: meal._id,
-                cartId: localStorage.cartId
-            })
-        })
-        .then(res => {
-            if(res.status === 201)
-                alert('meal added to your cart')
-        })
-        .catch(err => console.log(err))
-    }
 
     if(!meal)
         return(<div>Select a meal to view </div>)
