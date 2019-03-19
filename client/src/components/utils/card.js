@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
-        CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup 
-    } from 'reactstrap';
+        CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup} from 'reactstrap';
+import filterHof from '../utils/filterHof';
 import UpdateMeal from '../updateMeal';
 import addToCart from '../utils/addToCart';
 
 const Cards = (props) => {
+    const[searchedMeal] = useGlobal('searchedMeal');
     const[meals, setMeals] = useState([]);
     const[meal, setMeal] = useState({});
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
@@ -52,7 +53,7 @@ const Cards = (props) => {
             
             <Container> 
                 <Row>
-                {meals.map(meal =>
+                {meals.filter(filterHof(searchedMeal)).map(meal =>
                 <Col md = '3' key ={meal._id}> 
                     <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
@@ -71,7 +72,7 @@ const Cards = (props) => {
                     </Card>
                     <br />
                 </Col>
-                )}
+                )} 
             </Row>
             </Container>
         </div>

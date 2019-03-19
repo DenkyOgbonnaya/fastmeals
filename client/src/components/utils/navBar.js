@@ -5,13 +5,13 @@ import {
   import {NavLink as RRNavLink, Link} from 'react-router-dom';
 
 const NavBar = () => {
-const[searchMeal, setSearchMeal] = useState('');
+const[searchedMeal, setSearchedMeal] = useGlobal('searchedMeal');
 const[cart] = useGlobal('cart');
 const[user, setUser] = useGlobal('currentUser');
 const[showSideNav, setShowSideNav] = useGlobal('showSideNav')
 
 const handleSearchChange = e => {
-  setSearchMeal(e.target.value)
+  setSearchedMeal(e.target.value)
 }
 const logoutUser = () => {
   localStorage.removeItem('userToken');
@@ -29,7 +29,7 @@ const logoutUser = () => {
               <Row>
               <Col xs ='2' md= '1'> <img src='images/icons/menu_ic.png' alt='menu' onClick= {() => setShowSideNav(!showSideNav)} />  </Col>
                 <Col xs ='4' md='3'> <NavbarBrand> Fastmeals </NavbarBrand> </Col>
-                <Col xs = '3' md='6'> <Input placeholder='seach meal' value= {searchMeal} onChange= {handleSearchChange} /></Col>
+                <Col xs = '3' md='6'> <Input placeholder='seach meal' value= {searchedMeal} onChange= {handleSearchChange} /></Col>
                 <Col xs = '3' md='2'><NavLink to= '/cart' tag={RRNavLink}> <img src='images/icons/shopping_cart.png' alt='cart' />
                 <span style={{color:'white'}}  >{cart.length} </span>
                 </NavLink>  </Col>

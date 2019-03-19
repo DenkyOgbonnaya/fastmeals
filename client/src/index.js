@@ -11,6 +11,7 @@ setGlobal({
     currentUser : {},
     isAuthUser: false,
     cart: [],
+    searchedMeal: '',
     mealId: '',
     showSideNav: false,
     showContactModal: false,
