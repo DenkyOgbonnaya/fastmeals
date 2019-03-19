@@ -9,6 +9,7 @@ import Order from './orderView';
 import ViewMeal from './viewMeal';
 import Profile from './profileView';
 import SignupForm from './userAuth/signupForm';
+import PrivateRoute from './privateRoute'
 
 const Container = () => 
     <Switch> 
@@ -16,9 +17,9 @@ const Container = () =>
         <Route exact path = '/cart' component = {CartView} />
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/signup' component = {SignupForm} />
-        <Route exact path = '/addMeals' component = {AddMeals} />
-        <Route exact path = '/profile' component = {Profile} />
-        <Route exact path = '/order/:orderId' component = {Order} />
+        <PrivateRoute exact path = '/addMeals' component = {AddMeals} />
+        <PrivateRoute exact path = '/profile' component = {Profile} />
+        <PrivateRoute exact path = '/order/:orderId' component = {Order} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />
         

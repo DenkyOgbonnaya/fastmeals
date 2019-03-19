@@ -13,6 +13,7 @@ const LoginForm = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        const {from} = props.location.state || {from : {pathName: '/' }}
 
         fetch('api/users/login', {
             method: 'POST',
@@ -36,7 +37,7 @@ const LoginForm = (props) => {
             setCurrentUser(decoded.currentUser);
 
             setIsModalOpen(!isModalOPen);
-            props.history.push('/');
+            props.history.push(from);
         })
         .catch(err => console.log(err))
     }
@@ -48,7 +49,8 @@ const LoginForm = (props) => {
             <div className= 'errorMessage' style = {{color: 'red'}}> {error} </div>
             <Form onSubmit = {handleSubmit} > 
                 <Input name='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
-                <Input type = 'password' name='password' placeholder = 'Enter password' onChange={e => setPassword(e.target.value)} />
+                <Input type = 'password' name='password' placeholder = 'Enter password' 
+                onChange={e => setPassword(e.target.value)} />
                 <br />
                 <Button> login </Button> 
             </Form>
