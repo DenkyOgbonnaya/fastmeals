@@ -1,5 +1,5 @@
 const addToCart = (meal) => {
-    fetch('api/cart', {
+    fetch('/api/cart', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -15,8 +15,8 @@ const addToCart = (meal) => {
     })
     .then(res => {
         if(res.status === 201)
-            return 'meal aded';
-    })
+            return 'meal added'
+    } )
     .catch(err => console.log(err))
 }
 export default addToCart;

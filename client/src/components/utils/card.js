@@ -46,9 +46,13 @@ const Cards = (props) => {
         setMeal(meal);
         setRenderUpdateMealModal(true);
     }
-    const pushToCart= (meal) => {
-        addToCart(meal);
-        props.history.push('/cart');
+    async function pushToCart(meal){
+        try{
+            await addToCart(meal);
+            props.history.push('/cart');
+        } catch(err) {
+            console.log(err)
+        }
     }
     
     return(

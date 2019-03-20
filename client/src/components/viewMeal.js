@@ -17,6 +17,14 @@ const ViewMeal = (props) => {
         })
         .catch(err => console.log(err))
     }, [])
+    async function pushToCart(meal){
+        try{
+            await addToCart(meal);
+            props.history.push('/cart');
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
     if(!meal)
         return(<div>Select a meal to view </div>)
@@ -30,7 +38,7 @@ const ViewMeal = (props) => {
                             <CardText ><b>Category</b>: {meal.category} </CardText>
                             <CardText ><b>Stock</b>: {meal.quantity} </CardText>
                             <CardText> <small className='text-muted'> {meal.description} </small> </CardText>
-                            <Button onClick = {() => addToCart(meal)} > Buy Now </Button>
+                            <Button onClick = {() => pushToCart(meal)} > Buy Now </Button>
                         </CardBody>
                     </Card>
         </div>

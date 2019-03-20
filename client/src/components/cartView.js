@@ -1,14 +1,12 @@
 import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import ContactModal from './utils/contactModal';
-import AddContact from './utils/addContact';
 import { Table, Button, ButtonGroup} from 'reactstrap';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
   const[currentUser] = useGlobal('currentUser');
   const[showContactModal, setShowContactModal] = useGlobal('showContactModal');
-  const[showAddContact, setShowAddContact] = useGlobal('showAddContact');
 
   useEffect( () => {
       const cartId = localStorage.cartId;
@@ -104,7 +102,8 @@ const Cart = (props) => {
         </tbody>
       </Table>
       <div>Total: N{getTotalPrice()}   </div>
-      <Button onClick = { () => CheckOutOrder(cart) } > CheckOut </Button>
+      <Button onClick = { () => CheckOutOrder(cart) } > CheckOut </Button> {' '}
+      <Button onClick ={() => props.history.push('/')}> Continue shopping </Button>
       </div>
     );
   }
