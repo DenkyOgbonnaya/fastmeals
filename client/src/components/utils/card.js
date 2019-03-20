@@ -37,7 +37,7 @@ const Cards = (props) => {
         })
         .then(res => {
             if(res.status === 200 ){
-                alert('meal deleted')
+               alert('meal deleted')
             }
         })
         .catch(err => console.log(err))
@@ -45,6 +45,10 @@ const Cards = (props) => {
     const updateMeal = (meal) => {
         setMeal(meal);
         setRenderUpdateMealModal(true);
+    }
+    const pushToCart= (meal) => {
+        addToCart(meal);
+        props.history.push('/cart');
     }
     
     return(
@@ -64,7 +68,7 @@ const Cards = (props) => {
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
                             <ButtonGroup >
-                            <Button onClick= {() => addToCart(meal)} >Buy</Button>
+                            <Button onClick= {() => pushToCart(meal)} >Buy</Button>
                             {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal) }> Update </Button> : null} 
                             {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id)} > Delet </Button> : null}
                             </ButtonGroup>

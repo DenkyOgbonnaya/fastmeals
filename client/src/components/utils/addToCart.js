@@ -15,7 +15,7 @@ const addToCart = (meal) => {
     })
     .then(res => {
         if(res.status === 201)
-            alert('meal added to cart')
+            return 'meal aded';
     })
     .catch(err => console.log(err))
 }
