@@ -52,7 +52,8 @@ const orderController = {
     * @route '/userId/order'
     */
    getOrders(req, res){
-    Order.find({})
+    const user =  req.params.userId;
+    Order.find({user})
     .then(orders => {
         if(orders)
            return res.status(200).send({message: 'order found', orders})
