@@ -1,10 +1,12 @@
 import React from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
-import {useGlobal} from 'reactn'
-import Swal from 'sweetalert2'
+import {useGlobal} from 'reactn';
+import Swal from 'sweetalert2';
+import Can from './can';
 
 const SideNav = () => {
+    const[user] = useGlobal('currentUser');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
 
@@ -51,28 +53,41 @@ const SideNav = () => {
 
     return(
         <div> 
-            <Nav vertical > 
-                <NavItem> 
-                    <NavLink to= '/profile' tag= {RRNavLink}> My Profile </NavLink>
-                </NavItem>
+            <Nav vertical >
                 <NavItem> 
                     <NavLink to= '/cart' tag= {RRNavLink}> My cart </NavLink>
                 </NavItem>
-                <NavItem> 
-                    <NavLink to= '/addMeals' tag= {RRNavLink}> Add meals </NavLink>
-                </NavItem>
-                <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } > Add meal Category</NavLink>
-                </NavItem>
-                <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} > Update meals </NavLink>
-                </NavItem>
-                <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)}  > Delete meals </NavLink>
-                </NavItem>
-                <NavItem> 
-                    <NavLink to= '/' tag= {RRNavLink}> Order </NavLink>
-                </NavItem>
+                {
+                    user ?
+                    <div>
+                
+                    <NavItem> 
+                        <NavLink to= '/profile' tag= {RRNavLink}> My Orders </NavLink>
+                    </NavItem>
+                    <Can 
+                    role = {user.isAdmin}
+                    perform = "admin-board:visit"
+                    yes = {() => 
+                        <div> 
+                            <NavItem> 
+                                <NavLink to= '/addMeals' tag= {RRNavLink}> Add meals </NavLink>
+                            </NavItem>
+                            <NavItem> 
+                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } > Add meal Category</NavLink>
+                            </NavItem>
+                            <NavItem> 
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} > Update meals </NavLink>
+                            </NavItem>
+                            <NavItem> 
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)}  > Delete meals </NavLink>
+                            </NavItem>
+                        </div>
+                    }
+                    />
+                    
+                    </div>
+                    : null
+                }
             </Nav>
         </div>
     )
