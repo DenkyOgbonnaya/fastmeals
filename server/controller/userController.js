@@ -74,30 +74,6 @@ const authController = {
            })  
        }).catch(err => res.status(500).send(err))
     },
-    /** 
-    * add a contact details to a user
-    * @param req{obj} request
-    * @param req{obj} request
-    * @route '/userId'
-    */
-    addUserContact(req, res){
-        const contact = req.body
-
-        Users.findById(req.params.userId)
-        .then(user => {
-            user.contact = contact;
-            return user.save();
-        })
-        .then(user => {
-            const token = jwt.sign(
-                {currentUser: omit(user)},
-                process.env.SECRET_KEY,
-                {expiresIn: '24h'}
-            )
-            res.status(200).send({message: 'contact added', token})
-        })
-        .catch(err => res.status(500).send(err) )
-    },
     
 
 }

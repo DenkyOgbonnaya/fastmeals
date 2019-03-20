@@ -27,7 +27,7 @@ const SignupForm = (props) => {
             })
         })
         .then(res => {
-            if(res.status === 200)
+            if(res.status === 201)
                 return res.json();
             res.json().then(data => setError(data.message) )
         })
