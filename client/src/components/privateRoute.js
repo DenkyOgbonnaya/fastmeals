@@ -6,7 +6,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     const[user] = useGlobal('currentUser');
     return(
         <Route {...rest} render = {(props) => (
-            user ? <Component {...props} /> : <Redirect to = {{
+            user.hasOwnProperty('email') ? <Component {...props} /> : <Redirect to = {{
                 pathname: '/login',
                 state: {from: props.location}
             }} />
