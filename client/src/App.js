@@ -10,6 +10,7 @@ import './App.css';
 const App = () => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
+    const[cart, setCart] = useGlobal('cart');
 
     useEffect( () => {
         const cartId = localStorage.cartId || '';
@@ -27,6 +28,18 @@ const App = () => {
             })
             .then(data => localStorage.cartId = data.cartId)
             .catch(err => console.log(err))
+
+        if(cartId){
+            fetch(`cart/${cartId}`)
+            .then(res => {
+                if(res.status === 200)
+                    return res.json();
+            })
+            .then(data => {
+                setCart(data.cart)
+            })
+            .catch(err => console.log(err))
+        }
     })
     
     return(
