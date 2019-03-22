@@ -16,7 +16,7 @@ const UserContactForm = (props) => {
       e.preventDefault();
       const userToken = localStorage.userToken;
 
-      fetch(`api/order/${props.user._id}`, {
+      fetch(`api/${props.user._id}/order`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
