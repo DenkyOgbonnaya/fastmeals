@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import{Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import '../styles/profile.css';
 
 const Profile = () => {
     const[orders, setOrders] = useState([]);
@@ -33,10 +34,10 @@ const Profile = () => {
                 </tbody>
             </Table>
             <h3> Your Orders </h3>
-            <div>
+            <div className='orders'>
             {orders.map(order => 
-            <div key= {order._id}> Order: 
-            <Link to = {`/order/${order._id}`}> {order._id} </Link> <br />
+            <div key= {order._id}>#:  
+            <Link to = {`/order/${order._id}`} style={{color: 'grey'}}> {order._id} </Link> <br />
             </div>
             )}
             </div>

@@ -7,3 +7,10 @@ ul > li {
     display: inline-block;
     float: none;
 }
+ul > li > :hover {
+    color:  #8bc34a;
+}
+.navlink {
+    color: grey;
+    font-size: 18px;
+}

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
     CardTitle, CardText} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import '../styles/order.css';
 
 const Order = (props) => {
 const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });
@@ -25,10 +26,10 @@ const getTotalPrice = () => {
 if(order)
     return(
         <div> 
-            <div> 
+            <div className = 'details'> 
                 <h3> Order Details </h3>
                 <p> Order Code: <b>{order._id} </b> </p>
-                <p> Created On {new Date(order.created).toDateString()} </p>
+                <p> ordered On: {new Date(order.created).toDateString()} </p>
                 </div>
             <hr />
             <Container> 

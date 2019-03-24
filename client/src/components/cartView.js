@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import ContactModal from './utils/contactModal';
 import { Table, Button, ButtonGroup} from 'reactstrap';
+import '../styles/cart.css';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
@@ -45,7 +46,7 @@ const Cart = (props) => {
     const updateQuantity = (mealIndex, meal, action) => {
         const cartId = localStorage.cartId;
         action === 'inc' ? meal.quantity++ : meal.quantity--
-         console.log(meal.quantity)
+
         fetch(`api/cart/${cartId}/${meal.mealId}`, {
             method: 'PUT',
             headers: {
@@ -65,21 +66,21 @@ const Cart = (props) => {
     }
 
     if(cart.length === 0)
-        return <div> Your shopping Cart is empty </div>
+        return <div className ='empty'> Your shopping Cart is empty! </div>
     return (
     <div>
         {
             showContactModal ? <ContactModal cart = {cart}/> : ''
         }
-      <Table responsive >
+      <Table responsive className ='table' >
         <thead>
 
           <tr>
-            <th>Meal</th>
-            <th>Unit Price</th>
-            <th>Quantity</th>
-            <th>SubTotal</th>
-            <th>Actions</th>
+            <th className ='thead'>Meal</th>
+            <th className ='thead'>Unit Price</th>
+            <th className ='thead'>Quantity</th>
+            <th className ='thead'>SubTotal</th>
+            <th className ='thead'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -91,10 +92,10 @@ const Cart = (props) => {
                         <td>{meal.quantity}</td>
                         <td>{meal.subTotal}</td>
                         <td>
-                        <ButtonGroup>
-                            <Button onClick = {() =>  updateQuantity(index, meal, 'inc') }>+</Button> 
-                            <Button onClick= { () => removeFromCart(meal.mealId, index)} >Remove</Button> 
-                            <Button onClick = {() => { if(meal.quantity >=2 )updateQuantity(index, meal, 'dec') } } >-</Button>
+                        <ButtonGroup className = "btnGrp">
+                            <Button onClick = {() =>  updateQuantity(index, meal, 'inc') } className = 'actions'>+</Button> 
+                            <Button onClick= { () => removeFromCart(meal.mealId, index)} className = 'actions' >Remove</Button> 
+                            <Button onClick = {() => { if(meal.quantity >=2 )updateQuantity(index, meal, 'dec') } } className = 'actions'>-</Button>
                         </ButtonGroup></td>
                     </tr> 
                 )
@@ -102,8 +103,8 @@ const Cart = (props) => {
         </tbody>
       </Table>
       <div>Total: N{getTotalPrice()}   </div>
-      <Button onClick = { () => CheckOutOrder(cart) } > CheckOut </Button> {' '}
-      <Button onClick ={() => props.history.push('/')}> Continue shopping </Button>
+      <Button onClick = { () => CheckOutOrder(cart) } className = 'checkout'> CheckOut </Button> {' '}
+      <Button onClick ={() => props.history.push('/')} className = 'continue'> Continue shopping </Button>
       </div>
     );
   }

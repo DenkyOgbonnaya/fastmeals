@@ -18,11 +18,11 @@ const NavLinks = () => {
 
     return(
         <ul> 
-            <li> <NavLink to='/' tag = {RRNavLink}>All </NavLink> </li>
+            <li> <NavLink to='/' tag = {RRNavLink}  className='navlink' >All </NavLink> </li>
             {categories.map(category => 
               <li key = {category.id} >
                 <NavLink to = {`/category/${category.title}`} tag = {RRNavLink}
-                 >{category.title}</NavLink>
+               className='navlink' >{category.title}</NavLink>
               </li>
             )}
         </ul>

@@ -1,0 +1,25 @@
+.checkout{
+    background: #8bc34a;
+    border-radius: 10px
+}
+.continue{
+    background: firebrick;
+    border-radius: 10px
+}
+.actions{
+    background: firebrick
+}
+.thead {
+    color: firebrick
+}
+.btnGrp :hover {
+     background: rgb(78, 3, 3)
+}
+.empty {
+    border: solid 1px grey;
+    height: 350;
+    padding: 100px;
+    text-align: center;
+    font-size: 30px;
+    margin: auto;
+}
