@@ -31,8 +31,12 @@ const Cart = (props) => {
           method: 'DELETE'
       })
       .then(res => {
-          if(res.status === 200)
-                cart.splice(index, 1);
+          if(res.status === 200){
+            const cartCopy = Object.assign([], cart);
+            cartCopy.splice(index, 1);
+            setCart(cartCopy);
+          }
+            
       })
       .catch(err => console.log(err))
   }
@@ -60,7 +64,9 @@ const Cart = (props) => {
                 return res.json();
         })
         .then(data => {
-            cart[mealIndex] = data.meal;
+           const cartCopy = Object.assign([], cart);
+           cartCopy[mealIndex] = data.meal;
+           setCart(cartCopy);
         })
         .catch(err => console.log(err))
     }

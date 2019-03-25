@@ -40,7 +40,7 @@ const App = () => {
             })
             .catch(err => console.log(err))
         }
-    }, [cart.legnth])
+    }, [] )
     
     return(
         <div className= 'App' >
