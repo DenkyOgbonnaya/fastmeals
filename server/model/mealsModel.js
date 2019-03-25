@@ -9,8 +9,7 @@ const mealSchema = new Schema({
         required: 'Name is required'
       },
       image: {
-        data: Buffer,
-        contentType: String
+        type: String,
       },
       description: {
         type: String,

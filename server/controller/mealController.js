@@ -1,5 +1,7 @@
 const Meals = require('../model/mealsModel');
 const Category = require('../model/categoryModel');
+const fs = require('fs');
+const path = require('path');
 
 const mealController = {
 /**
@@ -55,12 +57,21 @@ updateMeal(req, res){
  * @route '/meals:mealId'
  */
 deleteMeal(req, res){
-    const mealId = req.params.mealId;
+    const mealId = req.params.mealId
     Meals.findByIdAndRemove(mealId)
-        .then(() => {
-            res.status(200).send({message: 'meal deleted'});
+    .then((meal) => {
+        const image = JSON.stringify(meal.image).replace('/', '')
+        const img = path.resolve("public", image).replace(/\"/g, '')
+
+        fs.unlink(img, (err) => {
+            if(err){
+                console.log('err',err)
+            }else {
+                res.status(200).send({message: 'meal deleted', mealId});
+            }
         })
-        .catch(err => res.status(500).send(err))
+    })
+    .catch(err => {console.log(err),res.status(500).send(err)})
 },
 /**
  * Get a meal by id
