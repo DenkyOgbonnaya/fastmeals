@@ -13,6 +13,7 @@ setGlobal({
     cart: [],
     searchedMeal: '',
     mealId: '',
+    categories: [],
     showSideNav: false,
     showContactModal: false,
     showAddContact: false,

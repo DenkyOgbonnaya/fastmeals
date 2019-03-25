@@ -7,6 +7,7 @@ import Can from './can';
 
 const SideNav = () => {
     const[user] = useGlobal('currentUser');
+    const[categories, setCategories] = useGlobal('categories');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
 
@@ -47,6 +48,9 @@ const SideNav = () => {
               Swal.fire({
                 title: `${result.value.message}`
               })
+              const categCopy = Object.assign([], categories);
+              categCopy.push(result.value.category);
+              setCategories(categCopy);
             }
           })
     }
@@ -88,6 +92,9 @@ const SideNav = () => {
                     </div>
                     : null
                 }
+                <NavItem> 
+                    <NavLink to= '/about' tag= {RRNavLink} className = 'navlink'>About </NavLink>
+                </NavItem>
             </Nav>
         </div>
     )

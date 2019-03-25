@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
+import {useGlobal} from 'reactn';
 import {NavLink } from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import '../../styles/navLinks.css'
 
 const NavLinks = () => {
-    const[categories, setCategories] = useState([]);
+    const[categories, setCategories] = useGlobal('categories');
     useEffect(() => {
         fetch('api/categories')
         .then(res => {

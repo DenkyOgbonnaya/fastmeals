@@ -44,8 +44,8 @@ addCategory(req, res){
             return res.status(208).send({message: 'Category already exist'});
         return Category.create(req.body)
     })
-    .then( () => {
-        return res.status(200).send({message: 'New Category added'});
+    .then( (category) => {
+        return res.status(200).send({message: 'New Category added', category: {title: category.title, id: category._id}});
     })
     .catch(err => res.status(500).send(err))
 }
