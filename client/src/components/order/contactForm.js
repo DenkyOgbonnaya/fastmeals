@@ -3,6 +3,7 @@ import {useGlobal} from 'reactn';
 import {withRouter} from 'react-router-dom';
 import { Col, Row, Button, Form, FormGroup, Label, Input,
   Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import orderApi from './order_api'
 
 const ContactForm = (props) => {
     const[name, setName] = useState(props.user.userName);
@@ -15,41 +16,28 @@ const ContactForm = (props) => {
 
     const submitForm = e => {
       e.preventDefault();
-      const userToken = localStorage.userToken;
 
-      fetch(`api/${props.user._id}/order`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userToken}`
-        },
-        body: JSON.stringify({
-          customerName: name,
-          customerEmail: email,
-          customerPhone: phone,
-          deliveryAddress: {
-            street,
-            city,
-            state
+      const orderDetails = {
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        deliveryAddress: {
+          street,
+          city,
+          state
           },
-          cart: props.cart
-        })
-
-      })
-      .then(res => {
-        if(res.status === 201)
-          return res.json();
-      })
-      .then(data => {
+        cart: props.cart
+      }
+      orderApi.createOrder(props.user._id, orderDetails)
+      .then(orderId => {
         setShowContactModal(!showContactModal);
-        props.history.push(`/order/${data.orderId}`)
+        props.history.push(`/order/${orderId}`)
       })
-      .catch(err => console.log(err))
+      
     }
     return (
-      <Modal> 
-        <ModalHeader> </ModalHeader>
+      <Modal isOpen={showContactModal}> 
+        <ModalHeader>Delivery Address </ModalHeader>
         <ModalBody> 
         <Form onSubmit ={submitForm}>
         <Row form>

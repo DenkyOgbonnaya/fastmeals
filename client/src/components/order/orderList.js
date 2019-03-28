@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import{Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import orderApi from './order_api';
 import '../../styles/profile.css';
 
 const Profile = () => {
@@ -9,14 +10,8 @@ const Profile = () => {
     const[user] = useGlobal('currentUser');
 
     useEffect( () => {
-        fetch(`/api/${user._id}/order`)
-        .then(res => {
-            if(res.status === 200)
-                return res.json();
-        })
-        .then(data => {
-            setOrders(data.orders)
-        })
+        orderApi.getOrders(user._id)
+        .then(orders => setOrders(orders))
     }, []);
     return(
         <div> 

@@ -2,20 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
     CardTitle, CardText} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import orderApi from './order_api';
 import '../../styles/order.css';
 
 const Order = (props) => {
 const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });
 useEffect( () => {
-    fetch(`/api/order/${props.match.params.orderId}`)
-    .then(res => {
-        if(res.status === 200)
-            return res.json();
-    })
-    .then(data => {
-        setOrder(data.order)
-    })
-    .catch(err => console.log(err))
+    orderApi.getOrder(props.match.params.orderId)
+    .then(order => setOrder(order))
 }, []);
 
 const getTotalPrice = () => {
