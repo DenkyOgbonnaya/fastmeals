@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import orderApi from './order_api';
 import '../../styles/profile.css';
 
-const Profile = () => {
+const OrederList = () => {
     const[orders, setOrders] = useState([]);
     const[user] = useGlobal('currentUser');
 
@@ -40,4 +40,4 @@ const Profile = () => {
 
     )
 }
-export default Profile;
+export default OrederList;

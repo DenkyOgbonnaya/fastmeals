@@ -3,6 +3,7 @@ import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
     CardTitle, CardText} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import orderApi from './order_api';
+import orderHelper from './order_helper';
 import '../../styles/order.css';
 
 const Order = (props) => {
@@ -11,11 +12,6 @@ useEffect( () => {
     orderApi.getOrder(props.match.params.orderId)
     .then(order => setOrder(order))
 }, []);
-
-const getTotalPrice = () => {
-    const totalPrice = order.meals.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 );
-    return totalPrice
-}
 
 if(order)
     return(
@@ -53,7 +49,7 @@ if(order)
             }
         </tbody>
       </Table>
-      <div> <b>Total</b>: {getTotalPrice()} </div> <br />
+      <div> <b>Total</b>: {orderHelper.getTotalPrice(order)} </div> <br />
                     </Col>
                     <Col> 
                     <Card>
