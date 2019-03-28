@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import ContactForm from '../order/contactForm';
 import { Table, Button, ButtonGroup} from 'reactstrap';
+import cartApi from './cart_api';
 import '../../styles/cart.css';
 
 const Cart = (props) => {
@@ -10,35 +11,18 @@ const Cart = (props) => {
   const[showContactModal, setShowContactModal] = useGlobal('showContactModal');
 
   useEffect( () => {
-      const cartId = localStorage.cartId;
-      fetch(`cart/${cartId}`)
-      .then(res => {
-          if(res.status === 200)
-            return res.json();
-      })
-      .then(data => {
-          setCart(data.cart)
-      })
-      .catch(err => console.log(err))
+      cartApi.getCart()
+      .then(cart => setCart(cart));
   }, []);
   const getTotalPrice = () => {
       const totalPrice = cart.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 )
       return totalPrice;
   }
-  const removeFromCart = (mealId, index) =>{
+  const removeFromCart = (mealId) =>{
       const cartId = localStorage.cartId;
-      fetch(`api/cart/${cartId}/${mealId}`, {
-          method: 'DELETE'
-      })
-      .then(res => {
-          if(res.status === 200){
-            const cartCopy = Object.assign([], cart);
-            cartCopy.splice(index, 1);
-            setCart(cartCopy);
-          }
-            
-      })
-      .catch(err => console.log(err))
+      setCart(cart.filter(meal => meal.mealId !== mealId ));
+      cartApi.removeMeal(mealId, cartId);
+
   }
   const CheckOutOrder = cart => {
         if(currentUser) {
@@ -48,27 +32,10 @@ const Cart = (props) => {
     }
 
     const updateQuantity = (mealIndex, meal, action) => {
-        const cartId = localStorage.cartId;
-        action === 'inc' ? meal.quantity++ : meal.quantity--
+        action === 'inc' ? meal.quantity++
+         :meal.quantity--
 
-        fetch(`api/cart/${cartId}/${meal.mealId}`, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-TYpe': 'application/json'
-            },
-            body: JSON.stringify({quantity: meal.quantity})
-        })
-        .then(res => {
-            if(res.status === 200)
-                return res.json();
-        })
-        .then(data => {
-           const cartCopy = Object.assign([], cart);
-           cartCopy[mealIndex] = data.meal;
-           setCart(cartCopy);
-        })
-        .catch(err => console.log(err))
+        cartApi.updateQuantity(meal.quantity, meal.mealId)
     }
 
     if(cart.length === 0)
@@ -100,7 +67,7 @@ const Cart = (props) => {
                         <td>
                         <ButtonGroup className = "btnGrp">
                             <Button onClick = {() =>  updateQuantity(index, meal, 'inc') } className = 'actions'>+</Button> 
-                            <Button onClick= { () => removeFromCart(meal.mealId, index)} className = 'actions' >Remove</Button> 
+                            <Button onClick= { () => removeFromCart(meal.mealId)} className = 'actions' >Remove</Button> 
                             <Button onClick = {() => { if(meal.quantity >=2 )updateQuantity(index, meal, 'dec') } } className = 'actions'>-</Button>
                         </ButtonGroup></td>
                     </tr> 
