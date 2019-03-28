@@ -1,10 +1,10 @@
 import React from 'react';
-import Cards from './utils/card';
+import MealList from './mealList';
 
 const CategoryView = (props) => {
     const title = props.match.params.title;
     const api = `/api/category/${title}`;
     
-    return (<Cards api = {api} />)
+    return <MealList api = {api} />
 }
 export default CategoryView;

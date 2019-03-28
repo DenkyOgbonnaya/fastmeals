@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
-import addToCart from './utils/addToCart';
+import addToCart from '../cart/addToCart';
 
 const ViewMeal = (props) => {
     const[meal, setMeal] = useState({});

@@ -1,15 +1,15 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import MealsView from './mealsView';
-import CategoryView from './categoryView';
-import CartView from './cartView';
+import MealsView from './meals/mealsView';
+import CategoryView from './meals/categoryView';
+import CartView from './cart/cartView';
 import LoginForm from './userAuth/loginForm';
-import AddMeals from './addMeals';
-import Order from './orderView';
-import ViewMeal from './viewMeal';
-import Profile from './profileView';
+import AddMeals from './meals/addMeals';
+import Order from './order/orderView';
+import ViewMeal from './meals/viewMeal';
+import OrderList from './order/orderList';
 import SignupForm from './userAuth/signupForm';
-import PrivateRoute from './privateRoute'
+import PrivateRoute from './userAuth/privateRoute';
 
 const Container = () => 
     <Switch> 
@@ -18,7 +18,7 @@ const Container = () =>
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/signup' component = {SignupForm} />
         <PrivateRoute exact path = '/addMeals' component = {AddMeals} />
-        <PrivateRoute exact path = '/profile' component = {Profile} />
+        <PrivateRoute exact path = '/orders' component = {OrderList} />
         <PrivateRoute exact path = '/order/:orderId' component = {Order} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />

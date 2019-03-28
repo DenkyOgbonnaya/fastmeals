@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
-import ContactModal from './utils/contactModal';
+import ContactForm from '../order/contactForm';
 import { Table, Button, ButtonGroup} from 'reactstrap';
-import '../styles/cart.css';
+import '../../styles/cart.css';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
@@ -76,7 +76,7 @@ const Cart = (props) => {
     return (
     <div>
         {
-            showContactModal ? <ContactModal cart = {cart}/> : ''
+            showContactModal ? <ContactForm cart = {cart} user = {currentUser}/> : ''
         }
       <Table responsive className ='table' >
         <thead>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
     CardTitle, CardText} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import '../styles/order.css';
+import '../../styles/order.css';
 
 const Order = (props) => {
 const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });

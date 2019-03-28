@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import{Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import '../styles/profile.css';
+import '../../styles/profile.css';
 
 const Profile = () => {
     const[orders, setOrders] = useState([]);

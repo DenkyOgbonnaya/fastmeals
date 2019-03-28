@@ -3,7 +3,7 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import {useGlobal} from 'reactn';
 import Swal from 'sweetalert2';
-import Can from './can';
+import Can from '../utils/can';
 
 const SideNav = () => {
     const[user] = useGlobal('currentUser');
@@ -66,7 +66,7 @@ const SideNav = () => {
                     <div>
                 
                     <NavItem> 
-                        <NavLink to= '/profile' tag= {RRNavLink} className = 'navlink' > My Orders </NavLink>
+                        <NavLink to= '/orders' tag= {RRNavLink} className = 'navlink' > My Orders </NavLink>
                     </NavItem>
                     <Can 
                     role = {user.isAdmin}

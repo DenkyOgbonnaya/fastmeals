@@ -23,7 +23,7 @@ const logoutUser = () => {
         <Container> 
           <Row> 
           <Col xs = '7' md='10'> </Col>
-            <Col xs = '5' md='2'> { user ? <div><Link to = '/profile' className = 'link'>{user.userName}</Link>  <Link to = '/' onClick = {() => logoutUser()} className = 'link'>Logout</Link></div> : 
+            <Col xs = '5' md='2'> { user ? <div><Link to = '/orders' className = 'link'>{user.userName}</Link>  <Link to = '/' onClick = {() => logoutUser()} className = 'link'>Logout</Link></div> : 
             <div><Link to = '/login' className = 'link'>Login</Link>  <Link to = '/signup' className = 'link'>sign Up</Link></div>} </Col>
             <Col xs = '12' md='12'>
               <Row>

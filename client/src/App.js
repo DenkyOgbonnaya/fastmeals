@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
-import NavBar from './components/utils/navBar';
+import NavBar from './components/navs/navBar';
 import Container from './components/container';
-import NavLinks from './components/utils/navLinks';
-import SideNav from './components/utils/sideNav';
+import NavLinks from './components/navs/navLinks';
+import SideNav from './components/navs/sideNav';
 import jwt from 'jsonwebtoken';
 import './App.css';
 

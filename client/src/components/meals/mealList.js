@@ -3,11 +3,11 @@ import {useGlobal} from 'reactn';
 import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
         CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup} from 'reactstrap';
-import filterHof from '../utils/filterHof';
-import UpdateMeal from '../updateMeal';
-import addToCart from '../utils/addToCart';
+import filterHof from './filterHof';
+import UpdateMeal from './updateMeal';
+import addToCart from '../cart/addToCart';
 
-const Cards = (props) => {
+const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
     const[meals, setMeals] = useState([]);
     const[meal, setMeal] = useState({});
@@ -28,7 +28,7 @@ const Cards = (props) => {
         
     }, [props.api]);
     
-    const deleteMeal = id => {
+    const deleteMeal = (id, index) => {
         fetch(`api/meals/${id}`, {
             method: 'DELETE',
             headers: {
@@ -37,7 +37,11 @@ const Cards = (props) => {
         })
         .then(res => {
             if(res.status === 200 ){
-               alert('meal deleted')
+               const mealsCopy = Object.assign([], meals);
+               console.log(index)
+               mealsCopy.splice(index, 0);
+
+               setMeals(mealsCopy);
             }
         })
         .catch(err => console.log(err))
@@ -51,7 +55,7 @@ const Cards = (props) => {
             await addToCart(meal);
             props.history.push('/cart');
         } catch(err) {
-            console.log(err)
+            console.log(err);
         }
     }
     
@@ -61,7 +65,7 @@ const Cards = (props) => {
             
             <Container> 
                 <Row>
-                {meals.filter(filterHof(searchedMeal)).map(meal =>
+                {meals.filter(filterHof(searchedMeal)).map((meal, index) =>
                 <Col  md = '3' key ={meal._id}> 
                     <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
@@ -74,7 +78,7 @@ const Cards = (props) => {
                             <ButtonGroup >
                             <Button onClick= {() => pushToCart(meal)}  >Buy</Button>
                             {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal)} > Update </Button> : null} 
-                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id)}  > Delete </Button> : null}
+                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id, index)}  > Delete </Button> : null}
                             </ButtonGroup>
                         </CardBody>
                     </Card>
@@ -86,4 +90,4 @@ const Cards = (props) => {
         </div>
     )
 }
-export default withRouter(Cards);
+export default withRouter(MealList);

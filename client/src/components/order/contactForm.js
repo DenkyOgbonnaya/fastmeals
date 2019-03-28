@@ -1,9 +1,10 @@
 import React,{useState} from 'react';
 import {useGlobal} from 'reactn';
 import {withRouter} from 'react-router-dom';
-import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input,
+  Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
-const UserContactForm = (props) => {
+const ContactForm = (props) => {
     const[name, setName] = useState(props.user.userName);
     const[email, setEmail] = useState(props.user.email);
     const[phone, setPhone] = useState('');
@@ -47,6 +48,9 @@ const UserContactForm = (props) => {
       .catch(err => console.log(err))
     }
     return (
+      <Modal> 
+        <ModalHeader> </ModalHeader>
+        <ModalBody> 
         <Form onSubmit ={submitForm}>
         <Row form>
           <Col md={6}>
@@ -93,6 +97,12 @@ const UserContactForm = (props) => {
         </Row>
         <Button > Place Order </Button>
       </Form>
+        </ModalBody>
+        <ModalFooter>
+            <Button color="secondary" onClick={() => setShowContactModal(!showContactModal)}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+        
     )
 }
-export default withRouter(UserContactForm);
+export default withRouter(ContactForm);
