@@ -3,6 +3,7 @@ import {useGlobal} from 'reactn';
 import ContactForm from '../order/contactForm';
 import { Table, Button, ButtonGroup} from 'reactstrap';
 import cartApi from './cart_api';
+import cartHelper from './cart_helper';
 import '../../styles/cart.css';
 
 const Cart = (props) => {
@@ -14,10 +15,7 @@ const Cart = (props) => {
       cartApi.getCart()
       .then(cart => setCart(cart));
   }, []);
-  const getTotalPrice = () => {
-      const totalPrice = cart.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 )
-      return totalPrice;
-  }
+  
   const removeFromCart = (mealId) =>{
       const cartId = localStorage.cartId;
       setCart(cart.filter(meal => meal.mealId !== mealId ));
@@ -32,10 +30,20 @@ const Cart = (props) => {
     }
 
     const updateQuantity = (mealIndex, meal, action) => {
-        action === 'inc' ? meal.quantity++
-         :meal.quantity--
-
-        cartApi.updateQuantity(meal.quantity, meal.mealId)
+        if(action === 'inc'){
+            const updatedCart = cartHelper.increaseQuantity(meal.mealId, cart)
+            setCart(updatedCart);
+            const quantity = updatedCart[mealIndex].quantity
+            cartApi.updateQuantity(quantity, meal.mealId)
+            
+        }else{
+            const updatedCart = cartHelper.decreaseQuantity(meal.mealId, cart)
+            setCart(updatedCart);
+            const quantity = updatedCart[mealIndex].quantity
+            cartApi.updateQuantity(quantity, meal.mealId)
+        }
+         
+        
     }
 
     if(cart.length === 0)
@@ -63,7 +71,7 @@ const Cart = (props) => {
                         <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/> {meal.name} </td>
                         <td>{meal.price}</td>
                         <td>{meal.quantity}</td>
-                        <td>{meal.subTotal}</td>
+                        <td>{meal.price*meal.quantity}</td>
                         <td>
                         <ButtonGroup className = "btnGrp">
                             <Button onClick = {() =>  updateQuantity(index, meal, 'inc') } className = 'actions'>+</Button> 
@@ -75,7 +83,7 @@ const Cart = (props) => {
             }
         </tbody>
       </Table>
-      <div>Total: N{getTotalPrice()}   </div>
+      <div>Total: N{cartHelper.getTotalPrice(cart)}   </div>
       <Button onClick = { () => CheckOutOrder(cart) } className = 'checkout'> CheckOut </Button> {' '}
       <Button onClick ={() => props.history.push('/')} className = 'continue'> Continue shopping </Button>
       </div>
