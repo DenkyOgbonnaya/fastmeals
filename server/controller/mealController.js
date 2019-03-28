@@ -26,7 +26,7 @@ addMeal(req, res){
         .then(cat => {
             cat.meals.push(meal._id)
             cat.save();
-            res.status(201).send({message: 'meal added'})
+            res.status(201).send({message: 'meal added', meal:meal})
         })
     })
     .catch(err => res.status(500).send(err));

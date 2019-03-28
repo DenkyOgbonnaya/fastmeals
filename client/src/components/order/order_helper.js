@@ -1,6 +1,6 @@
 const orderHelper = {
     getTotalPrice(order){
-        const totalPrice = order.meals.map(meal => meal.subTotal).reduce( (acc, val) =>  acc + val, 0 );
+        const totalPrice = order.meals.map(meal => meal.price*meal.quantity).reduce( (acc, val) =>  acc + val, 0 );
         return totalPrice
     }
 }

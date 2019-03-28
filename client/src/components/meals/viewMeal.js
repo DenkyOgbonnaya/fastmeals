@@ -1,21 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
 import addToCart from '../cart/addToCart';
+import mealsApi from './meals_api';
 
 const ViewMeal = (props) => {
     const[meal, setMeal] = useState({});
 
     useEffect( () => {
         const mealId = props.match.params.mealId;
-        fetch(`/api/meals/${mealId}`)
-        .then(res => {
-            if(res.status === 200 )
-                return res.json();
-        })
-        .then(data => {
-            setMeal(data.meal)
-        })
-        .catch(err => console.log(err))
+        mealsApi.getMeal(mealId)
+        .then(data => setMeal(data.meal))
     }, [])
     async function pushToCart(meal){
         try{

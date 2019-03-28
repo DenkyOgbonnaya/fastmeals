@@ -42,7 +42,7 @@ if(order)
                          <Link to = {`/meal/${meal.mealId}`} > {meal.name} </Link> <br />
                          {`${meal.price} x ${meal.quantity}`}
                          </td>
-                        <td>{meal.subTotal}</td>
+                        <td>{meal.price*meal.quantity}</td>
                         <td>{meal.status}</td>
                     </tr> 
                 )

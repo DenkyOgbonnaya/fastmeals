@@ -2,54 +2,30 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import { 
      Modal, ModalHeader, ModalBody, ModalFooter,
-    Col, Row, Button, Form, FormGroup, Label, Input
- } from 'reactstrap';
+    Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+    import mealsApi from './meals_api';
 
-const UpdateMeal = ({meal}) => {
-    const[name, setName] = useState(meal.name);
-    const[price, setPrice] = useState(meal.price);
-    const[quantity, setQuantity] = useState(meal.quantity);
-    const[category, setCategory] = useState(meal.category);
-    const[description, setDescription] = useState(meal.description);
+const UpdateMeal = (props) => {
+    const[name, setName] = useState(props.meal.name);
+    const[price, setPrice] = useState(props.meal.price);
+    const[quantity, setQuantity] = useState(props.meal.quantity);
+    const[category, setCategory] = useState(props.meal.category);
+    const[description, setDescription] = useState(props.meal.description);
     const[image, setImage] = useState(null);
-    const[categories, setCategories] = useState([]);
+    const[categories] = useGlobal('categories');
+    const[meals, setMeals] = useGlobal('meals');
 
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
 
-    useEffect(() => {
-      fetch('api/categories')
-      .then(res => {
-          if(res.status === 200) return res.json()
-      })
-      .then(data => {
-          setCategories(data.categories)
-      })
-      .catch(err => console.log(err))
-  }, [ ])
-  
     const submitForm = (e) => {
       e.preventDefault();
+      const data = {
+        name, price, quantity, category, description
+      }
+      setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, data) : meal ));
 
-      fetch(`api/meals/${meal._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.userToken}`
-        },
-        body: JSON.stringify({
-          name,
-          price,
-          quantity,
-          category,
-          description
-        })
-      })
-      .then(res => {
-        if(res.status === 200){
-          alert('meal added')
-        }
-      })
-      .catch(err => console.log(err))
+      mealsApi.updateMeal(props.meal._id, data);
+
     }
     return (
         <div> 

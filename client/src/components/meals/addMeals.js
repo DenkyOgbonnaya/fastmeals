@@ -1,46 +1,30 @@
 import React, {useState, useEffect} from 'react';
+import {useGlobal} from 'reactn';
 import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import mealApi from './meals_api';
 
-const AddMeals = () => {
+const AddMeals = (props) => {
     const[name, setName] = useState('');
     const[price, setPrice] = useState('');
     const[quantity, setQuantity] = useState('');
     const[category, setCategory] = useState('');
     const[description, setDescription] = useState('');
-    const[image, setImage] = useState(null);
+    const[image, setImage] = useState('');
 
-    const[categories, setCategories] = useState([]);
+    const[categories] = useGlobal('categories');
+    const[meals, setMeals] = useGlobal('meals');
 
-    useEffect(() => {
-        fetch('api/categories')
-        .then(res => {
-            if(res.status === 200) return res.json()
-        })
-        .then(data => {
-            setCategories(data.categories)
-        })
-        .catch(err => console.log(err))
-    }, [ ])
-
-    
     const submitForm = e => {
         e.preventDefault();
         const addMealForm = document.forms.addMealForm;
         const data = new FormData(addMealForm);
-        
-        fetch('api/meals', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${localStorage.userToken}`
-            },
-            body: data
-        })
-        .then(res => {
-            if(res.status === 201)
-            alert('meal added')
-        })
-        .catch(err => console.log(err))
+
+        mealApi.createMeal(data)
+        .then(data => {
+          setMeals(meals.concat(data.meal));
+          props.history.push(`category/${data.meal.category}`);
+        });
+          
     }
     return (
         <div> 

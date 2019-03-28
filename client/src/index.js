@@ -11,6 +11,7 @@ setGlobal({
     currentUser : {},
     isAuthUser: false,
     cart: [],
+    meals: [],
     searchedMeal: '',
     mealId: '',
     categories: [],

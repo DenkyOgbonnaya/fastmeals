@@ -6,45 +6,24 @@ import { Card, CardImg, CardText, CardBody,
 import filterHof from './filterHof';
 import UpdateMeal from './updateMeal';
 import addToCart from '../cart/addToCart';
+import mealsApi from './meals_api';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
-    const[meals, setMeals] = useState([]);
+    const[meals, setMeals] = useGlobal('meals');
     const[meal, setMeal] = useState({});
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
-        fetch(props.api)
-        .then(res => {
-            if(res.status === 200)
-            return res.json()
-        })
-        .then(data => {
-            setMeals(data.meals)
-        })
-        .catch(err => console.log(err))
-        
+        mealsApi.getMeals(props.api)
+        .then(meals => setMeals(meals))
     }, [props.api]);
     
-    const deleteMeal = (id, index) => {
-        fetch(`api/meals/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${localStorage.userToken}`
-            }
-        })
-        .then(res => {
-            if(res.status === 200 ){
-               const mealsCopy = Object.assign([], meals);
-               console.log(index)
-               mealsCopy.splice(index, 0);
-
-               setMeals(mealsCopy);
-            }
-        })
-        .catch(err => console.log(err))
+    const deleteMeal = (id) => {
+        setMeals(meals.filter(meal => meal._id !== id));
+        mealsApi.deleteMeal(id)
     }
     const updateMeal = (meal) => {
         setMeal(meal);
@@ -78,7 +57,7 @@ const MealList = (props) => {
                             <ButtonGroup >
                             <Button onClick= {() => pushToCart(meal)}  >Buy</Button>
                             {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal)} > Update </Button> : null} 
-                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id, index)}  > Delete </Button> : null}
+                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id)}  > Delete </Button> : null}
                             </ButtonGroup>
                         </CardBody>
                     </Card>
