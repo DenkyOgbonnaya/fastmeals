@@ -2,8 +2,8 @@ import React from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import {useGlobal} from 'reactn';
-import Swal from 'sweetalert2';
 import Can from '../utils/can';
+import mealsApi from '../meals/meals_api';
 
 const SideNav = () => {
     const[user] = useGlobal('currentUser');
@@ -12,47 +12,10 @@ const SideNav = () => {
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
 
     const addCategory = () => {
-        Swal.fire({
-            title: 'Add a new meal category',
-            input: 'text',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Add',
-            showLoaderOnConfirm: true,
-            preConfirm: title => {
-              return fetch(`api/categories`, {
-                  method: 'POST',
-                  headers: {
-                      'Content-type': 'application/json',
-                      'Authorization': `Bearer ${localStorage.userToken}`
-                    },
-                    body: JSON.stringify({title})
-              })
-                .then(response => {
-                  if (!response.ok) {
-                    throw new Error(response.statusText)
-                  }
-                  return response.json()
-                })
-                .catch(error => {
-                  Swal.showValidationMessage(
-                    `Request failed: ${error}`
-                  )
-                })
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-          }).then((result) => {
-            if (result.value) {
-              Swal.fire({
-                title: `${result.value.message}`
-              })
-              const categCopy = Object.assign([], categories);
-              categCopy.push(result.value.category);
-              setCategories(categCopy);
-            }
-          })
+        mealsApi.addCategory()
+        .then(category => {
+            setCategories(categories.concat(category));
+        })
     }
 
     return(
