@@ -22,14 +22,16 @@ const SideNav = () => {
         <div className= 'sideNav'> 
             <Nav vertical className = "nav" >
                 <NavItem> 
-                    <NavLink to= '/cart' tag= {RRNavLink} className = 'menuLinks'> My cart </NavLink>
+                    <NavLink to= '/cart' tag= {RRNavLink} className = 'menuLinks'>
+                    <img src = "/images/icons/cart_ic.png" alt="delete" /> My cart </NavLink>
                 </NavItem>
                 {
                     user ?
                     <div>
                 
                     <NavItem className = "nav"> 
-                        <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' > My Orders </NavLink>
+                        <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
+                        <img src = "/images/icons/order_ic.png" alt="delete" /> My Orders </NavLink>
                     </NavItem>
                     <Can 
                     role = {user.isAdmin}
@@ -37,16 +39,20 @@ const SideNav = () => {
                     yes = {() => 
                         <div> 
                             <NavItem className = "nav"> 
-                                <NavLink to= '/addMeals' tag= {RRNavLink} className = 'menuLinks'> Add meals </NavLink>
+                                <NavLink to= '/addMeals' tag= {RRNavLink} className = 'menuLinks'>
+                                <img src = "/images/icons/add_ic.png" alt="delete" /> Add meals </NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'> Add meal Category</NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'>
+                                <img src = "/images/icons/addcat_ic.png" alt="delete" /> Add meal Category</NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} className = 'menuLinks'> Update meals </NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} className = 'menuLinks'>
+                                <img src = "/images/icons/edit_ic.png" alt="delete" /> Update meals </NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)} className = 'menuLinks' > Delete meals </NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)} className = 'menuLinks' >
+                                <img src = "/images/icons/delete_ic.png" alt="delete" /> Delete meals </NavLink>
                             </NavItem>
                         </div>
                     }
@@ -56,7 +62,8 @@ const SideNav = () => {
                     : null
                 }
                 <NavItem> 
-                    <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>About </NavLink>
+                    <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>
+                    <img src = "/images/icons/about_ic.png" alt="delete" />About </NavLink>
                 </NavItem>
             </Nav>
         </div>

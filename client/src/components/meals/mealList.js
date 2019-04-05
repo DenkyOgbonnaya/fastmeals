@@ -54,11 +54,10 @@ const MealList = (props) => {
                             <CardText> <small className='text-muted'> {meal.description.substring(0, 20)} 
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
-                            <ButtonGroup >
-                            <Button onClick= {() => pushToCart(meal)}  >Buy</Button>
-                            {showUpdateMealsButton ? <Button onClick = {() => updateMeal(meal)} > Update </Button> : null} 
-                            {showDeleteMealsButton ? <Button onClick = {() => deleteMeal(meal._id)}  > Delete </Button> : null}
-                            </ButtonGroup>
+                            <Button onClick= {() => pushToCart(meal)}  >Buy</Button>{" "}
+                            {showUpdateMealsButton ? <img onClick = {() => updateMeal(meal)} src = "/images/icons/edit_ic.png" alt="edit" /> : null} {" "}
+                            {showDeleteMealsButton ? <img onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="delete" /> : null}
+                            
                         </CardBody>
                     </Card>
                     <br />
