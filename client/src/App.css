@@ -50,3 +50,6 @@ width: 100%;
       color: #8bc34a;
       border: solid 1px grey
   }
+  .option{
+      cursor: pointer;
+  }

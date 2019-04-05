@@ -48,15 +48,15 @@ const MealList = (props) => {
                 <Col  md = '3' key ={meal._id}> 
                     <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
-                        <CardBody>
+                        <CardBody >
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>N{meal.price} </CardSubtitle>
                             <CardText> <small className='text-muted'> {meal.description.substring(0, 20)} 
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
                             <Button onClick= {() => pushToCart(meal)}  >Buy</Button>{" "}
-                            {showUpdateMealsButton ? <img onClick = {() => updateMeal(meal)} src = "/images/icons/edit_ic.png" alt="edit" /> : null} {" "}
-                            {showDeleteMealsButton ? <img onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="delete" /> : null}
+                            {showUpdateMealsButton ? <img className= "option" onClick = {() => updateMeal(meal)} src = "/images/icons/edit_ic.png" alt="edit" /> : null} {" "}
+                            {showDeleteMealsButton ? <img className= "option" onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="delete" /> : null}
                             
                         </CardBody>
                     </Card>
