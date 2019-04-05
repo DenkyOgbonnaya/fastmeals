@@ -20,33 +20,33 @@ const SideNav = () => {
 
     return(
         <div className= 'sideNav'> 
-            <Nav vertical >
+            <Nav vertical className = "nav" >
                 <NavItem> 
-                    <NavLink to= '/cart' tag= {RRNavLink} className = 'navlink'> My cart </NavLink>
+                    <NavLink to= '/cart' tag= {RRNavLink} className = 'menuLinks'> My cart </NavLink>
                 </NavItem>
                 {
                     user ?
                     <div>
                 
-                    <NavItem> 
-                        <NavLink to= '/orders' tag= {RRNavLink} className = 'navlink' > My Orders </NavLink>
+                    <NavItem className = "nav"> 
+                        <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' > My Orders </NavLink>
                     </NavItem>
                     <Can 
                     role = {user.isAdmin}
                     perform = "admin-board:visit"
                     yes = {() => 
                         <div> 
-                            <NavItem> 
-                                <NavLink to= '/addMeals' tag= {RRNavLink} className = 'navlink'> Add meals </NavLink>
+                            <NavItem className = "nav"> 
+                                <NavLink to= '/addMeals' tag= {RRNavLink} className = 'menuLinks'> Add meals </NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'navlink'> Add meal Category</NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'> Add meal Category</NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} className = 'navlink'> Update meals </NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowUpdatMealsButton(true)} className = 'menuLinks'> Update meals </NavLink>
                             </NavItem>
                             <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)} className = 'navlink' > Delete meals </NavLink>
+                                <NavLink to= '/' tag= {RRNavLink} onClick = {() => setShowDeleteMealsButton(true)} className = 'menuLinks' > Delete meals </NavLink>
                             </NavItem>
                         </div>
                     }
@@ -56,7 +56,7 @@ const SideNav = () => {
                     : null
                 }
                 <NavItem> 
-                    <NavLink to= '/about' tag= {RRNavLink} className = 'navlink'>About </NavLink>
+                    <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>About </NavLink>
                 </NavItem>
             </Nav>
         </div>

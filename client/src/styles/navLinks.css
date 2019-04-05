@@ -12,5 +12,15 @@ ul > li > :hover {
 }
 .navlink {
     color: grey;
-    font-size: 18px;
+    font-size: 13px;
+    border: 1px solid grey;
+    border-radius: 20px;
+    margin-right: 5px;
+}
+.menuLinks {
+    color: grey;
+    font-size: 16px;
+}
+.nav :hover {
+    color: #8bc34a;
 }
