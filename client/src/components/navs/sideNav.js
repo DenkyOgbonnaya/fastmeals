@@ -14,6 +14,7 @@ const SideNav = () => {
     const addCategory = () => {
         mealsApi.addCategory()
         .then(category => {
+            if(category)
             setCategories(categories.concat(category));
         })
     }

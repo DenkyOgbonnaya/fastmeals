@@ -2,19 +2,14 @@ import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import {NavLink } from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
-import '../../styles/navLinks.css'
+import '../../styles/navLinks.css';
+import mealApi from '../meals/meals_api';
 
 const NavLinks = () => {
     const[categories, setCategories] = useGlobal('categories');
     useEffect(() => {
-        fetch('api/categories')
-        .then(res => {
-            if(res.status === 200) return res.json()
-        })
-        .then(data => {
-            setCategories(data.categories)
-        })
-        .catch(err => console.log(err))
+        mealApi.getCategories()
+        .then(data => setCategories(data.categories))
     }, [ ])
 
     return(

@@ -62,9 +62,6 @@ const mealApi = {
       .then(res => {
           if(res.status === 200) return res.json()
       })
-      .then(data => {
-          return data.categories;
-      })
       .catch(err => console.log(err))
     },
     getMeal(mealId){
