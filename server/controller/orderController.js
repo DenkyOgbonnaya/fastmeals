@@ -60,6 +60,11 @@ const orderController = {
         res.status(500).send({message: 'order not found'})
     })
     .catch(err => res.status(500).send(err))
+    },
+    deleteOrder(req, res){
+        Order.findByIdAndRemove(req.params.orderId)
+        .then(() => res.status(200).send({message: 'Order deleted'}))
+        .catch(err => res.status(500).send(err))
     }
 
 }

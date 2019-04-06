@@ -13,6 +13,10 @@ const OrederList = () => {
         orderApi.getOrders(user._id)
         .then(orders => setOrders(orders))
     }, []);
+    const deleteOrder = id => {
+        setOrders(orders.filter(order => order._id !== id));
+        orderApi.deleteOrder(id);
+    }
     return(
         <div> 
             <h3> Profile </h3>
@@ -29,13 +33,18 @@ const OrederList = () => {
                 </tbody>
             </Table>
             <h3> Your Orders </h3>
+            {orders ?  
             <div className='orders'>
             {orders.map(order => 
             <div key= {order._id}>#:  
-            <Link to = {`/order/${order._id}`} style={{color: 'grey'}}> {order._id} </Link> <br />
+            <Link to = {`/order/${order._id}`} style={{color: 'grey'}}> {order._id} </Link> 
+            <img className= "delete" src = "/images/icons/delete_ic.png" alt="edit" 
+            onClick = {() => deleteOrder(order._id)} /> <br />
             </div>
             )}
-            </div>
+            </div> :
+            <div> You have no ordered meals </div>
+            }
         </div>
 
     )

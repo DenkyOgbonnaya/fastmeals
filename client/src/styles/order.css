@@ -3,3 +3,8 @@
     text-align: center;
     margin: auto
 }
+.delete {
+    float: right;
+    padding: 1opx;
+    cursor: pointer;
+}

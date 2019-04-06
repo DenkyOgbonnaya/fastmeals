@@ -56,7 +56,7 @@ const MealList = (props) => {
                              </CardText>
                             <Button onClick= {() => pushToCart(meal)}  >Buy</Button>{" "}
                             {showUpdateMealsButton ? <img className= "option" onClick = {() => updateMeal(meal)} src = "/images/icons/edit_ic.png" alt="edit" /> : null} {" "}
-                            {showDeleteMealsButton ? <img className= "option" onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="delete" /> : null}
+                            {showDeleteMealsButton ? <img className= "option" onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="edit" />  : null}
                             
                         </CardBody>
                     </Card>

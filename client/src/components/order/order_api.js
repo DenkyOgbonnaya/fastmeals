@@ -39,6 +39,20 @@ const orderApi = {
             return data.order;
         })
         .catch(err => console.log(err))
+    },
+    deleteOrder(orderId){
+        fetch(`/api/order/${orderId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.userToken}`
+            },
+        })
+        .then(res => {
+            if(res.status === 200)
+           return 'order deleted'
+        })
+        .catch(err => console.log(err))
     }
 }
 
