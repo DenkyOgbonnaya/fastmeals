@@ -8,3 +8,10 @@
     padding: 1opx;
     cursor: pointer;
 }
+#orderButton {
+    background: #8bc34a;
+}
+.modalHeader {
+    background: #8bc34a;
+    color: white
+}

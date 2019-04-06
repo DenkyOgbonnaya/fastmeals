@@ -3,7 +3,8 @@ import {useGlobal} from 'reactn';
 import {withRouter} from 'react-router-dom';
 import { Col, Row, Button, Form, FormGroup, Label, Input,
   Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import orderApi from './order_api'
+import orderApi from './order_api';
+import '../../styles/order.css';
 
 const ContactForm = (props) => {
     const[name, setName] = useState(props.user.userName);
@@ -37,7 +38,7 @@ const ContactForm = (props) => {
     }
     return (
       <Modal isOpen={showContactModal}> 
-        <ModalHeader>Delivery Address </ModalHeader>
+        <ModalHeader className = 'modalHeader'>Delivery Address </ModalHeader>
         <ModalBody> 
         <Form onSubmit ={submitForm}>
         <Row form>
@@ -61,7 +62,7 @@ const ContactForm = (props) => {
           <Input type="text" name="phone"  placeholder="enter phone" value ={phone}
           onChange = {e => setPhone(e.target.value)} />
         </FormGroup>
-        <div>Delivery Address </div>
+        <div>Deliver To: </div>
         <FormGroup>
           <Label for="street">street</Label>
           <Input type="text" name="street"  placeholder="123 Main Street" value = {street}
@@ -83,11 +84,11 @@ const ContactForm = (props) => {
             </FormGroup>
           </Col>
         </Row>
-        <Button > Place Order </Button>
+        <Button id = 'orderButton' > Place Order </Button>
       </Form>
         </ModalBody>
         <ModalFooter>
-            <Button color="secondary" onClick={() => setShowContactModal(!showContactModal)}>Cancel</Button>
+            <Button color="warning" onClick={() => setShowContactModal(!showContactModal)}>Cancel</Button>
         </ModalFooter>
       </Modal>
         
