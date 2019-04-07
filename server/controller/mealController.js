@@ -96,9 +96,21 @@ getMeal(req, res){
  * @route '/meals:meals'
  */
 getMeals(req, res){
+    const page = Number(req.query.page);
+    const limit = 2;
     Meals.find({})
+    .skip((page * limit) - limit)
+    .limit(limit)
     .then(meals => {
-        res.status(200).send({meals});
+        Meals.countDocuments()
+        .then(count => {
+            res.status(200).send({
+                meals: meals,
+                currentPage: page,
+                pages: Math.ceil(count/limit)
+            });
+        })
+        
     })
     .catch(err => res.status(500).send(err))
 },

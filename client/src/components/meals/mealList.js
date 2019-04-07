@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
-        CardTitle, CardSubtitle, Button, Container, Row, Col, ButtonGroup} from 'reactstrap';
+        CardTitle, CardSubtitle, Button, Container, Row, Col,
+        Pagination, PaginationItem, PaginationLink, } from 'reactstrap';
 import filterHof from './filterHof';
 import UpdateMeal from './updateMeal';
 import addToCart from '../cart/addToCart';
@@ -12,13 +13,19 @@ const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
     const[meals, setMeals] = useGlobal('meals');
     const[meal, setMeal] = useState({});
+    const[currentPage, setCurrentPage] = useState(1);
+    const[pages, setPages] = useState(1);
     const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
     const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
         mealsApi.getMeals(props.api)
-        .then(meals => setMeals(meals))
+        .then(data => {
+            setMeals(data.meals);
+            setPages(data.pages);
+            setCurrentPage(data.currentPage);
+        })
     }, [props.api]);
     
     const deleteMeal = (id) => {
@@ -36,6 +43,37 @@ const MealList = (props) => {
         } catch(err) {
             console.log(err);
         }
+    }
+    const displayPageNums = () => {
+        const pageNumbers = [];
+
+        for(let number = 1; number <= pages; number++){
+            pageNumbers.push(number);
+        }
+        return (
+            <Pagination>
+                <PaginationItem> 
+                    <PaginationLink previous onClick = { () => {if(currentPage > 1) handlePageChange(currentPage -1)}} />
+                </PaginationItem>
+                {pageNumbers.map(number =>
+                <PaginationItem key = {number}>
+                    <PaginationLink  
+                    onClick = { ()=> handlePageChange(number)}>   {number}  
+                    </PaginationLink>
+                </PaginationItem>
+                )}
+                <PaginationItem> 
+                    <PaginationLink next onClick = { () => {if(currentPage < pages) handlePageChange(currentPage +1)}} />
+                </PaginationItem>
+            </Pagination>
+        )
+    }
+    const handlePageChange = (pageNum) => {
+        mealsApi.getMeals(`api/meals?page=${pageNum}`)
+        .then(data => {
+            setMeals(data.meals);
+            setCurrentPage(data.currentPage);
+        })
     }
     
     return(
@@ -65,6 +103,7 @@ const MealList = (props) => {
                 )} 
             </Row>
             </Container>
+            {displayPageNums()}
         </div>
     )
 }

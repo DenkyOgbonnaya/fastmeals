@@ -22,9 +22,6 @@ const mealApi = {
             if(res.status === 200)
             return res.json()
         })
-        .then(data => {
-            return data.meals;
-        })
         .catch(err => console.log(err)) 
     },
     deleteMeal(mealId){
