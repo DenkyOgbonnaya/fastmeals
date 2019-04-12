@@ -1,0 +1,25 @@
+body {
+    height: 100%;
+}
+.loginForm {
+    display: table;
+    height: 100%;
+    margin:0 auto;
+    border: 1px solid grey
+}
+.form {
+    display: table-cell;
+    vertical-align: middle;
+   padding: 5px;
+   width: 600px
+}
+#google {
+    text-align: center;
+    margin: 0 auto;
+}
+#google img {
+    cursor: pointer;
+}
+#google :hover {
+    background: firebrick
+}

@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import {useGlobal} from 'reactn';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input,
-Container, Row, Col } from 'reactstrap';
+import { Button, FormGroup ,Form, Input } from 'reactstrap';
 import jwt from 'jsonwebtoken';
+import '../../styles/login.css';
 
 const LoginForm = (props) => {
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
     const[error, setError] = useState('');
-    const[isModalOPen, setIsModalOpen] = useState(true)
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
 
     const handleSubmit = e => {
@@ -35,38 +34,38 @@ const LoginForm = (props) => {
             localStorage.userToken = data.token;
             const decoded = jwt.decode(data.token);
             setCurrentUser(decoded.currentUser);
-
-            setIsModalOpen(!isModalOPen);
             props.history.push(from);
         })
         .catch(err => console.log(err))
     }
-    const googleLogin = () => {
-        window.location.href = 'http://localhost:8080/auth/google';
-        setIsModalOpen(!isModalOPen);
-    }
+   
     return(
-        <div>
-        <Modal isOpen={isModalOPen} >
-          <ModalHeader toggle = {() => setIsModalOpen(!isModalOPen)} >Login</ModalHeader>
-          <ModalBody>
+        <div className = 'loginForm'>
             <div className= 'errorMessage' style = {{color: 'red'}}> {error} </div>
-            <Form onSubmit = {handleSubmit} > 
-                <Input name='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
-                <Input type = 'password' name='password' placeholder = 'Enter password' 
-                onChange={e => setPassword(e.target.value)} />
-                <br />
-                <Button> login </Button> 
-                
-            </Form>
-            <br />
-            <div>OR </div>
-            <br />
-            <div>Login with Google </div>
-            <Button onClick = { () => {googleLogin()}}> Google </Button>
-          </ModalBody>
-        </Modal>
-      </div>
+                <div className = 'form'>
+                    <h5>Login to place order </h5> <br />
+                    <Form onSubmit = {handleSubmit}  > 
+                        <FormGroup>
+                            <label for email> Email </label>
+                            <Input name='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <label for ='password'>Password </label>
+                            <Input type = 'password' name='password' placeholder = 'Enter password' 
+                            onChange={e => setPassword(e.target.value)} />
+                        </FormGroup> <br />
+                        <Button> login </Button> <br />
+                        <div id = 'google'>
+                        OR 
+                        <br />
+                        Login with Google 
+                        <br />
+                        <img src= '/images/icons/google.png' onClick = { () => window.location.href = 'http://localhost:8080/auth/google'} alt= 'google login'  />
+                        </div>
+            
+                    </Form>
+                </div>
+        </div>
         
     )
 }
