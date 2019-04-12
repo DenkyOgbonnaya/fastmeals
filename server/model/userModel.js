@@ -14,15 +14,13 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
     },
     isAdmin: {
         type: Number,
         default: 0,
     },
-    isBanned: {
-        type: Number,
-        default: 0,
+    oauthId: {
+        type: String,
     }
 },
 {timestamps: true})

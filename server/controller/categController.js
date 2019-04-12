@@ -26,11 +26,22 @@ categoryController = {
  * @route '/:category/category'
  */
 getMealsByCat(req, res){
+    const page = req.query.page;
+    const limit = 2;
     const title = req.params.title;
     Category.findOne({title})
     .populate('meals')
     .then(category => {
-        res.status(200).send({meals: category.meals})
+        const meals = category.meals;
+        const from =  (page*limit)-limit;
+        const currentMeals = meals.slice(from, limit);
+        console.log(from, currentMeals)
+        consol.log('meal',meals)
+        res.status(200).send({
+            meals: currentMeals,
+            currentPage: page,
+            pages: meals.length-1
+        })
     })
     .catch(err => res.status(500).send(err))
 },

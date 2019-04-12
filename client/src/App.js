@@ -5,9 +5,11 @@ import Container from './components/container';
 import NavLinks from './components/navs/navLinks';
 import SideNav from './components/navs/sideNav';
 import jwt from 'jsonwebtoken';
+import queryString from 'query-string';
+import {withRouter} from 'react-router-dom';
 import './App.css';
 
-const App = () => {
+const App = props => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
     const[cart, setCart] = useGlobal('cart');
@@ -15,6 +17,12 @@ const App = () => {
     useEffect( () => {
         const cartId = localStorage.cartId || '';
         const userToken = localStorage.userToken || '';
+        const query = queryString.parse(props.location.search);
+
+        if(query.token){
+            localStorage.userToken = query.token;
+            props.history.push('/')
+        }
 
         if(userToken){
             const decoded = jwt.decode(userToken);
@@ -63,4 +71,4 @@ const App = () => {
         </div>
     )
 }
-export default App;
+export default withRouter(App);

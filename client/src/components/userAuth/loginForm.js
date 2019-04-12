@@ -41,6 +41,10 @@ const LoginForm = (props) => {
         })
         .catch(err => console.log(err))
     }
+    const googleLogin = () => {
+        window.location.href = 'http://localhost:8080/auth/google';
+        setIsModalOpen(!isModalOPen);
+    }
     return(
         <div>
         <Modal isOpen={isModalOPen} >
@@ -53,8 +57,13 @@ const LoginForm = (props) => {
                 onChange={e => setPassword(e.target.value)} />
                 <br />
                 <Button> login </Button> 
+                
             </Form>
-    
+            <br />
+            <div>OR </div>
+            <br />
+            <div>Login with Google </div>
+            <Button onClick = { () => {googleLogin()}}> Google </Button>
           </ModalBody>
         </Modal>
       </div>

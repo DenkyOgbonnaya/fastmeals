@@ -20,7 +20,7 @@ const MealList = (props) => {
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
-        mealsApi.getMeals(props.api)
+        mealsApi.getMeals(`${props.api}?page=1`)
         .then(data => {
             setMeals(data.meals);
             setPages(data.pages);
@@ -50,6 +50,7 @@ const MealList = (props) => {
         for(let number = 1; number <= pages; number++){
             pageNumbers.push(number);
         }
+        if(pages > 1)
         return (
             <Pagination>
                 <PaginationItem> 
@@ -69,7 +70,7 @@ const MealList = (props) => {
         )
     }
     const handlePageChange = (pageNum) => {
-        mealsApi.getMeals(`api/meals?page=${pageNum}`)
+        mealsApi.getMeals(`${props.api}?page=${pageNum}`)
         .then(data => {
             setMeals(data.meals);
             setCurrentPage(data.currentPage);
