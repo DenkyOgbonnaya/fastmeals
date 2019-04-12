@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import {useGlobal} from 'reactn';
 import { Button, FormGroup ,Form, Input } from 'reactstrap';
 import jwt from 'jsonwebtoken';
-import '../../styles/login.css';
+import '../../styles/authForm.css';
 
 const LoginForm = (props) => {
     const[email, setEmail] = useState('');
@@ -40,21 +41,22 @@ const LoginForm = (props) => {
     }
    
     return(
-        <div className = 'loginForm'>
-            <div className= 'errorMessage' style = {{color: 'red'}}> {error} </div>
+        <div className = 'authForm'>
+            
                 <div className = 'form'>
                     <h5>Login to place order </h5> <br />
+                    <div id= 'error' > {error} </div>
                     <Form onSubmit = {handleSubmit}  > 
                         <FormGroup>
                             <label for email> Email </label>
-                            <Input name='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
+                            <Input name='email' required placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
                         </FormGroup>
                         <FormGroup>
                             <label for ='password'>Password </label>
-                            <Input type = 'password' name='password' placeholder = 'Enter password' 
+                            <Input type = 'password' required name='password' placeholder = 'Enter password' 
                             onChange={e => setPassword(e.target.value)} />
                         </FormGroup> <br />
-                        <Button> login </Button> <br />
+                        <Button> login </Button> {" "} <Link to= '/signup'> Already have an account </Link> <br />
                         <div id = 'google'>
                         OR 
                         <br />

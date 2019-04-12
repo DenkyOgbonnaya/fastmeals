@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {useGlobal} from 'reactn';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+import {Link} from 'react-router-dom';
+import { Button, FormGroup, Form, Input } from 'reactstrap';
 import jwt from 'jsonwebtoken';
+import '../../styles/authForm.css';
+
 
 const SignupForm = (props) => {
     const[userName, setUserName] = useState('');
     const[email, setEmail] = useState('');
     const[error, setError] = useState('');
     const[password, setPassword] = useState('');
-    const[isModalOPen, setIsModalOpen] = useState(true)
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
 
     const handleSubmit = e => {
@@ -35,28 +37,39 @@ const SignupForm = (props) => {
             localStorage.userToken = data.token;
             const decoded = jwt.decode(data.token);
             setCurrentUser(decoded.currentUser);
-
-            setIsModalOpen(!isModalOPen);
             props.history.push('/');
         })
         .catch(err => console.log(err))
     }
     return(
-        <div>
-        <Modal isOpen={isModalOPen} >
-          <ModalHeader toggle = {() => setIsModalOpen(!isModalOPen)} >Create Account</ModalHeader>
-          <ModalBody>
-            <div> {error} </div>
-            <Form onSubmit = {handleSubmit} > 
-                <Input name='userName' placeholder = 'Enter userName' onChange={e => setUserName(e.target.value)} /> 
-                <Input name='email' type='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
-                <Input type = 'password' name='password' placeholder = 'Enter password' onChange={e => setPassword(e.target.value)} />
-                <br />
-                <Button> Signup </Button> 
-            </Form>
+        <div className = 'authForm'>
+            <div className = 'form'>
+            <h5> Sign up to Fastmeals </h5>
+            <div id= 'error' > {error} </div>
+                <Form onSubmit = {handleSubmit} >
+                    <FormGroup>
+                        <label for ='userName'>User Name </label> 
+                        <Input name='userName' required placeholder = 'Enter userName' onChange={e => setUserName(e.target.value)} /> 
+                    </FormGroup>
+                    <FormGroup>
+                        <label for ='email'> Email </label>
+                        <Input name='email' required type='email' placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
+                    </FormGroup>
+                    <FormGroup>
+                        <label for ='password'> Password </label>
+                        <Input type = 'password' required name='password' placeholder = 'Enter password' onChange={e => setPassword(e.target.value)} />
+                    </FormGroup >
+                    <Button> Signup </Button> {" "} <Link to= '/login'> Already have an account? </Link>
+                </Form>
+                <div id = 'google'>
+                        OR 
+                        <br />
+                        Sign Up with Google 
+                        <br />
+                        <img src= '/images/icons/google.png' onClick = { () => window.location.href = 'http://localhost:8080/auth/google'} alt= 'google login'  />
+                        </div>
+            </div>
     
-          </ModalBody>
-        </Modal>
       </div>
         
     )

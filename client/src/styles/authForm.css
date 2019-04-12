@@ -1,7 +1,7 @@
 body {
     height: 100%;
 }
-.loginForm {
+.authForm {
     display: table;
     height: 100%;
     margin:0 auto;
@@ -22,4 +22,7 @@ body {
 }
 #google :hover {
     background: firebrick
+}
+#error {
+    color: red;
 }
