@@ -34,13 +34,13 @@ getMealsByCat(req, res){
     .then(category => {
         const meals = category.meals;
         const from =  (page*limit)-limit;
-        const currentMeals = meals.slice(from, limit);
-        console.log(from, currentMeals)
-        consol.log('meal',meals)
+        const to = limit + from;
+        const currentMeals = meals.slice(from, to);
+
         res.status(200).send({
             meals: currentMeals,
             currentPage: page,
-            pages: meals.length-1
+            pages: Math.ceil(meals.length/limit)
         })
     })
     .catch(err => res.status(500).send(err))
