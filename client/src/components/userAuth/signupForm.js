@@ -15,7 +15,7 @@ const SignupForm = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-
+        
         fetch('api/users/signup', {
             method: 'POST',
             headers: {

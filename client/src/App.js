@@ -15,15 +15,17 @@ const App = props => {
     const[cart, setCart] = useGlobal('cart');
 
     useEffect( () => {
-        const cartId = localStorage.cartId || '';
-        const userToken = localStorage.userToken || '';
         const query = queryString.parse(props.location.search);
 
         if(query.token){
             localStorage.userToken = query.token;
-            props.history.push('/')
         }
+    })
 
+    useEffect( () => {
+        const cartId = localStorage.cartId || '';
+        const userToken = localStorage.userToken || '';
+        
         if(userToken){
             const decoded = jwt.decode(userToken);
             setCurrentUser(decoded.currentUser);
