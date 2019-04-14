@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useGlobal} from 'reactn';
-import { Button, FormGroup ,Form, Input } from 'reactstrap';
+import { Button, FormGroup ,Form, Label, Input } from 'reactstrap';
 import jwt from 'jsonwebtoken';
 import '../../styles/authForm.css';
 
@@ -35,7 +35,7 @@ const LoginForm = (props) => {
             localStorage.userToken = data.token;
             const decoded = jwt.decode(data.token);
             setCurrentUser(decoded.currentUser);
-            props.history.push(from);
+            props.history.push(from.pathname || from.pathName);
         })
         .catch(err => console.log(err))
     }
@@ -48,11 +48,11 @@ const LoginForm = (props) => {
                     <div id= 'error' > {error} </div>
                     <Form onSubmit = {handleSubmit}  > 
                         <FormGroup>
-                            <label for email> Email </label>
+                            <Label for= 'email'> Email </Label>
                             <Input name='email' required placeholder = 'Enter email' onChange={e => setEmail(e.target.value)} />
                         </FormGroup>
                         <FormGroup>
-                            <label for ='password'>Password </label>
+                            <Label for ='password'>Password </Label>
                             <Input type = 'password' required name='password' placeholder = 'Enter password' 
                             onChange={e => setPassword(e.target.value)} />
                         </FormGroup> <br />
