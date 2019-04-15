@@ -36,9 +36,10 @@ width: 100%;
    color: #424242;
     width: 100%;
     top: 0px;
+    padding: 2px;
 }
 .NavLinks{
-    margin-top: 90px;
+    margin-top: 110px;
 }
 .navlink  {
     color: #424242;
@@ -54,3 +55,9 @@ width: 100%;
   .option{
       cursor: pointer;
   }
+  .right {
+    float: right;
+}
+.menu {
+    cursor: pointer;
+}
