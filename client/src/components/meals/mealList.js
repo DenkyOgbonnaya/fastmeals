@@ -4,14 +4,13 @@ import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
         CardTitle, CardSubtitle, Button, Container, Row, Col,
         Pagination, PaginationItem, PaginationLink, } from 'reactstrap';
-import filterHof from './filterHof';
 import UpdateMeal from './updateMeal';
 import addToCart from '../cart/addToCart';
 import mealsApi from './meals_api';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
-    const[meals, setMeals] = useGlobal('meals');
+    const[meals, setMeals] = useState([]);
     const[meal, setMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
@@ -20,13 +19,13 @@ const MealList = (props) => {
     const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
-        mealsApi.getMeals(`${props.api}?page=1`)
+        mealsApi.getMeals(props.api)
         .then(data => {
             setMeals(data.meals);
             setPages(data.pages);
-            setCurrentPage(data.currentPage);
+            setCurrentPage(data.currentPage)
         })
-    }, [props.api]);
+    }, [props.api])
     
     const deleteMeal = (id) => {
         setMeals(meals.filter(meal => meal._id !== id));
@@ -83,7 +82,7 @@ const MealList = (props) => {
             
             <Container> 
                 <Row>
-                {meals.filter(filterHof(searchedMeal)).map((meal, index) =>
+                {meals.map((meal) =>
                 <Col  md = '3' key ={meal._id}> 
                     <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />

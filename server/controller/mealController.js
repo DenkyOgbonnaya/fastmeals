@@ -96,24 +96,41 @@ getMeal(req, res){
  * @route '/meals:meals'
  */
 getMeals(req, res){
-    const page = Number(req.query.page);
-    const limit = 2;
-    Meals.find({})
-    .skip((page * limit) - limit)
-    .limit(limit)
-    .then(meals => {
-        Meals.countDocuments()
-        .then(count => {
-            res.status(200).send({
-                meals: meals,
-                currentPage: page,
-                pages: Math.ceil(count/limit)
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.page) || 2;
+    Meals.paginate({}, {page, limit})
+    .then(result => {
+        res.status(200).send({
+            meals: result.docs,
+            currentPage: result.page,
+            pages: result.pages
             });
-        })
-        
     })
     .catch(err => res.status(500).send(err))
 },
+searchMeal(req, res){
+    const{search, category} = req.query;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.page) || 2;
+    const query = {};
+    if(search)
+        query.name = {$regex: search, $options: 'i'};
+    if(category && category !== 'All')
+        query.category = category
+    
+    Meals.paginate(query, {page, limit})
+    .then(result => {
+        if(result)
+           return res.status(200).send({
+               meals: result.docs,
+               currentPage: result.page,
+               pages: result.pages
+            });
+        return res.status(401).send({message: 'meal not found'})
+        
+    })
+    .catch(err => {console.log(err), res.status(404).send(err)})
+}
 
 }
 

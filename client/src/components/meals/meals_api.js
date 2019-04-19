@@ -109,6 +109,13 @@ const mealApi = {
               return result.value.category;
             }
           })
+    },
+    searchMeal(name){
+        return fetch(`api/${name}/meal`)
+        .then(res => {
+            return res.json()
+        })
+        .catch(err => console.log(err))
     }
 }
 export default mealApi;

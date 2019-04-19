@@ -26,8 +26,8 @@ categoryController = {
  * @route '/:category/category'
  */
 getMealsByCat(req, res){
-    const page = req.query.page;
-    const limit = 2;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.page) || 2;
     const title = req.params.title;
     Category.findOne({title})
     .populate('meals')

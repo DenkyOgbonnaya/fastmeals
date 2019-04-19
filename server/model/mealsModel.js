@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const paginate = require('mongoose-paginate');
 
 const Schema = mongoose.Schema;
 
@@ -32,6 +33,7 @@ const mealSchema = new Schema({
         default: Date.now
       },
 })
+mealSchema.plugin(paginate);
 const Meal = mongoose.model('Meal', mealSchema);
 
 module.exports = Meal;

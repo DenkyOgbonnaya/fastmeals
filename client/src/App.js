@@ -4,6 +4,7 @@ import NavBar from './components/navs/navBar';
 import Container from './components/container';
 import NavLinks from './components/navs/navLinks';
 import SideNav from './components/navs/sideNav';
+import SearchField from './components/utils/searchField';
 import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
 import {withRouter} from 'react-router-dom';
@@ -56,6 +57,7 @@ const App = props => {
         <div className= 'App' >
             <div className = 'NavBar' >
             <NavBar />
+            <SearchField /> 
             </div>
             <hr />
             <div className='NavLinks' >

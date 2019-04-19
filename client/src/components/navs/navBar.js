@@ -3,7 +3,6 @@ import {useGlobal} from 'reactn';
 import {
   Container, Row, Col, Input, NavLink, NavbarBrand, Button, Navbar} from 'reactstrap';
   import {NavLink as RRNavLink, Link} from 'react-router-dom';
-import SearchField from '../utils/searchField';
 
 const NavBar = () => {
 const[searchedMeal, setSearchedMeal] = useGlobal('searchedMeal');
@@ -35,7 +34,6 @@ const logoutUser = () => {
                 </NavLink> </div> </Col>
               </Row>
             </Col>
-            <Col xs= '10' md= '7'>  <SearchField /> </Col>
           </Row>
         </Container>
       

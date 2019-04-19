@@ -11,6 +11,7 @@ const{
     deleteMeal,
     getMeal,
     getMeals,
+    searchMeal,
     getMealsByCat
 } = mealController;
 const{validateMealInput,
@@ -26,6 +27,7 @@ mealRouter.route('/meals/:mealId')
     .put(isLoggedIn, isAdmin, validateMealInput, validateMealId, updateMeal)
     .delete(isLoggedIn, isAdmin, validateMealId, deleteMeal)
     .get(validateMealId, getMeal)
+mealRouter.get('/meal', searchMeal);
 
 
 module.exports = mealRouter;
