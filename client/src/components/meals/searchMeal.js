@@ -1,25 +1,23 @@
 import React, {useState} from 'react';
 import {useGlobal} from 'reactn';
-import {withRouter} from 'react-router-dom';
 import {Form, Input, Button, InputGroup, InputGroupAddon} from 'reactstrap';
 import mealsApi from '../meals/meals_api';
 import MealList from '../meals/mealList'
+import SearchList from './searchList';
 
-const SearchField = props => {
+const SearchMeal = () => {
     const[search, setSearch] = useState('');
     const[category, setCategory] = useState('All');
     const[result, setResult] = useState([]);
     const[categories] = useGlobal('categories');
-    const[displaySearch, setDisplaySearch] = useState(false);
 
     const handleSearch = () => {
-        setDisplaySearch(true)
+        mealsApi.searchMeal(search, category)
+        .then(data => setResult(data.meals))
     } 
-    const renderSearch = () => <MealList api = {`/api/meal?search=${search}&category=${category}`} />
-   
     
     return(
-        <div>
+        <div >
         <InputGroup>
         <InputGroupAddon addonType= 'prepend' >
             <Input type = 'select' name="category"  onChange = {e => setCategory(e.target.value)} > 
@@ -31,9 +29,10 @@ const SearchField = props => {
             <Input placeholder = 'Search meal...' value = {search} onChange = { e => setSearch(e.target.value)} />
             <InputGroupAddon addonType='append' ><Button onClick = {() => handleSearch()} >Search</Button></InputGroupAddon>
         </InputGroup>
-        {displaySearch ? renderSearch() : null}
+        {result ? 
+        <div> <hr /> <SearchList result = {result} /> </div>: <div style={{color: 'red'}}>No meals found for this search </div> }
         </div>
     )
 }
 
-export default withRouter(SearchField);
+export default SearchMeal;

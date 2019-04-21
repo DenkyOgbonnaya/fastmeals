@@ -4,9 +4,10 @@ import {withRouter, Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody, 
         CardTitle, CardSubtitle, Button, Container, Row, Col,
         Pagination, PaginationItem, PaginationLink, } from 'reactstrap';
-import UpdateMeal from './updateMeal';
 import addToCart from '../cart/addToCart';
 import mealsApi from './meals_api';
+import SearchMeal from './searchMeal';
+import NavLinks from '../navs/navLinks';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
@@ -14,9 +15,6 @@ const MealList = (props) => {
     const[meal, setMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
-    const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
-    const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
-    const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
     
     useEffect( () => {
         mealsApi.getMeals(props.api)
@@ -27,14 +25,6 @@ const MealList = (props) => {
         })
     }, [props.api])
     
-    const deleteMeal = (id) => {
-        setMeals(meals.filter(meal => meal._id !== id));
-        mealsApi.deleteMeal(id)
-    }
-    const updateMeal = (meal) => {
-        setMeal(meal);
-        setRenderUpdateMealModal(true);
-    }
     async function pushToCart(meal){
         try{
             await addToCart(meal);
@@ -78,8 +68,9 @@ const MealList = (props) => {
     
     return(
         <div> 
-            {renderUpdateMealModal ? <UpdateMeal meal= {meal}/> : null }
-            
+             <SearchMeal />
+            <br />
+            <NavLinks />
             <Container> 
                 <Row>
                 {meals.map((meal) =>
@@ -93,9 +84,6 @@ const MealList = (props) => {
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
                             <Button onClick= {() => pushToCart(meal)}  >Buy</Button>{" "}
-                            {showUpdateMealsButton ? <img className= "option" onClick = {() => updateMeal(meal)} src = "/images/icons/edit_ic.png" alt="edit" /> : null} {" "}
-                            {showDeleteMealsButton ? <img className= "option" onClick = {() => deleteMeal(meal._id)} src = "/images/icons/delete_ic.png" alt="edit" />  : null}
-                            
                         </CardBody>
                     </Card>
                     <br />

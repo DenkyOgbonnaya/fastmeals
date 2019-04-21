@@ -1,5 +1,5 @@
 const addToCart = (meal) => {
-    fetch('/api/cart', {
+    return fetch('/api/cart', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

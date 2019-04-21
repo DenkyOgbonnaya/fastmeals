@@ -9,7 +9,8 @@ const NavLinks = () => {
     const[categories, setCategories] = useGlobal('categories');
     useEffect(() => {
         mealApi.getCategories()
-        .then(data => setCategories(data.categories))
+        .then(data => setCategories(data.categories) 
+        )
     }, [ ])
 
     return(

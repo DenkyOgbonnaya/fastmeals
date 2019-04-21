@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 
 const mealApi = {
     createMeal(meal){
-        return fetch('api/meals', {
+        return fetch('/api/meals', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -25,7 +25,7 @@ const mealApi = {
         .catch(err => console.log(err)) 
     },
     deleteMeal(mealId){
-        fetch(`api/meals/${mealId}`, {
+        fetch(`/api/meals/${mealId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.userToken}`
@@ -39,7 +39,7 @@ const mealApi = {
         .catch(err => console.log(err))
     },
     updateMeal(id, data){
-        fetch(`api/meals/${id}`, {
+        fetch(`/api/meals/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const mealApi = {
           .catch(err => console.log(err))
     },
     getCategories(){
-        return fetch('api/categories')
+        return fetch('/api/categories')
       .then(res => {
           if(res.status === 200) return res.json()
       })
@@ -110,8 +110,8 @@ const mealApi = {
             }
           })
     },
-    searchMeal(name){
-        return fetch(`api/${name}/meal`)
+    searchMeal(search, category){
+        return fetch(`/api/meal?search=${search}&category=${category}`)
         .then(res => {
             return res.json()
         })

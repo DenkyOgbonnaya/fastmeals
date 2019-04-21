@@ -110,21 +110,17 @@ getMeals(req, res){
 },
 searchMeal(req, res){
     const{search, category} = req.query;
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.page) || 2;
     const query = {};
     if(search)
         query.name = {$regex: search, $options: 'i'};
     if(category && category !== 'All')
         query.category = category
     
-    Meals.paginate(query, {page, limit})
+    Meals.find(query)
     .then(result => {
         if(result)
            return res.status(200).send({
-               meals: result.docs,
-               currentPage: result.page,
-               pages: result.pages
+               meals: result
             });
         return res.status(401).send({message: 'meal not found'})
         

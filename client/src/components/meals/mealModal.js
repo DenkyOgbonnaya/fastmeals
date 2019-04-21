@@ -1,39 +1,51 @@
 import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
+import '../../styles/order.css'
 import { 
      Modal, ModalHeader, ModalBody, ModalFooter,
     Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
     import mealsApi from './meals_api';
 
 const UpdateMeal = (props) => {
-    const[name, setName] = useState(props.meal.name);
-    const[price, setPrice] = useState(props.meal.price);
-    const[quantity, setQuantity] = useState(props.meal.quantity);
-    const[category, setCategory] = useState(props.meal.category);
-    const[description, setDescription] = useState(props.meal.description);
+    const[name, setName] = useState(props.meal.name || '');
+    const[price, setPrice] = useState(props.meal.price || '');
+    const[quantity, setQuantity] = useState(props.meal.quantity || '');
+    const[category, setCategory] = useState(props.meal.category || '');
+    const[description, setDescription] = useState(props.meal.description || '');
     const[image, setImage] = useState(null);
     const[categories] = useGlobal('categories');
     const[meals, setMeals] = useGlobal('meals');
 
-    const[renderUpdateMealModal, setRenderUpdateMealModal] = useGlobal('renderUpdateMealModal');
+    const[showMealmodal, setShowMealModal] = useGlobal('showMealModal');
 
     const submitForm = (e) => {
       e.preventDefault();
-      const data = {
-        name, price, quantity, category, description
+      
+      if(props.meal){
+        const data = {name, price, quantity, description, category}
+        setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, data) : meal ));
+        setShowMealModal(false);
+        mealsApi.updateMeal(props.meal._id, data);
+      }else{
+        const addMealForm = document.forms.mealForm;
+        const data = new FormData(addMealForm);
+
+        mealsApi.createMeal(data)
+        .then(data => {
+          setMeals(meals.concat(data.meal));
+          setShowMealModal(false);
+          //props.history.push(`category/${data.meal.category}`);
+        });
       }
-      setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, data) : meal ));
-
-      mealsApi.updateMeal(props.meal._id, data);
-
+      
     }
     return (
         <div> 
-    <Modal isOpen={renderUpdateMealModal}  >
-              <ModalHeader>Edit meal details</ModalHeader>
-              <ModalBody>
+          <Modal isOpen={showMealmodal}  >
+            <ModalHeader className= 'modalHeader'>{props.meal? 'Update meal details' : 'Add new meal'}</ModalHeader>
+            <ModalBody>
               
-        <Form onSubmit ={submitForm} encType = "multipart/form-data"  name= 'updateMealForm' >
+        <Form onSubmit ={submitForm} encType = "multipart/form-data"  name= 'mealForm' >
         <Row form>
           <Col md={6}>
             <FormGroup>
@@ -71,21 +83,21 @@ const UpdateMeal = (props) => {
         </Row>
         <FormGroup>
           <Label for="description">Description</Label>
-          <Input type="textarea" name="phone"  placeholder="A breif description about the meal" value ={description}
+          <Input type="textarea" name="description"  placeholder="A breif description about the meal" value ={description}
           onChange = {e => setDescription(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label for="image">Image</Label>
-          <Input type="file" name="image" accept='image/*'  onChange = { e => setImage(e.target.files[0])} disabled
-          />
+        <Label for="image">Image</Label>
+          <Input type="file" name="image" accept='image/*'  onChange = { e => setImage(e.target.files[0])} 
+            disabled = {props.meal ? true : false }/>
         </FormGroup>
         
-        <Button > Save </Button>
+        <Button id = 'actionBtn' > {props.meal? 'Save' : 'Add'} </Button>
       </Form>
         
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onClick={() => setRenderUpdateMealModal(!renderUpdateMealModal)}>Done</Button>{' '}
+                <Button color="warning" onClick={() => setShowMealModal(!showMealmodal)}>Cancel</Button>{' '}
               </ModalFooter>
             </Modal>
             </div>

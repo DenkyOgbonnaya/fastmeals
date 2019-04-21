@@ -4,10 +4,10 @@ import NavBar from './components/navs/navBar';
 import Container from './components/container';
 import NavLinks from './components/navs/navLinks';
 import SideNav from './components/navs/sideNav';
-import SearchField from './components/utils/searchField';
 import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
 import {withRouter} from 'react-router-dom';
+import SearchMeal from './components/meals/searchMeal';
 import './App.css';
 
 const App = props => {
@@ -55,21 +55,17 @@ const App = props => {
     
     return(
         <div className= 'App' >
-            <div className = 'NavBar' >
-            <NavBar />
-            <SearchField /> 
-            </div>
-            <hr />
-            <div className='NavLinks' >
-            <NavLinks />
-            </div>
-            <hr />
             <div className='Wrapper' > 
                 <div className= {showSideNav ? 'showSideNav' : 'hideSideNav'} onClick= {() => setShowSideNav(false)} > 
                     <SideNav />
                 </div>
-                <div className= 'Content'> 
-                    <Container />
+                    <div className= 'Content'> 
+                        <div className = 'NavBar' >
+                            <NavBar />
+                        </div >
+                        <div className = 'Container'>
+                            <Container />
+                        </div>
                 </div>
             </div>
         </div>

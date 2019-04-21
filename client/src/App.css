@@ -38,8 +38,8 @@ width: 100%;
     top: 0px;
     padding: 2px;
 }
-.NavLinks{
-    margin-top: 110px;
+.Container {
+    margin-top: 80px
 }
 .navlink  {
     color: #424242;
@@ -60,4 +60,7 @@ width: 100%;
 }
 .menu {
     cursor: pointer;
+}
+.dashboard{
+    height: 60px;
 }

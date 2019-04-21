@@ -1,6 +1,8 @@
 import React from 'react';
 import MealList from './mealList';
-
-const Meals = () => < MealList api = '/api/meals' /> 
+const Meals = () =>
+    <div>
+         < MealList api = '/api/meals' /> 
+    </div>
 
 export default Meals;
