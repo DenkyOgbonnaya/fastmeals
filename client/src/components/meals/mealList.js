@@ -11,6 +11,7 @@ import NavLinks from '../navs/navLinks';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
+    const[cart, setCart] = useGlobal('cart');
     const[meals, setMeals] = useState([]);
     const[meal, setMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
@@ -21,17 +22,22 @@ const MealList = (props) => {
         .then(data => {
             setMeals(data.meals);
             setPages(data.pages);
-            setCurrentPage(data.currentPage)
+            setCurrentPage(data.page)
+            console.log(data.pages)
         })
     }, [props.api])
     
-    async function pushToCart(meal){
-        try{
-            await addToCart(meal);
-            props.history.push('/cart');
-        } catch(err) {
-            console.log(err);
-        }
+    const pushToCart = meal =>{
+            setCart(cart.concat(meal));
+            addToCart(meal);
+         
+    }
+    const handlePageChange = (pageNum) => {
+        mealsApi.getMeals(`${props.api}?page=${pageNum}`)
+        .then(data => {
+            setMeals(data.meals);
+            setCurrentPage(data.page);
+        })
     }
     const displayPageNums = () => {
         const pageNumbers = [];
@@ -58,18 +64,10 @@ const MealList = (props) => {
             </Pagination>
         )
     }
-    const handlePageChange = (pageNum) => {
-        mealsApi.getMeals(`${props.api}?page=${pageNum}`)
-        .then(data => {
-            setMeals(data.meals);
-            setCurrentPage(data.currentPage);
-        })
-    }
     
     return(
         <div> 
              <SearchMeal />
-            <br />
             <NavLinks />
             <Container> 
                 <Row>

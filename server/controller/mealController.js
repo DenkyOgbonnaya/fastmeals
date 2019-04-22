@@ -95,14 +95,17 @@ getMeal(req, res){
  * @return {obj} meals object.
  * @route '/meals:meals'
  */
-getMeals(req, res){
+async getMeals(req, res){
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.page) || 2;
+    const limit = Number(req.query.limit) || 2;
+    
+
+
     Meals.paginate({}, {page, limit})
     .then(result => {
         res.status(200).send({
             meals: result.docs,
-            currentPage: result.page,
+            page: result.page,
             pages: result.pages
             });
     })

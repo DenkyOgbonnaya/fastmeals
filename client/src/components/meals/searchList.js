@@ -8,12 +8,9 @@ import {Link} from 'react-router-dom';
 const SearchList = (props) => {
     const[cart, setCart] = useGlobal('cart');
 
-    function pushToCart(meal){
-        
-            addToCart(meal)
-            .then(() => setCart(cart.concat(meal)) )
-            
-        
+    const pushToCart = meal => {
+        setCart(cart.concat(meal));
+        addToCart(meal); 
     }
 
     return(

@@ -28,7 +28,7 @@ const logoutUser = () => {
             <Col xs = '12' md='12'>
               <Row>
               <Col xs ='2' md= '1'> <img src='images/icons/menu_ic.png' alt='menu' onClick= {() => setShowSideNav(!showSideNav)} className='menu'/>  </Col>
-                <Col xs ='6' md='9'> <NavbarBrand > <Link style={{color: '#424242'}} to='/'> Fastmeals </Link> </NavbarBrand> </Col>
+                <Col xs ='6' md='9'> <NavbarBrand > FastMeals </NavbarBrand> </Col>
                 <Col xs = '4' md='2'> <div className = 'right'><NavLink to= '/cart' tag={RRNavLink}> <img src='images/icons/shopping_cart.png' alt='cart' />
                 <span style={{color:'white'}}  >{cart.length} </span>
                 </NavLink> </div> </Col>
