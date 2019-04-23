@@ -72,7 +72,7 @@ const MealList = (props) => {
             <Container> 
                 <Row>
                 {meals.map((meal) =>
-                <Col  md = '3' key ={meal._id}> 
+                <Col  md = '3' xs='6' key ={meal._id}> 
                     <Card >
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
                         <CardBody >
