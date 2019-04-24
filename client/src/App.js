@@ -9,6 +9,7 @@ import queryString from 'query-string';
 import {withRouter} from 'react-router-dom';
 import SearchMeal from './components/meals/searchMeal';
 import './App.css';
+import Footer from './components/footer';
 
 const App = props => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
@@ -68,6 +69,8 @@ const App = props => {
                         </div>
                 </div>
             </div>
+            <br />
+            <Footer />
         </div>
     )
 }
