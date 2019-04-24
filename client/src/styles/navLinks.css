@@ -3,11 +3,11 @@ ul {
     overflow-x: auto;
 }
 
-ul > li {
+.navs > li {
     display: inline-block;
     float: none;
 }
-ul > li > :hover {
+.navs > li > :hover {
     color:  #8bc34a;
 }
 .navlink {

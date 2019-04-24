@@ -14,7 +14,7 @@ const NavLinks = () => {
     }, [ ])
 
     return(
-        <ul> 
+        <ul className = 'navs'> 
             <li> <NavLink to='/' tag = {RRNavLink}  className='navlink' >All </NavLink> </li>
             {categories.map(category => 
               <li key = {category.id} >
