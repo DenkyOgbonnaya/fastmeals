@@ -66,11 +66,12 @@ const App = props => {
                         </div >
                         <div className = 'Container'>
                             <Container />
+                            <br />
+                            <Footer />
                         </div>
                 </div>
             </div>
-            <br />
-            <Footer />
+            
         </div>
     )
 }
