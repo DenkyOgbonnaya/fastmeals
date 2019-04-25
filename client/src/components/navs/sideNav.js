@@ -36,6 +36,7 @@ const SideNav = () => {
                         <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
                         <img src = "/images/icons/order_ic.png" alt="delete" /> My Orders </NavLink>
                     </NavItem>
+                    <hr />
                     <Can 
                     role = {user.isAdmin}
                     perform = "admin-board:visit"
@@ -43,7 +44,7 @@ const SideNav = () => {
                         <div> 
                             <NavItem className = "nav"> 
                                 <NavLink to= '/manageMeals' tag= {RRNavLink} className = 'menuLinks'>
-                                <img src = "/images/icons/add_ic.png" alt="delete" /> ManageMeals </NavLink>
+                                <img src = "/images/icons/admin_ic.png" alt="admin" /> ManageMeals </NavLink>
                             </NavItem>
                             <NavItem> 
                                 <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'>
@@ -56,9 +57,10 @@ const SideNav = () => {
                     </div>
                     : null
                 }
+                <hr />
                 <NavItem> 
                     <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>
-                    <img src = "/images/icons/about_ic.png" alt="delete" />About </NavLink>
+                    <img src = "/images/icons/about_ic.png" alt="delete" /> About </NavLink>
                 </NavItem>
             </Nav>
         </div>
