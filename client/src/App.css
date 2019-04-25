@@ -7,7 +7,7 @@
     color: #fff;
     width: 300px;
     height: inherit;
-    background:  #745f04;
+    background:  #3e2723;
     font-size: 20px;
     position: -webkit-sticky;
     position: sticky;
@@ -16,6 +16,9 @@
     overflow-y: hidden;
     transition: 0.5s;
     
+}
+.sideNav hr{
+    background: grey
 }
 .Wrapper > .hideSideNav{
     width: 0px;
