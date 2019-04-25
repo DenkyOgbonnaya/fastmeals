@@ -4,12 +4,14 @@
 .showSideNav{
     border: 1px solid #e0e0e0;
     padding: 5px;
-    color: #ccc;
+    color: #fff;
     width: 300px;
-    height: 100vh;
-    background: #fafafa;
+    height: inherit;
+    background:  #745f04;
     font-size: 20px;
+    position: -webkit-sticky;
     position: sticky;
+    top: 0;
     z-index: 1;
     overflow-y: hidden;
     transition: 0.5s;
@@ -20,7 +22,6 @@
 }
 .Content{
 width: 100%;
-
 }
 @media (max-width: 768px){
     .showSideNav {
@@ -31,8 +32,8 @@ width: 100%;
 }
 .NavBar{
     position: fixed;
-    z-index: 2;
-   background: #8bc34a;
+    z-index: 3;
+   background:  #8bc34a;
    color: #424242;
     width: 100%;
     top: 0px;

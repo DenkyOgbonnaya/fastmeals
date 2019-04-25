@@ -11,12 +11,12 @@ ul {
     color:  #8bc34a;
 }
 .navlink {
-    color: grey;
+    color:grey;
     font-size: 16px;
     margin-right: 5px;
 }
 .menuLinks {
-    color: grey;
+    color: #eeee;
     font-size: 16px;
 }
 .nav :hover {
