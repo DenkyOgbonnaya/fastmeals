@@ -72,7 +72,7 @@ const ManageMeals = props => {
                 <Button  onClick = {() => addMeal()} style = {{float: 'right', background:'#8bc34a'}}> +Add Meal </Button>
             </div>
             {showMealModal ? <MealModal meal= {editableMeal}/> : null }
-            <Table> 
+            <Table responsive > 
                 <thead>
 
                     <tr>
