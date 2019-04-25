@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import orderApi from './order_api';
 import orderHelper from './order_helper';
 import '../../styles/order.css';
+import formatter from '../utils/formatter';
 
 const Order = (props) => {
 const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });
@@ -42,14 +43,14 @@ if(order)
                          <Link to = {`/meal/${meal.mealId}`} > {meal.name} </Link> <br />
                          {`${meal.price} x ${meal.quantity}`}
                          </td>
-                        <td>{meal.price*meal.quantity}</td>
+                        <td>{formatter.format(Number(meal.price*meal.quantity))}</td>
                         <td>{meal.status}</td>
                     </tr> 
                 )
             }
         </tbody>
       </Table>
-      <div> <b>Total</b>: {orderHelper.getTotalPrice(order)} </div> <br />
+      <div> <b>Total</b>: {formatter.format(Number(orderHelper.getTotalPrice(order)))} </div> <br />
                     </Col>
                     <Col> 
                     <Card>

@@ -8,6 +8,7 @@ import addToCart from '../cart/addToCart';
 import mealsApi from './meals_api';
 import SearchMeal from './searchMeal';
 import NavLinks from '../navs/navLinks';
+import formatter from '../utils/formatter';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
@@ -77,11 +78,11 @@ const MealList = (props) => {
                         <CardImg top width="100%" height="150px" src= {meal.image} alt="Card image cap" />
                         <CardBody >
                             <CardTitle> {meal.name} </CardTitle>
-                            <CardSubtitle>N{meal.price} </CardSubtitle>
+                            <CardSubtitle>{formatter.format(Number(meal.price))} </CardSubtitle>
                             <CardText> <small className='text-muted'> {meal.description.substring(0, 20)} 
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
-                            <Button onClick= {() => pushToCart(meal)}  >Buy</Button>{" "}
+                            <Button style = {{background:'firebrick'}} onClick= {() => pushToCart(meal)}  >Buy Now </Button>{" "}
                         </CardBody>
                     </Card>
                     <br />

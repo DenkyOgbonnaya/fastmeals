@@ -12,8 +12,10 @@ const SearchMeal = () => {
     const[categories] = useGlobal('categories');
 
     const handleSearch = () => {
-        mealsApi.searchMeal(search, category)
-        .then(data => setResult(data.meals))
+        if(search){
+            mealsApi.searchMeal(search, category)
+            .then(data => setResult(data.meals))
+        }
     } 
     
     return(
@@ -27,7 +29,8 @@ const SearchMeal = () => {
             </Input>
         </InputGroupAddon>
             <Input placeholder = 'Search meal...' value = {search} onChange = { e => setSearch(e.target.value)} />
-            <InputGroupAddon addonType='append' ><Button onClick = {() => handleSearch()} >Search</Button></InputGroupAddon>
+            <InputGroupAddon addonType='append' ><Button style = {{background:'firebrick'}}
+            onClick = {() => handleSearch()} >Search</Button></InputGroupAddon>
         </InputGroup>
         {result ? 
         <div> <hr /> <SearchList result = {result} /> </div>: <div style={{color: 'red'}}>No meals found for this search </div> }

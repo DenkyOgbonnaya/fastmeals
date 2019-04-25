@@ -5,6 +5,7 @@ import { Table, Button, ButtonGroup} from 'reactstrap';
 import cartApi from './cart_api';
 import cartHelper from './cart_helper';
 import '../../styles/cart.css';
+import formatter from '../utils/formatter';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
@@ -69,9 +70,9 @@ const Cart = (props) => {
                 cart.map((meal, index) =>
                     <tr key = {meal._id}> 
                         <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/> {meal.name} </td>
-                        <td>{meal.price}</td>
+                        <td>{formatter.format(Number(meal.price)) }</td>
                         <td>{meal.quantity}</td>
-                        <td>{meal.price*meal.quantity}</td>
+                        <td>{formatter.format(Number(meal.price*meal.quantity))}</td>
                         <td>
                         <ButtonGroup className = "btnGrp">
                             <Button onClick = {() =>  updateQuantity(index, meal, 'inc') } className = 'actions'>+</Button> 
@@ -83,7 +84,7 @@ const Cart = (props) => {
             }
         </tbody>
       </Table>
-      <div>Total: N{cartHelper.getTotalPrice(cart)}   </div>
+      <div>Total: {formatter.format(Number(cartHelper.getTotalPrice(cart)))}   </div>
       <Button onClick = { () => CheckOutOrder(cart) } className = 'checkout'> CheckOut </Button> {' '}
       <Button onClick ={() => props.history.push('/')} className = 'continue'> Continue shopping </Button>
       </div>
