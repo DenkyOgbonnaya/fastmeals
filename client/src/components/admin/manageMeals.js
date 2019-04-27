@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
-import {Table, ButtonGroup, Button} from 'reactstrap';
-import MealModal from './mealModal';
+import {Table, ButtonGroup, Button, InputGroup, InputGroupAddon} from 'reactstrap';
 import {Pagination, PaginationItem, PaginationLink} from 'reactstrap';
-import mealApi from './meals_api';
+import mealApi from '../meals/meals_api';
+import ListMeals from './listMeals';
+import SearchMeal from '../meals/searchMeal'
 
 const ManageMeals = props => {
     const[meals, setMeals] = useGlobal('meals');
     const[editableMeal, setEditableMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
-    const[showMealModal, setShowMealModal] = useGlobal('showMealModal');
     
     useEffect( () => {
         mealApi.getMeals('/api/meals')
@@ -20,15 +20,7 @@ const ManageMeals = props => {
             setPages(data.pages);
         })
     }, [])
-    const addMeal = () => {
-        setEditableMeal('');
-        setShowMealModal(true);
-    }
-    const updateMeal = (meal) => {
-        setEditableMeal(meal);
-        setShowMealModal(true);
-
-    }
+    
     const deleteMeal = (id) => {
         setMeals(meals.filter(meal => meal._id !== id));
         mealApi.deleteMeal(id);
@@ -69,9 +61,10 @@ const ManageMeals = props => {
         <div> 
             <div style = {{ padding: '5px'}}>  
                 <h3>Manage Meals </h3>
-                <Button  onClick = {() => addMeal()} style = {{float: 'right', background:'#8bc34a'}}> +Add Meal </Button>
             </div>
-            {showMealModal ? <MealModal meal= {editableMeal}/> : null }
+            <SearchMeal search = 'admin' />
+            <ListMeals meals = {meals} deleteMeal = {deleteMeal} />
+            {/*{showMealModal ? <MealModal meal= {editableMeal}/> : null }
             <Table responsive > 
                 <thead>
 
@@ -95,7 +88,7 @@ const ManageMeals = props => {
                     )
                 }
                 </tbody>
-            </Table>
+            </Table>*/}
             {displayPageNums()}
         </div>
     )

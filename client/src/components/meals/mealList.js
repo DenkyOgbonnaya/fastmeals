@@ -68,7 +68,7 @@ const MealList = (props) => {
     
     return(
         <div> 
-             <SearchMeal />
+             <SearchMeal search = 'user' />
             <NavLinks />
             <Container> 
                 <Row>

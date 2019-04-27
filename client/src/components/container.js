@@ -9,7 +9,7 @@ import ViewMeal from './meals/viewMeal';
 import OrderList from './order/orderList';
 import SignupForm from './userAuth/signupForm';
 import PrivateRoute from './userAuth/privateRoute';
-import ManageMeals from './meals/manageMeals';
+import ManageMeals from './admin/manageMeals';
 
 const Container = () => 
     <Switch> 

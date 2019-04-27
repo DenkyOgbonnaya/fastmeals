@@ -4,8 +4,9 @@ import {Form, Input, Button, InputGroup, InputGroupAddon} from 'reactstrap';
 import mealsApi from '../meals/meals_api';
 import MealList from '../meals/mealList'
 import SearchList from './searchList';
+import ListMeals from '../admin/listMeals';
 
-const SearchMeal = () => {
+const SearchMeal = (props) => {
     const[search, setSearch] = useState('');
     const[category, setCategory] = useState('All');
     const[result, setResult] = useState([]);
@@ -32,8 +33,10 @@ const SearchMeal = () => {
             <InputGroupAddon addonType='append' ><Button style = {{background:'firebrick'}}
             onClick = {() => handleSearch()} >Search</Button></InputGroupAddon>
         </InputGroup>
-        {result ? 
-        <div> <hr /> <SearchList result = {result} /> </div>: <div style={{color: 'red'}}>No meals found for this search </div> }
+        {result && (props.search === 'user') ? 
+        <div> <hr /> <SearchList result = {result} /> </div> : 
+        result.length > 0 && (props.search === 'admin') ? <ListMeals meals = {result} /> : 'No meals found for this search'
+        }
         </div>
     )
 }
