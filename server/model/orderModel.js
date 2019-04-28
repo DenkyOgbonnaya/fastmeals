@@ -27,6 +27,9 @@ const orderSchema = Schema({
     },
     payment_id: {},
     updated: Date,
+    status: {type: String,
+      default: 'Cancelled_ Payment not made',
+      enum: ['Not processed' , 'Processing', 'Shipped', 'Delivered', 'Cancelled_ Payment not made']},
     created: {
       type: Date,
       default: Date.now

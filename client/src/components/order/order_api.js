@@ -14,9 +14,6 @@ const orderApi = {
             if(res.status === 201)
             return res.json();
         })
-        .then(data => {
-            return data.orderId;
-        })
         .catch(err => console.log(err))
     },
     getOrders(userId){

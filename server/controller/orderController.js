@@ -10,7 +10,7 @@ const orderController = {
  * @returns {obj} order 
  * @route '/:userId/orders'
  */
-    createOrder(req, res){
+    createOrder(req, res, next){
         const {userId} = req.params
         const{cart, customerName, customerEmail, customerPhone, deliveryAddress} = req.body;
 
@@ -24,7 +24,8 @@ const orderController = {
         })
         .then((order) => {
             Cart.deleteMany({cartFor: cart[0].cartFor}).exec();
-            return res.status(201).send({message: 'you order has been placed', orderId: order._id})
+            res.locals.orderId = order._id
+            next();
         })
         .catch(err => {console.log(err), res.status(500).send(err)})   
     },

@@ -30,9 +30,11 @@ const ContactForm = (props) => {
         cart: props.cart
       }
       orderApi.createOrder(props.user._id, orderDetails)
-      .then(orderId => {
+      .then(data => {
+        console.log(data)
         setShowContactModal(!showContactModal);
-        props.history.push(`/order/${orderId}`)
+        window.location.href = data.authUrl;
+
       })
       
     }

@@ -26,6 +26,7 @@ if(order)
             <Container> 
                 <Row> 
                     <Col> 
+                    <div style= {{color: 'red'}}>Order Status: {order.status} </div>
                         <Table responsive >
                             <thead>
 
