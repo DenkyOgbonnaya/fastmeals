@@ -9,6 +9,7 @@ import mealsApi from './meals_api';
 import SearchMeal from './searchMeal';
 import NavLinks from '../navs/navLinks';
 import formatter from '../utils/formatter';
+import Department from '../navs/department';
 
 const MealList = (props) => {
     const[searchedMeal] = useGlobal('searchedMeal');
@@ -69,6 +70,7 @@ const MealList = (props) => {
     return(
         <div> 
              <SearchMeal search = 'user' />
+             <Department />
             <NavLinks />
             <Container> 
                 <Row>

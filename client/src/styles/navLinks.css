@@ -10,7 +10,11 @@ ul {
 .navs > li > :hover {
     color:  #8bc34a;
 }
-.navlink {
+.deptlinks {
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.navlink, .deptlinks {
     color:grey;
     font-size: 16px;
     margin-right: 5px;
