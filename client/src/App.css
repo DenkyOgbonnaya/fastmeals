@@ -36,14 +36,14 @@ width: 100%;
 .NavBar{
     position: fixed;
     z-index: 3;
-   background:  #8bc34a;
+    background:  #8bc34a;
    color: #424242;
     width: 100%;
     top: 0px;
     padding: 2px;
 }
 .Container {
-    margin-top: 80px
+    margin-top: 90px
 }
 .navlink  {
     color: #424242;
