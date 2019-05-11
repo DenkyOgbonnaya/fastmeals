@@ -29,7 +29,7 @@ const UpdateMeal = (props) => {
       }else{
         const addMealForm = document.forms.mealForm;
         const data = new FormData(addMealForm);
-
+        
         mealsApi.createMeal(data)
         .then(data => {
           setMeals(meals.concat(data.meal));

@@ -10,6 +10,7 @@ import OrderList from './order/orderList';
 import SignupForm from './userAuth/signupForm';
 import PrivateRoute from './userAuth/privateRoute';
 import ManageMeals from './admin/manageMeals';
+import Orders from './admin/orders';
 
 const Container = () => 
     <Switch> 
@@ -17,9 +18,8 @@ const Container = () =>
         <Route exact path = '/cart' component = {CartView} />
         <Route exact path = '/login' component = {LoginForm} />
         <Route exact path = '/signup' component = {SignupForm} />
-        <PrivateRoute exact path = '/orders' component = {OrderList} />
-        <PrivateRoute exact path = '/manageMeals' component = {ManageMeals} />
-        <PrivateRoute exact path = '/order/:orderId' component = {Order} />
+        <PrivateRoute exact path = '/orders' component = {Orders} />
+        <PrivateRoute exact path = '/order/:orderId' component = {OrderList} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />
         

@@ -99,14 +99,13 @@ async getMeals(req, res){
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 16;
     
-
-
     Meals.paginate({}, {page, limit})
     .then(result => {
         res.status(200).send({
             meals: result.docs,
             page: result.page,
-            pages: result.pages
+            pages: result.pages,
+            total: result.total
             });
     })
     .catch(err => res.status(500).send(err))
@@ -129,6 +128,38 @@ searchMeal(req, res){
         
     })
     .catch(err => {console.log(err), res.status(404).send(err)})
+},
+mealsInCategory(req, res){
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 16;
+    const{category} = req.params;
+
+    Meals.paginate({category})
+    .then(result => {
+        res.status(200).send({
+            meals: result.docs,
+            page: result.page,
+            pages: result.pages
+        });
+    })
+    .catch(err => res.status(400).send(err))
+    
+},
+mealsInDepartment(req, res){
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 16;
+    const{department} = req.params;
+
+    Meals.paginate({department})
+    .then(result => {
+        res.status(200).send({
+            meals: result.docs,
+            page: result.page,
+            pages: result.pages
+        });
+    })
+    .catch(err => res.status(400).send(err))
+    
 }
 
 }

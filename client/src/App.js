@@ -7,10 +7,8 @@ import SideNav from './components/navs/sideNav';
 import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
 import {withRouter} from 'react-router-dom';
-import SearchMeal from './components/meals/searchMeal';
 import './App.css';
 import Footer from './components/footer';
-
 const App = props => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
     const[currentUser, setCurrentUser] = useGlobal('currentUser');

@@ -21,46 +21,34 @@ const SideNav = () => {
 
     return(
         <div className= 'sideNav'>
-        <div className = 'dashboard'>Dashboard </div> 
+        <div className = 'dashboard'>Admin Dashboard </div> 
         <hr />
-            <Nav vertical className = "nav" >
-                <NavItem> 
-                    <NavLink to= '/cart' tag= {RRNavLink} className = 'menuLinks'>
-                    <img src = "/images/icons/cart_ic.png" alt="delete" /> My cart </NavLink>
+            <Nav vertical className = "nav" ><div> 
+                <NavItem className = "nav"> 
+                    <NavLink to= '/manageMeals' tag= {RRNavLink} className = 'menuLinks'>
+                        <img src = "/images/icons/admin_ic.png" alt="admin" /> Manage Meals </NavLink>
                 </NavItem>
-                {
-                    user ?
-                    <div>
-                
+                    <NavItem className = "nav"> 
+                    <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
+                    <img src = "/images/icons/order_ic.png" alt="delete" /> manage Orders </NavLink>
+                    </NavItem>
+                    <NavItem className = "nav"> 
+                    <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
+                    <img src = "/images/icons/order_ic.png" alt="delete" /> Manage categories</NavLink>
+                    </NavItem>
                     <NavItem className = "nav"> 
                         <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
-                        <img src = "/images/icons/order_ic.png" alt="delete" /> My Orders </NavLink>
+                        <img src = "/images/icons/order_ic.png" alt="delete" /> Manage Users </NavLink>
                     </NavItem>
-                    <hr />
-                    <Can 
-                    role = {user.isAdmin}
-                    perform = "admin-board:visit"
-                    yes = {() => 
-                        <div> 
-                            <NavItem className = "nav"> 
-                                <NavLink to= '/manageMeals' tag= {RRNavLink} className = 'menuLinks'>
-                                <img src = "/images/icons/admin_ic.png" alt="admin" /> ManageMeals </NavLink>
-                            </NavItem>
                             <NavItem> 
                                 <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'>
                                 <img src = "/images/icons/addcat_ic.png" alt="delete" /> Add meal Category</NavLink>
                             </NavItem>
                         </div>
-                    }
-                    />
-                    
-                    </div>
-                    : null
-                }
                 <hr />
                 <NavItem> 
                     <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>
-                    <img src = "/images/icons/about_ic.png" alt="delete" /> About </NavLink>
+                    <img src = "/images/icons/about_ic.png" alt="delete" /> Logout </NavLink>
                 </NavItem>
             </Nav>
         </div>

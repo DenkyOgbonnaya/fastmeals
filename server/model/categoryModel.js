@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const categorySchema = Schema({
     title: String,
+    department: String,
     meals: [{
         type: Schema.Types.ObjectId, ref: 'Meal'
     }]
