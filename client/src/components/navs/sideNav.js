@@ -37,7 +37,7 @@ const SideNav = () => {
                     <img src = "/images/icons/order_ic.png" alt="delete" /> Manage categories</NavLink>
                     </NavItem>
                     <NavItem className = "nav"> 
-                        <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
+                        <NavLink to= '/users' tag= {RRNavLink} className = 'menuLinks' >
                         <img src = "/images/icons/order_ic.png" alt="delete" /> Manage Users </NavLink>
                     </NavItem>
                             <NavItem> 

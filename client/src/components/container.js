@@ -12,6 +12,7 @@ import SignupForm from './userAuth/signupForm';
 import PrivateRoute from './userAuth/privateRoute';
 import ManageMeals from './admin/manageMeals';
 import Orders from './admin/orders/orders';
+import ListUsers from './admin/users/listUsers';
 
 const Container = () => 
     <Switch> 
@@ -22,6 +23,7 @@ const Container = () =>
         <PrivateRoute exact path = '/profile' component = {Order} />
         <PrivateRoute exact path = '/manageMeals' component = {ManageMeals} />
         <PrivateRoute exact path = '/orders' component = {Orders} />
+        <PrivateRoute exact path = '/users' component = {ListUsers} />
         <PrivateRoute exact path = '/order/:orderId' component = {OrderView} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />
