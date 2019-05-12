@@ -1,19 +1,30 @@
 import React, {useState, useEffect} from 'react';
+import {useGlobal} from 'reactn';
 import {Container, Row, Col, Table, Card,  CardHeader, CardFooter, CardBody,
-    CardTitle, CardText} from 'reactstrap';
+    CardTitle, CardText, Form, Input, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import orderApi from './order_api';
 import orderHelper from './order_helper';
 import '../../styles/order.css';
 import formatter from '../utils/formatter';
+import Can from '../utils/can';
 
 const Order = (props) => {
 const[order, setOrder] = useState({deliveryAddress: {}, meals: [] });
+const[status, setStatus] = useState('');
+const[currentUser] = useGlobal('currentUser');
+
 useEffect( () => {
     orderApi.getOrder(props.match.params.orderId)
     .then(order => setOrder(order))
 }, []);
 
+const handleStatusChange = e => {
+    e.preventDefault();
+
+    //save order changes
+    console.log(status)
+}
 if(order)
     return(
         <div> 
@@ -27,6 +38,22 @@ if(order)
                 <Row> 
                     <Col> 
                     <div style= {{color: 'red'}}>Order Status: {order.status} </div>
+                    <Can
+                    role = {currentUser.isAdmin}
+                    perform = 'order:edit'
+                    yes = {() =>
+                        <Form inline onSubmit = {handleStatusChange} > 
+                        <Input type='select' onChange = {e => setStatus(e.target.value)}>
+                            <option>Processing </option>
+                            <option>Shipped </option>
+                            <option>Delivered </option>
+                            <option>Cancelled </option>
+                        </Input>
+                        <Button outline >Save</Button>
+                    </Form>
+                    }
+                    />
+                    
                         <Table responsive >
                             <thead>
 

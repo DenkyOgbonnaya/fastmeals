@@ -4,7 +4,7 @@ const rules = {
     ],
     1: [
         "admin-board:visit",
-        "meal:add",
+        "order:edit",
         "meal:update",
         "meal:delete",
         "profile:visit"

@@ -2,11 +2,16 @@ import React, {useState} from 'react';
 import {TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, 
 CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import OrderView from './orderView';
 
-
+const orderss = [
+  {_id: '5cc605d27df609258c1dff75', date: '09/05', reference: 'aghasfj', customer: 'Emma', items: '4', total: '2,500', returned: 'true'},
+  {_id: '5cc605d27df609258c1dff75', date: '09/05', reference: 'aghfsdj', customer: 'Emma', items: '4', total: '2,500', returned: 'true'},
+  {_id: '5cc605d27df609258c1dff75', date: '09/05', reference: 'aghewfj', customer: 'Emma', items: '4', total: '2,500', returned: 'false'}
+]
 
 const Orders = () => {
-    const[activeTab, setActiveTab] = useState(1)
+    const[activeTab, setActiveTab] = useState('1')
 
     const toggle = tab => {
       if (activeTab !== tab) 
@@ -20,7 +25,7 @@ const Orders = () => {
                 className={classnames({ active: activeTab === '1' })}
                 onClick={() => toggle('1') }
               >
-                Ordered
+                Processing
               </NavLink>
             </NavItem>
             <NavItem>
@@ -28,13 +33,21 @@ const Orders = () => {
                 className={classnames({ active: activeTab === '2' })}
                 onClick={() => toggle('2') }
               >
-                Delivered
+                Shipped
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
                 className={classnames({ active: activeTab === '3' })}
                 onClick={() => toggle('3') }
+              >
+                Delivered
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: activeTab === '4' })}
+                onClick={() => toggle('4') }
               >
                 Cancelled
               </NavLink>
@@ -44,32 +57,29 @@ const Orders = () => {
             <TabPane tabId="1">
               <Row>
                 <Col sm="12">
-                  <h4>Tab 1 Contents</h4>
+                <OrderView  orders={orderss}/>
                 </Col>
               </Row>
             </TabPane>
             <TabPane tabId="2">
               <Row>
-                <Col sm="6">
-                  <Card body>
-                    <CardTitle>Special Title Treatment</CardTitle>
-                    <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                    <Button>Go somewhere</Button>
-                  </Card>
-                </Col>
-                <Col sm="6">
-                  <Card body>
-                    <CardTitle>Special Title Treatment</CardTitle>
-                    <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                    <Button>Go somewhere</Button>
-                  </Card>
+                <Col sm="12">
+                <OrderView  orders={orderss}/>
                 </Col>
               </Row>
             </TabPane>
             <TabPane tabId="3">
               <Row>
                 <Col sm="12">
-                  <h4>Cancelled Orders</h4>
+                <OrderView  orders={orderss}/>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane tabId="4">
+              <Row>
+                <Col sm="12">
+  
+                <OrderView  orders={orderss}/>
                 </Col>
               </Row>
             </TabPane>

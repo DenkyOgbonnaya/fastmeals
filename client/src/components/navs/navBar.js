@@ -34,7 +34,7 @@ const logoutUser = () => {
             <DropdownMenu>
               <DropdownItem header> Dashboard  </DropdownItem>
               <DropdownItem onClick = {() => props.history.push('/profile')}> Profile </DropdownItem>
-              <DropdownItem onClick = {() => props.history.push('/orders')}>Orders</DropdownItem>
+              <DropdownItem onClick = {() => props.history.push('/order')}>Orders</DropdownItem>
               <DropdownItem divider />
               <DropdownItem onClick = {() => logoutUser()} > Logout </DropdownItem>
             </DropdownMenu>
