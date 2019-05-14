@@ -4,9 +4,13 @@ const orderController = require('../controller/orderController');
 const paystackController = require('../controller/paystack')
 const validation = require('../middleware/validation');
 
-const{createOrder, getOrder, getOrders, deleteOrder, getOrdersInStatus} = orderController;
+const{createOrder,
+     getOrder, getOrders, 
+     deleteOrder, getOrdersInStatus, 
+     updateOrderStatus} = orderController;
+
 const{startPayment} = paystackController;
-const{isLoggedIn} = validation;
+const{isLoggedIn, isAdmin} = validation;
 orderRouter = express.Router();
 
 orderRouter.route('/:userId/order')
@@ -16,6 +20,7 @@ orderRouter.route('/:userId/order')
 orderRouter.route('/order/:orderId')
 .get(getOrder)
 .delete(isLoggedIn, deleteOrder)
+.put(isLoggedIn, isAdmin, updateOrderStatus)
 
 orderRouter.route('/order/:status/status')
 .get(getOrdersInStatus)

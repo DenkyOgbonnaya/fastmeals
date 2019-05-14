@@ -21,9 +21,8 @@ useEffect( () => {
 
 const handleStatusChange = e => {
     e.preventDefault();
-
-    //save order changes
-    console.log(status)
+    orderApi.updateStatus(order._id, status)
+    .then(data => alert(data.message))
 }
 if(order)
     return(
@@ -43,13 +42,14 @@ if(order)
                     perform = 'order:edit'
                     yes = {() =>
                         <Form inline onSubmit = {handleStatusChange} > 
-                        <Input type='select' onChange = {e => setStatus(e.target.value)}>
+                        <Input type='select' name='status' onChange = {e => setStatus(e.target.value)}>
+                            <option>Pending </option>
                             <option>Processing </option>
                             <option>Shipped </option>
                             <option>Delivered </option>
                             <option>Cancelled </option>
                         </Input>
-                        <Button outline >Save</Button>
+                        <Button outline color='success' >Save</Button>
                     </Form>
                     }
                     />
@@ -60,7 +60,6 @@ if(order)
                                 <tr>
             <th>Meal</th>
             <th>subTotal</th>
-            <th>status</th>
           </tr>
         </thead>
         <tbody>
@@ -72,7 +71,6 @@ if(order)
                          {`${meal.price} x ${meal.quantity}`}
                          </td>
                         <td>{formatter.format(Number(meal.price*meal.quantity))}</td>
-                        <td>{meal.status}</td>
                     </tr> 
                 )
             }

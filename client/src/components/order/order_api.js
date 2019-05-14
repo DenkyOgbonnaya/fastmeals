@@ -58,6 +58,22 @@ const orderApi = {
                 return res.json();
         })
         .catch(err => console.log(err))
+    },
+    updateStatus(orderId, orderStatus){
+        return fetch(`/api/order/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.userToken}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({orderStatus})
+        })
+        .then(res => {
+            if(res.status === 200)
+                return res.json();
+        })
+        .catch(err => console.log(err))
     }
 }
 

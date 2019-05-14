@@ -72,6 +72,14 @@ const orderController = {
         Order.find({status})
         .then(orders => res.status(200).send({orders}))
         .catch(err => res.status(400).send(err))
+    },
+    updateOrderStatus(req, res){
+        const{orderId} = req.params;
+        const{orderStatus} = req.body;
+        Order.findByIdAndUpdate(orderId, {$set: {status: orderStatus}})
+        .then(() => res.status(200).send({message: 'order updated'}))
+        .catch(err => res.status(400).send(err))
+
     }
 
 }
