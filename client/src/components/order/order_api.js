@@ -50,6 +50,14 @@ const orderApi = {
            return 'order deleted'
         })
         .catch(err => console.log(err))
+    },
+    getOrderInStatus(orderStatus){
+        return fetch(`/api/order/${orderStatus}/status`)
+        .then(res => {
+            if(res.status === 200)
+                return res.json();
+        })
+        .catch(err => console.log(err))
     }
 }
 
