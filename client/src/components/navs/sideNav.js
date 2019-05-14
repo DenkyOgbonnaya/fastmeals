@@ -26,19 +26,19 @@ const SideNav = () => {
             <Nav vertical className = "nav" ><div> 
                 <NavItem className = "nav"> 
                     <NavLink to= '/manageMeals' tag= {RRNavLink} className = 'menuLinks'>
-                        <img src = "/images/icons/admin_ic.png" alt="admin" /> Manage Meals </NavLink>
+                        <img src = "/images/icons/admin_ic.png" alt="admin" /> Meals </NavLink>
                 </NavItem>
                     <NavItem className = "nav"> 
                     <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
-                    <img src = "/images/icons/order_ic.png" alt="delete" /> manage Orders </NavLink>
+                    <img src = "/images/icons/order_ic.png" alt="delete" /> Orders </NavLink>
                     </NavItem>
                     <NavItem className = "nav"> 
-                    <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
-                    <img src = "/images/icons/order_ic.png" alt="delete" /> Manage categories</NavLink>
+                    <NavLink to= '/categories' tag= {RRNavLink} className = 'menuLinks' >
+                    <img src = "/images/icons/order_ic.png" alt="delete" /> Categories</NavLink>
                     </NavItem>
                     <NavItem className = "nav"> 
                         <NavLink to= '/users' tag= {RRNavLink} className = 'menuLinks' >
-                        <img src = "/images/icons/order_ic.png" alt="delete" /> Manage Users </NavLink>
+                        <img src = "/images/icons/order_ic.png" alt="delete" />Users </NavLink>
                     </NavItem>
                             <NavItem> 
                                 <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'>
