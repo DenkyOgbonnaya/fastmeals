@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const omit = require('../modules/omit');
 require('dotenv').config();
+const _ = require('lodash')
 
 const authController = {
 
@@ -74,6 +75,16 @@ const authController = {
            })  
        }).catch(err => res.status(500).send(err))
     },
+    getUsers(req, res){
+        Users.find({})
+        .then(users => {
+            if(users){
+                const data = users.map(user => _.pick(user, "_id", "userName", "email") ) ;
+                res.status(200).send({users: data})
+            }
+        })
+        .catch(err => res.status(400).send(err))
+    }
     
 
 }

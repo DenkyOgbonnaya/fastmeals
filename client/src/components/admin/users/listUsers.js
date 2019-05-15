@@ -1,31 +1,38 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
-const users = [
-    {_id:'kejkdj', name: 'Alex', email:'Alex@fastmeals.com', orders: '5'},
-    {_id:'kfhkdj', name: 'James', email:'James@fastmeals.com', orders: '3'},
-    {_id:'kdkdj', name: 'Mary', email:'Mary@fastmeals.com', orders: '10'}
-]
 const ListUsers = () => {
+    const[users, setUsers] = useState([]);
+
+    useEffect( () => {
+        fetch('api/users/', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.userToken}`
+            }
+        })
+        .then(res => {
+            if(res.status === 200) return res.json();
+        })
+        .then(data => setUsers(data.users))
+        .catch(err => console.log(err))
+    }, [])
 
 return(
     <div> 
         <Table responsive className ='table' > 
             <thead className='thead'> 
                 <tr> 
-                    <th>Name </th>
+                    <th>UserName </th>
                     <th>Email </th>
-                    <th>Orders </th>
                 </tr>
             </thead>
             {
                 users.map(user => 
                     <tr key= {user._id}> 
-                        <td> {user.name} </td>
+                        <td> {user.userName} </td>
                         <td> {user.email} </td>
-                        <td> {user.orders} </td>
-                        <td> <Link to= {`/order`}> View Orders </Link> </td>
+                        <td> <Link to= {`/${user._id}/orders`}> View Orders </Link> </td>
                     </tr>
                 )
             }
