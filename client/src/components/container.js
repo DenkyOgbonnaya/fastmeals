@@ -12,7 +12,8 @@ import PrivateRoute from './userAuth/privateRoute';
 import ManageMeals from './admin/manageMeals';
 import Orders from './admin/orders/orders';
 import ListUsers from './admin/users/listUsers';
-import Categories from './admin/categories/listCategories';
+import ListCategories from './admin/categories/listCategories';
+import ListDepartments from './admin/departments/listDepartments';
 
 const Container = () => 
     <Switch> 
@@ -25,7 +26,8 @@ const Container = () =>
         <PrivateRoute exact path = '/orders' component = {Orders} />
         <PrivateRoute exact path = '/users' component = {ListUsers} />
         <PrivateRoute exact path = '/order/:orderId' component = {OrderView} />
-        <PrivateRoute exact path = '/categories' component = {Categories} />
+        <PrivateRoute exact path = '/departments' component = {ListDepartments} />
+        <PrivateRoute exact path = '/categories' component = {ListCategories} />
         <Route exact path = '/meal/:mealId' component = {ViewMeal} />
         <Route exact path = '/category/:title' component = {CategoryView} />
         

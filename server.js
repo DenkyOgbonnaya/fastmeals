@@ -6,6 +6,7 @@ const UserRouter = require('./server/routes/userRoutes');
 const MealRouter = require('./server/routes/mealRoutes');
 const CartRouter = require('./server/routes/cartRoutes');
 const CategRouter = require('./server/routes/categoRoutes');
+const deptRouter = require('./server/routes/department');
 const orderRouter = require('./server/routes/orderRoutes');
 const oauthRouter = require('./server/routes/oauth');
 const paystackRouter = require('./server/routes/paystackRoute')
@@ -24,6 +25,7 @@ app.use(MealRouter);
 app.use(CartRouter);
 app.use(CategRouter);
 app.use(orderRouter);
+app.use(deptRouter);
 app.use(oauthRouter);
 app.use(paystackRouter);
 
@@ -32,6 +34,7 @@ app.use('/api', MealRouter);
 app.use('/api', CartRouter);
 app.use('/api', CategRouter);
 app.use('/api', orderRouter);
+app.use('/api', deptRouter);
 app.use('/auth', oauthRouter);
 app.use('/paystack', paystackRouter);
 

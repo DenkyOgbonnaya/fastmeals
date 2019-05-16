@@ -23,7 +23,7 @@ const validation = {
             errorMessage.push('password can not be blank');
 
         if(errorMessage.length > 0)
-            return res.status(403).send({authenticated: false, message: errorMessage});
+            return res.status(406).send({authenticated: false, message: errorMessage});
 
         next();
     },
@@ -37,7 +37,7 @@ const validation = {
     Users.findOne({userName: req.body.userName})
     .then(user =>{
         if(user)
-            return res.status(443).send({authenticated: false, message: 'The userName already exist'});
+            return res.status(409).send({authenticated: false, message: 'The userName already exist'});
 
         next();
     })
@@ -53,7 +53,7 @@ const validation = {
     Users.findOne({email: req.body.email})
     .then(user =>{
         if(user)
-            return res.status(443).send({authenticated: false, message: 'The email already exist'});
+            return res.status(409).send({authenticated: false, message: 'The email already exist'});
 
         next();
     })
@@ -75,7 +75,7 @@ const validation = {
             errorMessage.push('password can not be blank');
 
         if(errorMessage.length > 0)
-            return res.status(403).send({authenticated: false, message: errorMessage});
+            return res.status(400).send({authenticated: false, message: errorMessage});
 
         next();
     },
@@ -114,7 +114,7 @@ const validation = {
        const isValidId = mongoose.Types.ObjectId.isValid(mealId);
 
        if(!isValidId)
-            return res.status(422).send({message: 'not a valid meal id'});
+            return res.status(400).send({message: 'not a valid meal id'});
         next();
    },
    /**
@@ -158,7 +158,7 @@ isLoggedIn(req, res, next){
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
         if(err) 
-            return res.status(403).send({message: 'unauthorized user.'})
+            return res.status(401).send({message: 'unauthorized user.'})
     
         next();
     });
@@ -172,10 +172,23 @@ isLoggedIn(req, res, next){
 isAdmin(req, res, next){
     const token = req.headers['authorization'].substring(7).replace(/"/g, '');
     const decoded = jwt.decode(token);
-    console.log(decoded.currentUser)
 
     if(decoded.currentUser.isAdmin === 0)
-        return res.status(403).send({message: 'unauthorized user'})
+        return res.status(401).send({message: 'unauthorized user'})
+
+    next();
+},
+validateDeptInput(req, res, next){
+    const{name, description} = req.body;
+    let errorMessage = [];
+
+    if(name.length === 0)
+        errorMessage.push('department name is required');
+    if(description.length === 0)
+        errorMessage.push('department description is required');
+
+    if(errorMessage.length> 0)
+        return res.status(406).send({errorMessage})
 
     next();
 }
