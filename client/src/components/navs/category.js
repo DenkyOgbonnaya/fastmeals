@@ -3,12 +3,12 @@ import {useGlobal} from 'reactn';
 import {NavLink } from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import '../../styles/navLinks.css';
-import mealApi from '../meals/meals_api';
+import dataProvider from '../admin/categories/dataProvider';
 
-const NavLinks = () => {
+const Category = () => {
     const[categories, setCategories] = useGlobal('categories');
     useEffect(() => {
-        mealApi.getCategories()
+        dataProvider.getCategories('food')
         .then(data => setCategories(data.categories) 
         )
     }, [ ])
@@ -17,12 +17,12 @@ const NavLinks = () => {
         <ul className = 'navs'> 
             <li> <NavLink to='/' tag = {RRNavLink}  className='navlink' >All </NavLink> </li>
             {categories.map(category => 
-              <li key = {category.id} >
-                <NavLink to = {`/category/${category.title}`} tag = {RRNavLink}
-               className='navlink' >{category.title}</NavLink>
+              <li key = {category._id} >
+                <NavLink to = {`/category/${category.name}`} tag = {RRNavLink}
+               className='navlink' >{category.name}</NavLink>
               </li>
             )}
         </ul>
     )
 }
-export default NavLinks;
+export default Category;

@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
-import {useGlobal} from 'reactn';
-import {Form, Input, Button, InputGroup, InputGroupAddon} from 'reactstrap';
+import React, {useState, useEffect} from 'react';
+import {Input, Button, InputGroup, InputGroupAddon} from 'reactstrap';
 import mealsApi from '../meals/meals_api';
-import MealList from '../meals/mealList'
 import SearchList from './searchList';
 import ListMeals from '../admin/listMeals';
+import dataProvider from '../admin/categories/dataProvider';
 
 const SearchMeal = (props) => {
     const[search, setSearch] = useState('');
     const[category, setCategory] = useState('All');
     const[result, setResult] = useState([]);
-    const[categories] = useGlobal('categories');
+    const[categories, setCategories] = useState([]);
 
+    useEffect( () => {
+        dataProvider.getCategories()
+        .then(data => setCategories(data.categories))
+    }, [])
     const handleSearch = () => {
         if(search){
             mealsApi.searchMeal(search, category)
@@ -24,9 +27,9 @@ const SearchMeal = (props) => {
         <InputGroup>
         <InputGroupAddon addonType= 'prepend' >
             <Input type = 'select' name="category"  onChange = {e => setCategory(e.target.value)} > 
-                <option> All </option>
+                <option key='All'> All </option>
                 {categories.map(category => 
-                <option value= {category.title}  key= {category.id}>{category.title} </option>)}
+                <option key= {category._id} value= {category.name}  >{category.name} </option>)}
             </Input>
         </InputGroupAddon>
             <Input placeholder = 'Search meal...' value = {search} onChange = { e => setSearch(e.target.value)} />

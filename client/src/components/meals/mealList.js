@@ -7,30 +7,32 @@ import { Card, CardImg, CardText, CardBody,
 import addToCart from '../cart/addToCart';
 import mealsApi from './meals_api';
 import SearchMeal from './searchMeal';
-import NavLinks from '../navs/navLinks';
+import Category from '../navs/category';
 import formatter from '../utils/formatter';
 import Department from '../navs/department';
+import { loadavg } from 'os';
+import Spinner from '../utils/spinner';
 
 const MealList = (props) => {
-    const[searchedMeal] = useGlobal('searchedMeal');
     const[cart, setCart] = useGlobal('cart');
     const[meals, setMeals] = useState([]);
-    const[meal, setMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
+    const[loading, setLoading] = useState(true);
     
     useEffect( () => {
         mealsApi.getMeals(props.api)
         .then(data => {
             setMeals(data.meals);
             setPages(data.pages);
-            setCurrentPage(data.page)
-            console.log(data.pages)
+            setCurrentPage(data.page);
+            setLoading(false);
         })
     }, [props.api])
     
     const pushToCart = meal =>{
             setCart(cart.concat(meal));
+            props.history.push('/cart');
             addToCart(meal);
          
     }
@@ -71,7 +73,9 @@ const MealList = (props) => {
         <div> 
              <SearchMeal search = 'user' />
              <Department />
-            <NavLinks />
+            <Category />
+            {
+                loading ? <Spinner /> :
             <Container> 
                 <Row>
                 {meals.map((meal) =>
@@ -92,7 +96,9 @@ const MealList = (props) => {
                 )} 
             </Row>
             </Container>
+            }
             {displayPageNums()}
+            
         </div>
     )
 }

@@ -1,23 +1,22 @@
 import React, {useState} from 'react';
 import {useGlobal} from 'reactn';
 import {
-  Container, Row, Col, Input, NavLink, NavbarBrand, Button, Navbar,
-Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav,NavItem} from 'reactstrap';
+  Container, Row, Col, NavLink, NavbarBrand, 
+Dropdown, DropdownItem, DropdownMenu, DropdownToggle, } from 'reactstrap';
   import {NavLink as RRNavLink, Link, withRouter} from 'react-router-dom';
+  import Can from '../utils/can';
 
 const NavBar = props => {
-const[searchedMeal, setSearchedMeal] = useGlobal('searchedMeal');
 const[cart] = useGlobal('cart');
 const[user, setUser] = useGlobal('currentUser');
 const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
 const[dropdownOpen, setDropDownOpen] = useState(false);
 
-const handleSearchChange = e => {
-  setSearchedMeal(e.target.value)
-}
+
 const logoutUser = () => {
   localStorage.removeItem('userToken');
   setUser(null);
+  props.history.push('/')
 }
   
     return (
@@ -46,8 +45,13 @@ const logoutUser = () => {
              </Col>
             <Col xs = '12' md='12'>
               <Row>
-              <Col xs ='2' md= '1'> <img src='images/icons/menu_ic.png' alt='menu' onClick= {() => setShowSideNav(!showSideNav)} className='menu'/>  </Col>
-                <Col xs ='6' md='9'> <NavbarBrand style = {{fontSize:'25px'}}> FastMeals </NavbarBrand> </Col>
+                <Can 
+                role= {user ? user.isAdmin : 0}
+                perform = 'menuIcon:see'
+                yes = { () => <Col xs ='2' md= '1'> <img src='images/icons/menu_ic.png' alt='menu' onClick= {() => setShowSideNav(!showSideNav)} className='menu'/>  </Col> }
+                />
+              
+                <Col xs ='6' md='9'> <NavbarBrand onClick ={ () => props.history.push('/')} style = {{fontSize:'25px', cursor: 'pointer'}}> FastMeals </NavbarBrand> </Col>
                 <Col xs = '4' md='2'> <div className = 'right'><NavLink to= '/cart' tag={RRNavLink}> <img src='images/icons/shopping_cart.png' alt='cart' />
                 <span style={{color:'white'}}  >{cart.length} </span>
                 </NavLink> </div> </Col>

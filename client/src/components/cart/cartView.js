@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import ContactForm from '../order/contactForm';
 import { Table, Button, ButtonGroup} from 'reactstrap';
@@ -6,15 +6,20 @@ import cartApi from './cart_api';
 import cartHelper from './cart_helper';
 import '../../styles/cart.css';
 import formatter from '../utils/formatter';
+import Spinner from '../utils/spinner';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
   const[currentUser] = useGlobal('currentUser');
   const[showContactModal, setShowContactModal] = useGlobal('showContactModal');
+  const[loading, setLoading] = useState(true);
 
   useEffect( () => {
       cartApi.getCart()
-      .then(cart => setCart(cart));
+      .then(cart => {
+          setCart(cart);
+          setLoading(false);
+      });
   }, []);
   
   const removeFromCart = (mealId) =>{
@@ -54,6 +59,8 @@ const Cart = (props) => {
         {
             showContactModal ? <ContactForm cart = {cart} user = {currentUser}/> : ''
         }
+        {loading ? <Spinner /> :
+        <div>
       <Table responsive className ='table' >
         <thead>
 
@@ -88,6 +95,8 @@ const Cart = (props) => {
       <Button onClick = { () => CheckOutOrder(cart) } className = 'checkout'> CheckOut </Button> {' '}
       <Button onClick ={() => props.history.push('/')} className = 'continue'> Continue shopping </Button>
       </div>
+        }
+    </div>
     );
   }
   export default Cart;

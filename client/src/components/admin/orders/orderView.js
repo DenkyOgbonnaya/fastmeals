@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Button} from 'reactstrap';
+import {Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import orderHelper from '../../order/order_helper';
 import formatter from '../../utils/formatter';

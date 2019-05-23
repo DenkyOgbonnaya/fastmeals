@@ -4,19 +4,21 @@ import {NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import '../../styles/navLinks.css';
 import dataProvider from '../admin/departments/dataProvider';
+import categDataprov from '../admin/categories/dataProvider';
 
 const Department = () => {
-    const[categories, setcategories] = useGlobal('categories');
+    const[categories, setCategories] = useGlobal('categories');
     const[depts, setDepts] = useState([]);
     
     useEffect( () => {
         dataProvider.getDepartments()
         .then(data => setDepts(data.depts))
     }, [])
-    const getCategories = id => {
-        //fetch categories in department(id);
-        const seedcatgories = [{id: 1, title: 'rice'}, {id: 2, title: 'Snacks'}, {id: 3, title: 'spagheti'}];
-        setcategories(seedcatgories);
+    const getCategories = name => {
+        //fetch categories in department(name);
+        categDataprov.getCategoriesInDept(name)
+        .then(data => setCategories(data.categories))
+
     }
     return(
         <div> 
@@ -24,7 +26,7 @@ const Department = () => {
                 {
                     depts.map((dept) =>
                         <li key = {dept._id}>
-                        <NavLink to={`/`} className = 'deptlinks' tag={RRNavLink} onClick= {() => getCategories(dept._id)} >
+                        <NavLink to={`/`} className = 'deptlinks'  tag={RRNavLink} onClick= {() => getCategories(dept.name)} >
                         {dept.name} </NavLink> </li>
                     )
                 }

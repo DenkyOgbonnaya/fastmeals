@@ -2,6 +2,8 @@ const Meals = require('../model/mealsModel');
 const Category = require('../model/categoryModel');
 const fs = require('fs');
 const path = require('path');
+const {dataUri} = require('../controller/imageUploder');
+const{uploader} = require('../services/cloudinary_setup');
 
 const mealController = {
 /**
@@ -11,25 +13,29 @@ const mealController = {
  * @return {obj} json object
  * @route '/meals'
  */
-addMeal(req, res){
+async addMeal(req, res){
     const{name, price, quantity, category, description} = req.body;
-    Meals.create({
-        name,
-        price,
-        quantity,
-        category,
-        description,
-        image: `/uploads/${req.file.filename}`
-    })
-    .then((meal) => {
-        Category.findOne({title: category})
-        .then(cat => {
-            cat.meals.push(meal._id)
-            cat.save();
-            res.status(201).send({message: 'meal added', meal:meal})
-        })
-    })
-    .catch(err => res.status(500).send(err));
+    if(req.file){
+        try{
+            const file = dataUri(req).content;
+            const result = await uploader.upload(file);
+            const meal = await Meals.create({
+                name,
+                price,
+                quantity,
+                category,
+                description, 
+                image: result.url,
+                publicId: result.public_id
+            })
+            console.log(meal);
+            return res.status(201).send({message: 'meal added', meal:meal})
+        }catch(err){
+            console.log('roo',err)
+            res.status(400).send(err)
+        }
+    }else
+    return res.status(400).send({message: 'input a meal image'})
         
 },
 
@@ -60,16 +66,11 @@ deleteMeal(req, res){
     const mealId = req.params.mealId
     Meals.findByIdAndRemove(mealId)
     .then((meal) => {
-        const image = JSON.stringify(meal.image).replace('/', '')
-        const img = path.resolve("public", image).replace(/\"/g, '')
-
-        fs.unlink(img, (err) => {
-            if(err){
-                console.log('err',err)
-            }else {
-                res.status(200).send({message: 'meal deleted', mealId});
-            }
-        })
+        uploader.destroy(meal.publicId, (err, result) => {
+            if(err) res.status(400).send(err);
+            res.status(200).send({message: 'meal deleted', mealId});
+        });
+        
     })
     .catch(err => {console.log(err),res.status(500).send(err)})
 },

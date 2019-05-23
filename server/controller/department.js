@@ -4,6 +4,9 @@ const deptController = {
    async create(req, res){
        const name = req.body.name.toLowerCase();
        const description = req.body.description;
+
+       if(name.length === 0 || description.length === 0)
+            return res.status(400).send({message: 'name or description cant be blank'});
        try{
            const dept = await Department.findOne({name});
            if(dept)
@@ -24,8 +27,8 @@ const deptController = {
        }
    },
    async updateDept(req, res){
-       const[deptId] = req.params;
-       const[name, description] = req.body;
+       const{deptId} = req.params;
+       const{name, description} = req.body;
        try{
            const updatedDept = await Department.findByIdAndUpdate(deptId, {$set: {name, description}});
            res.status(200).send({updatedDept})

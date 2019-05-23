@@ -1,32 +1,18 @@
 import React from 'react';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {NavLink as RRNavLink} from 'react-router-dom';
-import {useGlobal} from 'reactn';
-import Can from '../utils/can';
 import mealsApi from '../meals/meals_api';
 
 const SideNav = () => {
-    const[user] = useGlobal('currentUser');
-    const[categories, setCategories] = useGlobal('categories');
-    const[showUpdateMealsButton, setShowUpdatMealsButton] = useGlobal('showUpdateMealsButton');
-    const[showDeleteMealsButton, setShowDeleteMealsButton] = useGlobal('showDeleteMealsButton');
-
-    const addCategory = () => {
-        mealsApi.addCategory()
-        .then(category => {
-            if(category)
-            setCategories(categories.concat(category));
-        })
-    }
 
     return(
         <div className= 'sideNav'>
         <div className = 'dashboard'>Admin Dashboard </div> 
         <hr />
-            <Nav vertical className = "nav" ><div> 
+            <Nav vertical className = "nav" >
                 <NavItem className = "nav"> 
                     <NavLink to= '/manageMeals' tag= {RRNavLink} className = 'menuLinks'>
-                        <img src = "/images/icons/admin_ic.png" alt="admin" /> Meals </NavLink>
+                        <img src = "/images/icons/meals_ic.png" alt="meals" /> Meals </NavLink>
                 </NavItem>
                     <NavItem className = "nav"> 
                     <NavLink to= '/orders' tag= {RRNavLink} className = 'menuLinks' >
@@ -34,27 +20,17 @@ const SideNav = () => {
                     </NavItem>
                     <NavItem className = "nav"> 
                     <NavLink to= '/departments' tag= {RRNavLink} className = 'menuLinks' >
-                    <img src = "/images/icons/order_ic.png" alt="delete" /> Departments</NavLink>
+                    <img src = "/images/icons/department_ic.png" alt="departments" /> Departments</NavLink>
                     </NavItem>
                     <NavItem className = "nav"> 
                     <NavLink to= '/categories' tag= {RRNavLink} className = 'menuLinks' >
-                    <img src = "/images/icons/order_ic.png" alt="delete" /> Categories</NavLink>
+                    <img src = "/images/icons/category_ic.png" alt="category" /> Categories</NavLink>
                     </NavItem>
                     <NavItem className = "nav"> 
                         <NavLink to= '/users' tag= {RRNavLink} className = 'menuLinks' >
-                        <img src = "/images/icons/order_ic.png" alt="delete" />Users </NavLink>
+                        <img src = "/images/icons/users_ic.png" alt="delete" />Users </NavLink>
                     </NavItem>
-                            <NavItem> 
-                                <NavLink to= '/' tag= {RRNavLink} onClick= { () => addCategory() } className = 'menuLinks'>
-                                <img src = "/images/icons/addcat_ic.png" alt="delete" /> Add meal Category</NavLink>
-                            </NavItem>
-                        </div>
-                <hr />
-                <NavItem> 
-                    <NavLink to= '/about' tag= {RRNavLink} className = 'menuLinks'>
-                    <img src = "/images/icons/about_ic.png" alt="delete" /> Logout </NavLink>
-                </NavItem>
-            </Nav>
+                </Nav>
         </div>
     )
 }

@@ -30,7 +30,6 @@ const cartController = {
                 .then(meal => {
                     if(meal){
                         meal.quantity++
-                        meal.subTotal = meal.price*meal.quantity
 
                         return meal.save()
                     }else{
@@ -38,7 +37,6 @@ const cartController = {
                             mealId,
                             name,
                             price,
-                            subTotal: price*1,
                             quantity: 1,
                             cartFor: cartId,
                             image

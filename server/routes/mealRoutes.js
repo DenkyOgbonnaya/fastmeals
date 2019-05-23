@@ -2,7 +2,7 @@ const express = require('express');
 const mealController = require('../controller/mealController');
 const validation = require('../middleware/validation');
 const multer = require('multer');
-const upload = require('../controller/imageUploder')
+const {multerUploads} = require('../controller/imageUploder')
 
 const mealRouter = express.Router();
 const{
@@ -12,7 +12,7 @@ const{
     getMeal,
     getMeals,
     searchMeal,
-    getMealsByCat
+    mealsInCategory
 } = mealController;
 const{validateMealInput,
     validateMealId,
@@ -20,7 +20,7 @@ const{validateMealInput,
     isAdmin
 } = validation;
 
-mealRouter.post('/meals', upload.single('image'), isLoggedIn, isAdmin, addMeal)
+mealRouter.post('/meals', multerUploads, isLoggedIn, isAdmin, addMeal)
 mealRouter.get('/meals', getMeals)
 
 mealRouter.route('/meals/:mealId')
@@ -28,6 +28,7 @@ mealRouter.route('/meals/:mealId')
     .delete(isLoggedIn, isAdmin, validateMealId, deleteMeal)
     .get(validateMealId, getMeal)
 mealRouter.get('/meal', searchMeal);
+mealRouter.get('/meals/inCategory/:category', mealsInCategory)
 
 
 module.exports = mealRouter;

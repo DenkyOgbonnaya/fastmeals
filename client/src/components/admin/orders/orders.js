@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, 
-CardTitle, CardText, Row, Col } from 'reactstrap';
+import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import OrderView from './orderView';
 import dataProvider from '../../order/order_api';
@@ -101,7 +100,7 @@ const Orders = () => {
             <TabPane tabId="Cancelled">
               <Row>
                 <Col sm="12">
-  
+
                 <OrderView  orders={orders}/>
                 </Col>
               </Row>

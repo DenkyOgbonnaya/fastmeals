@@ -7,7 +7,8 @@ const rules = {
         "order:edit",
         "meal:update",
         "meal:delete",
-        "profile:visit"
+        "profile:visit",
+        "menuIcon:see"
     ]
 }
 export default rules;

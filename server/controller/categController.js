@@ -9,12 +9,13 @@ categoryController = {
  * @route '/category'
  */
     getCategories(req, res){
-        Category.find({})
+        const{department} = req.query;
+        let query = {};
+        if(department)
+            query.department = department;
+        Category.find(query)
         .then(categories => {
-            const titles = categories.map(category => {
-                return {title: category.title, id: category._id}
-            })
-            res.status(200).send({categories: titles});
+            res.status(200).send({categories});
         })
         .catch(err => res.status(500).send(err))
     },
@@ -46,19 +47,40 @@ getMealsByCat(req, res){
     .catch(err => res.status(500).send(err))
 },
 addCategory(req, res){
-    const title = req.body.title;
-    if(!title)
-        return res.status(400).send({message: 'specify a title'})
-    Category.findOne(req.body)
+    const name = req.body.name.toLowerCase();
+    const department = req.body.department;
+    if(name.length === 0 || department.length === 0)
+        return res.status(400).send({message: 'specify a name and department'})
+    Category.findOne({name})
     .then(category => {
         if(category)
             return res.status(208).send({message: 'Category already exist'});
-        return Category.create(req.body)
+        return Category.create({name, department})
     })
-    .then( (category) => {
-        return res.status(200).send({message: 'New Category added', category: {title: category.title, id: category._id}});
+    .then( (newCategory) => {
+        return res.status(201).send({message: 'New Category added', newCategory});
     })
     .catch(err => res.status(500).send(err))
+},
+async updateCategory(req, res){
+    const{categoryId} = req.params;
+    const {department, name} = req.body;
+
+    try{
+        const updatedCategory = await Category.findByIdAndUpdate(categoryId, {$set: {name, department}})
+        res.status(200).send({updatedCategory});
+    }catch(err){
+        res.status(500).send(err)
+    }
+},
+async categoriesInDept(req, res){
+    const{department} = req.params;
+    try{
+        const categories = await Category.find({department});
+        res.status(200).send({categories})
+    }catch(err){
+        res.status(400).send(err)
+    }
 }
 }
 module.exports = categoryController

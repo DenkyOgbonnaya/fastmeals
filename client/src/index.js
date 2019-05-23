@@ -15,6 +15,7 @@ setGlobal({
     searchedMeal: '',
     mealId: '',
     categories: [],
+    departments: [],
     showContactModal: false,
     showSideNav: false,
     showMealModal: false,

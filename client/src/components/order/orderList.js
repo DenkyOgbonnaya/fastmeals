@@ -21,7 +21,7 @@ const OrederList = props => {
     return(
         <div> 
             <h3> Order List </h3>
-            {orders ?  
+            {orders.length > 0 ?  
             <div className='orders'>
                 <Table responsive className='table' > 
                     <thead className='thead'> 
@@ -42,7 +42,7 @@ const OrederList = props => {
                                     <td>{order.meals.length}</td>
                                     <td>{formatter.format(orderHelper.getTotalPrice(order))}</td>
                                     <td>{order.status}</td>
-                                    <td><img src= '/images/icons/delete_ic.png' className='delete' onClick={() => deleteOrder(order._id)} /> </td>
+                                    <td><img src= '/images/icons/delete_ic.png' alt='delete' className='delete' onClick={() => deleteOrder(order._id)} /> </td>
                                     <td> <Link to= {`/order/${order._id}`}>Details </Link> </td>
                                 </tr>
                             )
@@ -52,7 +52,7 @@ const OrederList = props => {
             </div>
             
              :
-            <div> You have no ordered meals </div>
+            <div> No ordered meals </div>
             }
         </div>
 

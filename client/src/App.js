@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import NavBar from './components/navs/navBar';
 import Container from './components/container';
-import NavLinks from './components/navs/navLinks';
 import SideNav from './components/navs/sideNav';
 import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
+import Can from './components/utils/can';
 import {withRouter} from 'react-router-dom';
 import './App.css';
 import Footer from './components/footer';
@@ -56,7 +56,11 @@ const App = props => {
         <div className= 'App' >
             <div className='Wrapper' > 
                 <div className= {showSideNav ? 'showSideNav' : 'hideSideNav'} onClick= {() => setShowSideNav(false)} > 
-                    <SideNav />
+                    <Can 
+                    role= {currentUser ? currentUser.isAdmin : 0}
+                    perform= 'admin-board:visit'
+                    yes= {() => <SideNav />}
+                    />
                 </div>
                     <div className= 'Content'> 
                         <div className = 'NavBar' >

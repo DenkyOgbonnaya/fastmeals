@@ -1,7 +1,6 @@
 const Users = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const omit = require('../modules/omit');
 require('dotenv').config();
 const _ = require('lodash')
 
@@ -25,9 +24,8 @@ const authController = {
         })
         .then(user => {
             const token = jwt.sign(
-                {currentUser: omit(user) },
-                process.env.SECRET_KEY,
-                {expiresIn: '24h'}   
+                {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned") },
+                process.env.SECRET_KEY,  
             )
             return res.status(201).send({
                 token,
@@ -61,9 +59,8 @@ const authController = {
                    message: 'incorrect email and password combination'
                })
             const token = jwt.sign(
-                {currentUser: omit(user)},
-                process.env.SECRET_KEY,
-                {expiresIn: '24h'}
+                {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned")},
+                process.env.SECRET_KEY
             )
             return token;
        })

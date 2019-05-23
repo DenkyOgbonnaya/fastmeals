@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useGlobal} from 'reactn';
-import {Table, ButtonGroup, Button, InputGroup, InputGroupAddon} from 'reactstrap';
+import {withRouter} from 'react-router-dom';
+import {Table, ButtonGroup, Button} from 'reactstrap';
 import MealModal from '../meals/mealModal';
 
 const ListMeals = (props) => {
@@ -49,4 +50,4 @@ const ListMeals = (props) => {
     )
 }
 
-export default ListMeals;
+export default withRouter(ListMeals);

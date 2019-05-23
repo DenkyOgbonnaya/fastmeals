@@ -12,6 +12,9 @@ const mealSchema = new Schema({
       image: {
         type: String,
       },
+      publicId: {
+        type: String,
+      },
       description: {
         type: String,
         trim: true

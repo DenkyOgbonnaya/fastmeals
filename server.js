@@ -12,6 +12,7 @@ const oauthRouter = require('./server/routes/oauth');
 const paystackRouter = require('./server/routes/paystackRoute')
 const passport = require('passport');
 const passport_setup = require('./server/services/passport_setup');
+const{cloudinaryConfig} = require('./server/services/cloudinary_setup');
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,6 +21,7 @@ app.use(cors({credentials:true, origin: 'http://localhost:3000'}));
 app.options('*', cors());
 app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
+app.use('*', cloudinaryConfig)
 app.use(UserRouter);
 app.use(MealRouter);
 app.use(CartRouter);

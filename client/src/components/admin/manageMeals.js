@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {useGlobal} from 'reactn';
-import {Table, ButtonGroup, Button, InputGroup, InputGroupAddon} from 'reactstrap';
 import {Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 import mealApi from '../meals/meals_api';
 import ListMeals from './listMeals';
 import SearchMeal from '../meals/searchMeal'
+import Spinner from '../utils/spinner';
 
 const ManageMeals = props => {
     const[meals, setMeals] = useGlobal('meals');
-    const[editableMeal, setEditableMeal] = useState({});
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
+    const[loading, setLoading] = useState(true);
     
     useEffect( () => {
         mealApi.getMeals('/api/meals')
@@ -18,6 +18,7 @@ const ManageMeals = props => {
             setMeals(data.meals);
             setCurrentPage(data.currentPage);
             setPages(data.pages);
+            setLoading(false);
         })
     }, [])
     
@@ -63,32 +64,9 @@ const ManageMeals = props => {
                 <h3>Manage Meals </h3>
             </div>
             <SearchMeal search = 'admin' />
-            <ListMeals meals = {meals} deleteMeal = {deleteMeal} />
-            {/*{showMealModal ? <MealModal meal= {editableMeal}/> : null }
-            <Table responsive > 
-                <thead>
-
-                    <tr>
-                    <th className ='thead'>Meal</th>
-                    <th className ='thead'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        meals.map(meal =>
-                        <tr key = {meal._id}> 
-                            <td><img src= {meal.image} alt='meal' height= '80px' width= '80px'/> {meal.name} </td>
-                            <td>
-                            <ButtonGroup className = "btnGrp">
-                                <Button onClick = {() => props.history.push(`/meal/${meal._id}`)}  className = 'actions'>View</Button> 
-                                <Button onClick = {() => updateMeal(meal)}  className = 'actions' >Update</Button> 
-                                <Button onClick = {() => deleteMeal(meal._id)}  className = 'actions'>Delete</Button>
-                            </ButtonGroup></td>
-                        </tr> 
-                    )
-                }
-                </tbody>
-            </Table>*/}
+            {   loading ? <Spinner /> :
+                <ListMeals meals = {meals} deleteMeal = {deleteMeal} />
+            }
             {displayPageNums()}
         </div>
     )

@@ -5,7 +5,7 @@ import MealList from './mealList';
 
 const CategoryView = (props) => {
     const title = props.match.params.title;
-    const api = `/api/category/${title}`;
+    const api = `/api/meals/inCategory/${title}`;
     
     return (
         <div className = 'category'>

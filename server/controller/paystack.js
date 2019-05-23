@@ -44,7 +44,7 @@ const paystackController = {
         Orders.findById(id)
         .then(order => {
             order.payment_id = reference,
-            order.status = 'Processing'
+            order.status = 'Pending'
             order.save();
            
             res.redirect(`http://localhost:3000/order/${order._id}`)
