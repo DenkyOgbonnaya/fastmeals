@@ -13,6 +13,7 @@ const paystackRouter = require('./server/routes/paystackRoute')
 const passport = require('passport');
 const passport_setup = require('./server/services/passport_setup');
 const{cloudinaryConfig} = require('./server/services/cloudinary_setup');
+import path from 'path';
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use(orderRouter);
 app.use(deptRouter);
 app.use(oauthRouter);
 app.use(paystackRouter);
+app.use(express.static(__dirname + '/client/public'));
 
 app.use('/api/users', UserRouter);
 app.use('/api', MealRouter);
@@ -40,6 +42,13 @@ app.use('/api', deptRouter);
 app.use('/auth', oauthRouter);
 app.use('/paystack', paystackRouter);
 
+
+  if(process.env.node_env === 'production'){
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname+'/client/build/index.html'));
+      });
+  }
 const PORT = process.env.PORT || 8080;
 
 connectToDb();
