@@ -13,7 +13,7 @@ const paystackRouter = require('./server/routes/paystackRoute')
 const passport = require('passport');
 const passport_setup = require('./server/services/passport_setup');
 const{cloudinaryConfig} = require('./server/services/cloudinary_setup');
-import path from 'path';
+const path = require ('path');
 
 const app = express();
 app.use(express.json());
