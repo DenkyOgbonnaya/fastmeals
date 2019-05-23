@@ -152,9 +152,9 @@ const validation = {
     * @param next next middleware
     */
 isLoggedIn(req, res, next){
-    const token = req.headers['authorization'].substring(7).replace(/"/g, '');
+    const token = req.headers['authorization'] ?  req.headers['authorization'].substring(7).replace(/"/g, '') : ''
 
-    if(!token) return res.status(403 ).send({message: 'unauthorized user'})
+    if(!token) return res.status(403).send({message: 'unauthorized user'})
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
         if(err) 
@@ -170,7 +170,9 @@ isLoggedIn(req, res, next){
     * @param next next middleware
     */
 isAdmin(req, res, next){
-    const token = req.headers['authorization'].substring(7).replace(/"/g, '');
+    const token = req.headers['authorization'] ?  req.headers['authorization'].substring(7).replace(/"/g, '') : ''
+    if(!token) return res.status(403).send({message: 'unauthorized user'});
+
     const decoded = jwt.decode(token);
 
     if(decoded.currentUser.isAdmin === 0)
