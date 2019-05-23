@@ -80,10 +80,11 @@ const UpdateMeal = (props) => {
           <Col md={4}>
             <FormGroup>
               <Label for="category">Category</Label>
-              <Input type='select'  name="category"  onChange = {e => setCategory(e.target.value)} >
-              {categories.map(category =>
+              <Input type='select'  name="category" value={category}  onChange = {e => setCategory(e.target.value)} >
+              {categories.length > 0 ?
+                categories.map(category =>
               <option value= {category.name} key={category.id} > {category.name} </option>
-            )} 
+            ) : null} 
               </Input>
             </FormGroup>
           </Col>

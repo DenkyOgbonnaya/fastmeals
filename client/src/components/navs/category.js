@@ -16,12 +16,15 @@ const Category = () => {
     return(
         <ul className = 'navs'> 
             <li> <NavLink to='/' tag = {RRNavLink}  className='navlink' >All </NavLink> </li>
-            {categories.map(category => 
+            {categories.length > 0 ?
+            categories.map(category => 
               <li key = {category._id} >
                 <NavLink to = {`/category/${category.name}`} tag = {RRNavLink}
                className='navlink' >{category.name}</NavLink>
               </li>
-            )}
+            )
+            : null
+        }
         </ul>
     )
 }

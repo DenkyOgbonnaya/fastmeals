@@ -28,8 +28,10 @@ const SearchMeal = (props) => {
         <InputGroupAddon addonType= 'prepend' >
             <Input type = 'select' name="category"  onChange = {e => setCategory(e.target.value)} > 
                 <option key='All'> All </option>
-                {categories.map(category => 
-                <option key= {category._id} value= {category.name}  >{category.name} </option>)}
+                { categories.length > 0 ?
+                    categories.map(category => 
+                <option key= {category._id} value= {category.name}  >{category.name} </option>)
+                : null}
             </Input>
         </InputGroupAddon>
             <Input placeholder = 'Search meal...' value = {search} onChange = { e => setSearch(e.target.value)} />
