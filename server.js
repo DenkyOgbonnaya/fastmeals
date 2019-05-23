@@ -20,7 +20,7 @@ app.use(express.json());
 //app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors({credentials:true, origin: 'http://localhost:3000'}));
 app.options('*', cors());
-app.use(express.static(__dirname + '/public'))
+//app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use('*', cloudinaryConfig)
 app.use(UserRouter);
@@ -31,7 +31,7 @@ app.use(orderRouter);
 app.use(deptRouter);
 app.use(oauthRouter);
 app.use(paystackRouter);
-app.use(express.static(__dirname + '/client/public'));
+app.use(express.static(__dirname + '/client/build'));
 
 app.use('/api/users', UserRouter);
 app.use('/api', MealRouter);
@@ -42,8 +42,11 @@ app.use('/api', deptRouter);
 app.use('/auth', oauthRouter);
 app.use('/paystack', paystackRouter);
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
-  if(process.env.node_env === 'production'){
+  if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname, 'client/build')));
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/client/build/index.html'));
