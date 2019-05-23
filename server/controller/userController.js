@@ -65,7 +65,7 @@ const authController = {
             return token;
        })
        .then(token => {
-           res.status(200).send({
+           return res.status(200).send({
                token,
                authenticated: true,
                message: 'login successfull'
