@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-Parser')
+//const bodyParser = require('body-Parser')
 const connectToDb = require('./server/model/dataBase');
 const UserRouter = require('./server/routes/userRoutes');
 const MealRouter = require('./server/routes/mealRoutes');
@@ -15,8 +15,8 @@ const passport_setup = require('./server/services/passport_setup');
 const{cloudinaryConfig} = require('./server/services/cloudinary_setup');
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.json());
+//app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors({credentials:true, origin: 'http://localhost:3000'}));
 app.options('*', cors());
 app.use(express.static(__dirname + '/public'))
