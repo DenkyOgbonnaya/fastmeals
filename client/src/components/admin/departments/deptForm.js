@@ -17,6 +17,7 @@ const DeptForm = ({dept, closeForm}) => {
             Swal.fire('Department', 'New department successfully added');
             dataProvider.create(name, description)
             .then(data => setDepartments(departments.concat(data.newDept)))
+            return;
 
         }else
             setDepartments(departments.map(department => department._id === dept._id ? 
