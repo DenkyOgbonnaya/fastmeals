@@ -23,10 +23,12 @@ const MealList = (props) => {
     useEffect( () => {
         mealsApi.getMeals(props.api)
         .then(data => {
-            setMeals(data.meals);
-            setPages(data.pages);
-            setCurrentPage(data.page);
-            setLoading(false);
+            if(data.meals.length > 0){
+                setMeals(data.meals);
+                setPages(data.pages);
+                setCurrentPage(data.page);
+                setLoading(false);
+            }
         })
     }, [props.api])
     
@@ -85,7 +87,7 @@ const MealList = (props) => {
                         <CardBody >
                             <CardTitle> {meal.name} </CardTitle>
                             <CardSubtitle>{formatter.format(Number(meal.price))} </CardSubtitle>
-                            <CardText> <small className='text-muted'> {meal.description.substring(0, 20)} 
+                            <CardText> <small className='text-muted'> {meal.description ? meal.description.substring(0, 20) : ''} 
                             ...<Link to = {`/meal/${meal._id}`} >more </Link> </small>
                              </CardText>
                             <Button style = {{background:'firebrick'}} onClick= {() => pushToCart(meal)}  >Buy Now </Button>{" "}
