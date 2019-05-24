@@ -8,7 +8,7 @@ const ListUsers = () => {
     const[loading, setLoading] = useState(true);
 
     useEffect( () => {
-        fetch('api/users/', {
+        fetch('api/users/admin', {
             headers: {
                 'Authorization': `Bearer ${localStorage.userToken}`
             }

@@ -16,7 +16,7 @@ const{validateUserInput,
 
 userRouter.post('/signup', validateUserInput, checkEmailExist, checkUsernameExist, createUser);
 userRouter.post('/login', validateLoginInput, loginUser);
-userRouter.get('/', isLoggedIn, isAdmin, getUsers)
+userRouter.get('/admin', isLoggedIn, isAdmin, getUsers)
 
 
 
