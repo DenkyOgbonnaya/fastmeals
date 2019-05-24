@@ -153,7 +153,7 @@ const validation = {
     */
 isLoggedIn(req, res, next){
     const token = req.headers['authorization'] ?  req.headers['authorization'].substring(7).replace(/"/g, '') : ''
-
+    
     if(!token) return res.status(401).send({message: 'unauthorized user or expired access token'})
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{

@@ -28,10 +28,8 @@ async addMeal(req, res){
                 image: result.url,
                 publicId: result.public_id
             })
-            console.log(meal);
             return res.status(201).send({message: 'meal added', meal:meal})
         }catch(err){
-            console.log('roo',err)
             res.status(400).send(err)
         }
     }else

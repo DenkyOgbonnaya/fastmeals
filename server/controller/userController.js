@@ -2,7 +2,7 @@ const Users = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-//const _ = require('lodash')
+const _ = require('lodash')
 
 const authController = {
 
@@ -34,7 +34,7 @@ const authController = {
             const token = jwt.sign(
                 {currentUser: newUser },
                 process.env.SECRET_KEY,
-                {expiresIn: '24h'  }
+                {expiresIn: "1d"  }
             )
             return res.status(201).send({
                 token,
@@ -79,7 +79,7 @@ const authController = {
             const token = jwt.sign(
                 {currentUser: newUser},
                 process.env.SECRET_KEY,
-                {expiresIn: '24h'}
+                {expiresIn: "1d"}
             )
             return res.status(200).send({
                 token,
