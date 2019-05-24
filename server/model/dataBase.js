@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const{MONGODB_URL} = process.env;
 
-const dbUrl = process.env.MONGO_URL || MONGODB_URL; //'mongodb://localhost:27017/fastmeals';
+const dbUrl = process.env.MONGODB_URI || MONGODB_URL; //'mongodb://localhost:27017/fastmeals';
 
 const connectToDb = () => {
     mongoose.connect(dbUrl, {useNewUrlParser: true})
