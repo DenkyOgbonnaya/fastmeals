@@ -154,11 +154,11 @@ const validation = {
 isLoggedIn(req, res, next){
     const token = req.headers['authorization'] ?  req.headers['authorization'].substring(7).replace(/"/g, '') : ''
 
-    if(!token) return res.status(403).send({message: 'unauthorized user'})
+    if(!token) return res.status(401).send({message: 'unauthorized user or expired access token'})
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
         if(err) 
-            return res.status(401).send({message: 'unauthorized user.'})
+            return res.status(401).send({message: 'unauthorized user or expired access token.'})
     
         next();
     });
@@ -171,12 +171,12 @@ isLoggedIn(req, res, next){
     */
 isAdmin(req, res, next){
     const token = req.headers['authorization'] ?  req.headers['authorization'].substring(7).replace(/"/g, '') : ''
-    if(!token) return res.status(403).send({message: 'unauthorized user'});
+    if(!token) return res.status(401).send({message: 'unauthorized user or expired access tokem'});
 
     const decoded = jwt.decode(token);
 
     if(decoded.currentUser.isAdmin === 0)
-        return res.status(401).send({message: 'unauthorized user'})
+        return res.status(401).send({message: 'unauthorized user or expired access token'})
 
     next();
 },

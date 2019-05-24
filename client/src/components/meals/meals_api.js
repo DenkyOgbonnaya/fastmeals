@@ -9,7 +9,6 @@ const mealApi = {
             body: meal
         })
         .then(res => {
-            if(res.status === 201)
             return res.json();
         })
         .catch(err => console.log(err))
@@ -23,21 +22,19 @@ const mealApi = {
         .catch(err => console.log(err)) 
     },
     deleteMeal(mealId){
-        fetch(`/api/meals/${mealId}`, {
+        return fetch(`/api/meals/${mealId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.userToken}`
             }
         })
         .then(res => {
-            if(res.status === 200 ){
-              //ToDo
-            }
+            return res.json();
         })
         .catch(err => console.log(err))
     },
     updateMeal(id, data){
-        fetch(`/api/meals/${id}`, {
+        return fetch(`/api/meals/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -46,9 +43,7 @@ const mealApi = {
             body: JSON.stringify(data)
           })
           .then(res => {
-            if(res.status === 200){
-              //ToDo
-            }
+            return res.json();
           })
           .catch(err => console.log(err))
     },

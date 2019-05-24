@@ -49,8 +49,8 @@ async addMeal(req, res){
 updateMeal(req, res){
     const mealId = req.params.mealId;
     Meals.findByIdAndUpdate(mealId, {$set : req.body})
-        .then(() => {
-            res.status(200).send({message: 'meal updated'})
+        .then(meal => {
+            res.status(200).send({message: 'meal updated', meal})
         })
         .catch(err => res.status(500).send(err));
 },
@@ -68,7 +68,7 @@ deleteMeal(req, res){
     .then((meal) => {
         uploader.destroy(meal.publicId, (err, result) => {
             if(err) res.status(400).send(err);
-            res.status(200).send({message: 'meal deleted', mealId});
+            res.status(200).send({message: 'meal deleted', meal});
         });
         
     })

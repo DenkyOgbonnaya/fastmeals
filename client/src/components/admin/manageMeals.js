@@ -5,12 +5,14 @@ import mealApi from '../meals/meals_api';
 import ListMeals from './listMeals';
 import SearchMeal from '../meals/searchMeal'
 import Spinner from '../utils/spinner';
+import {Alert} from 'reactstrap';
 
 const ManageMeals = props => {
     const[meals, setMeals] = useGlobal('meals');
     const[currentPage, setCurrentPage] = useState(1);
     const[pages, setPages] = useState(1);
     const[loading, setLoading] = useState(true);
+    const[isExpiredToken, setIsExpiredToken] = useState(false);
     
     useEffect( () => {
         mealApi.getMeals('/api/meals')
@@ -24,7 +26,13 @@ const ManageMeals = props => {
     
     const deleteMeal = (id) => {
         setMeals(meals.filter(meal => meal._id !== id));
-        mealApi.deleteMeal(id);
+        mealApi.deleteMeal(id)
+        .then(data => {
+            if(data.meal){
+                setMeals(meals.filter(meal => meal._id !== id));
+            }else
+                setIsExpiredToken(true);
+        })
     }
     const displayPageNums = () => {
         const pageNumbers = [];
@@ -63,6 +71,7 @@ const ManageMeals = props => {
             <div style = {{ padding: '5px'}}>  
                 <h3>Manage Meals </h3>
             </div>
+            {isExpiredToken ? <Alert color='danger'> Expired acces token! re-authenticate to delete meal </Alert> : ''}
             <SearchMeal search = 'admin' />
             {   loading ? <Spinner /> :
                 <ListMeals meals = {meals} deleteMeal = {deleteMeal} />

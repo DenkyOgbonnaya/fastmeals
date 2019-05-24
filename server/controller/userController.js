@@ -25,14 +25,15 @@ const authController = {
         .then(user => {
             const token = jwt.sign(
                 {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned") },
-                process.env.SECRET_KEY,  
+                process.env.SECRET_KEY,
+                {expiresIn: '24h'  }
             )
             return res.status(201).send({
                 token,
                 message: 'new user created'
             })
         })
-        .catch(err => res.status(500).send(err))
+        .catch(err =>  res.status(500).send(err))
     },
     /** 
     * login user
@@ -41,36 +42,37 @@ const authController = {
     * @return {obj} jwt
     * @route '/login'
     */
-   loginUser(req, res){
+   async loginUser(req, res){
        const{email, password} = req.body;
-
-       Users.findOne({email})
-       .then(user => {
-           if(!user)
+        try{
+            const user = await Users.findOne({email});
+            if(!user){
                 return res.status(403).send({
-                authenticated: false,
-                message: 'incorrect email and password combination'
-        })
-          const validPassword = bcrypt.compareSync(password, user.password);
+                    authenticated: false,
+                    message: 'incorrect email and password combination'
+                })
+            }
+            const validPassword = bcrypt.compareSync(password, user.password);
 
-          if(!validPassword)
-               return res.status(403).send({
-                   authenticated: false,
-                   message: 'incorrect email and password combination'
-               })
+            if(!validPassword){
+                return res.status(403).send({
+                    authenticated: false,
+                    message: 'incorrect email and password combination'
+                })
+            }
             const token = jwt.sign(
                 {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned")},
-                process.env.SECRET_KEY
+                process.env.SECRET_KEY,
+                {expiresIn: '24h'}
             )
-            return token;
-       })
-       .then(token => {
-           return res.status(200).send({
-               token,
-               authenticated: true,
-               message: 'login successfull'
-           })  
-       }).catch(err => res.status(500).send(err))
+            return res.status(200).send({
+                token,
+                authenticated: true,
+                message: 'login successfull'
+            })  
+        }catch(err){
+            res.status(500).send(err)
+        }
     },
     getUsers(req, res){
         Users.find({})

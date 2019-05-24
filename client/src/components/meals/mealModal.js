@@ -3,7 +3,7 @@ import {useGlobal} from 'reactn';
 import '../../styles/order.css'
 import { 
      Modal, ModalHeader, ModalBody, ModalFooter,
-    Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+    Col, Row, Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
     import mealsApi from './meals_api';
     import dataProvider from '../admin/categories/dataProvider';
     import Swal from 'sweetalert2';
@@ -17,6 +17,7 @@ const UpdateMeal = (props) => {
     const[image, setImage] = useState(null);
     const[categories, setCategories] = useState([]);
     const[meals, setMeals] = useGlobal('meals');
+    const[isTokenExpired, setIsTokenExpired] = useState(false);
 
     const[showMealmodal, setShowMealModal] = useGlobal('showMealModal');
 
@@ -28,20 +29,29 @@ const UpdateMeal = (props) => {
       e.preventDefault();
       
       if(props.meal){
-        const data = {name, price, quantity, description, category}
-        setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, data) : meal ));
+        const credentials = {name, price, quantity, description, category}
+        setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, credentials) : meal ));
         setShowMealModal(false);
-        Swal.fire('Update Meal', 'Meal successfully updated');
-        mealsApi.updateMeal(props.meal._id, data);
+        mealsApi.updateMeal(props.meal._id, credentials)
+        .then(data => {
+          if(data.meal){
+            setMeals(meals.map(meal => meal._id === props.meal._id ? Object.assign({}, meal, data) : meal ));
+            Swal.fire('Update Meal', 'Meal successfully updated');
+          }else
+            setIsTokenExpired(true);
+        })
       }else{
         const addMealForm = document.forms.mealForm;
         const data = new FormData(addMealForm);
         
         mealsApi.createMeal(data)
         .then(data => {
-          setMeals(meals.concat(data.meal));
-          setShowMealModal(false);
-          Swal.fire('New Meal', 'Meal successfully added');
+          if(data.meal){
+            setMeals(meals.concat(data.meal));
+            setShowMealModal(false);
+            Swal.fire('New Meal', 'Meal successfully added');
+          }else
+            setIsTokenExpired(true);
         });
       }
       
@@ -51,7 +61,7 @@ const UpdateMeal = (props) => {
           <Modal isOpen={showMealmodal}  >
             <ModalHeader className= 'modalHeader'>{props.meal? 'Update meal details' : 'Add new meal'}</ModalHeader>
             <ModalBody>
-              
+              {isTokenExpired ? <Alert color='danger'>Expired access token! re-authenticate to add or edit meals </Alert> : ''}
         <Form onSubmit ={submitForm} encType = "multipart/form-data"  name= 'mealForm' >
         <Row form>
           <Col md={6}>
