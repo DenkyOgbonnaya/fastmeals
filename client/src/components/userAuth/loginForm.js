@@ -44,7 +44,7 @@ const LoginForm = (props) => {
         <div className = 'authForm'>
             
                 <div className = 'form'>
-                    <h5>Login to place order </h5> <br />
+                    <h5>Login to Fastmeals </h5> <br />
                     <div id= 'error' > {error} </div>
                     <Form onSubmit = {handleSubmit}  > 
                         <FormGroup>
@@ -56,7 +56,7 @@ const LoginForm = (props) => {
                             <Input type = 'password' required name='password' placeholder = 'Enter password' 
                             onChange={e => setPassword(e.target.value)} />
                         </FormGroup> <br />
-                        <Button> login </Button> {" "} <Link to= '/signup'> Already have an account </Link> <br />
+                        <Button> login </Button> {" "} <Link to= '/signup'> Don't have an account? </Link> <br />
                         <div id = 'google'>
                         OR 
                         <br />

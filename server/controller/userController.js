@@ -2,7 +2,7 @@ const Users = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const _ = require('lodash')
+//const _ = require('lodash')
 
 const authController = {
 
@@ -23,8 +23,16 @@ const authController = {
             password: hashedPassword
         })
         .then(user => {
+            //const newUser = _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned");
+            const newUser = {
+                _id: user._id,
+                userName: user.userName,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                isBanned: user.isBanned
+            }
             const token = jwt.sign(
-                {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned") },
+                {currentUser: newUser },
                 process.env.SECRET_KEY,
                 {expiresIn: '24h'  }
             )
@@ -60,8 +68,16 @@ const authController = {
                     message: 'incorrect email and password combination'
                 })
             }
+            //const newUser = _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned");
+            const newUser = {
+                _id: user._id,
+                userName: user.userName,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                isBanned: user.isBanned
+            }
             const token = jwt.sign(
-                {currentUser: _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned")},
+                {currentUser: newUser},
                 process.env.SECRET_KEY,
                 {expiresIn: '24h'}
             )
