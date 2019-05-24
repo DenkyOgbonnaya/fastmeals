@@ -31,7 +31,8 @@ app.use(orderRouter);
 app.use(deptRouter);
 app.use(oauthRouter);
 app.use(paystackRouter);
-app.use(express.static(__dirname + '/client/build'));
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(__dirname + '/client/public'));
 
 app.use('/api/users', UserRouter);
 app.use('/api', MealRouter);
@@ -42,16 +43,6 @@ app.use('/api', deptRouter);
 app.use('/auth', oauthRouter);
 app.use('/paystack', paystackRouter);
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
-  if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, 'client/build')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname+'/client/build/index.html'));
-      });
-  }
 const PORT = process.env.PORT || 8080;
 
 connectToDb();
