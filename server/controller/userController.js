@@ -23,14 +23,8 @@ const authController = {
             password: hashedPassword
         })
         .then(user => {
-            //const newUser = _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned");
-            const newUser = {
-                _id: user._id,
-                userName: user.userName,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                isBanned: user.isBanned
-            }
+            const newUser = _.omit(user, "password");
+            
             const token = jwt.sign(
                 {currentUser: newUser },
                 process.env.SECRET_KEY,
@@ -68,14 +62,8 @@ const authController = {
                     message: 'incorrect email and password combination'
                 })
             }
-            //const newUser = _.pick(user, "_id", "userName", "email", "isAdmin", "isBanned");
-            const newUser = {
-                _id: user._id,
-                userName: user.userName,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                isBanned: user.isBanned
-            }
+            const newUser = _.omit(user, "password");
+            
             const token = jwt.sign(
                 {currentUser: newUser},
                 process.env.SECRET_KEY,

@@ -54,17 +54,17 @@ const MealList = (props) => {
         if(pages > 1)
         return (
             <Pagination>
-                <PaginationItem> 
+                <PaginationItem disabled = {currentPage === 1 ? true : false} > 
                     <PaginationLink previous onClick = { () => {if(currentPage > 1) handlePageChange(currentPage -1)}} />
                 </PaginationItem>
                 {pageNumbers.map(number =>
-                <PaginationItem key = {number}>
+                <PaginationItem key = {number} active = {currentPage === number ? true : false}>
                     <PaginationLink  
                     onClick = { ()=> handlePageChange(number)}>   {number}  
                     </PaginationLink>
                 </PaginationItem>
                 )}
-                <PaginationItem> 
+                <PaginationItem disabled = {currentPage === pages ? true : false} > 
                     <PaginationLink next onClick = { () => {if(currentPage < pages) handlePageChange(currentPage +1)}} />
                 </PaginationItem>
             </Pagination>
