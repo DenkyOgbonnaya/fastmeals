@@ -1,12 +1,14 @@
 .Wrapper {
     display: flex;
+    flex-direction: row;
+    height: 100%;
+    overflow: hidden;
 }
 .showSideNav{
     border: 1px solid #e0e0e0;
     padding: 5px;
     color: #fff;
-    width: 300px;
-    height: inherit;
+    flex : 1;
     background:  #616161;       /*#3e2723;*/
     font-size: 20px;
     position: -webkit-sticky;
@@ -24,7 +26,10 @@
     width: 0px;
 }
 .Content{
-width: 100%;
+    flex: 5;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
 }
 @media (max-width: 768px){
     .showSideNav {
