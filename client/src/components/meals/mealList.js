@@ -34,8 +34,8 @@ const MealList = (props) => {
     
     const pushToCart = meal =>{
             setCart(cart.concat(meal));
-            props.history.push('/cart');
             addToCart(meal);
+            props.history.push('/cart');
          
     }
     const handlePageChange = (pageNum) => {
