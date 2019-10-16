@@ -47,7 +47,7 @@ const paystackController = {
             order.status = 'Pending'
             order.save();
            
-            res.redirect(`http://localhost:3000/order/${order._id}`)
+            res.redirect(`https://fastmeals.herokuapp.com/order/${order._id}`)
         })
         .catch(err => console.log(err))
     })

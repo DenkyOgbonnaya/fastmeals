@@ -4,7 +4,6 @@ import DeptForm from './deptForm';
 import ListDepartments from './listDepartments';
 import dataProvider from './dataProvider';
 
-
 const DeptDashboard = () => {
     const[departments, setDepartments] = useGlobal('departments');
 

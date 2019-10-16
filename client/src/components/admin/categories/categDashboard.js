@@ -4,7 +4,6 @@ import CategoryForm from './categoryForm';
 import ListCategories from './listCategories';
 import dataProvider from './dataProvider';
 
-//const categories = [{_id: 'hjsj', name: 'rice', department: 'food'}, {_id: 'fhff', name: 'Snacks', department: 'bakery'}]
 const CategDashboard = () => {
     const[categories, setCategories] = useGlobal('categories');
 

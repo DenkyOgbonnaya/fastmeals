@@ -7,6 +7,7 @@ import cartHelper from './cart_helper';
 import '../../styles/cart.css';
 import formatter from '../utils/formatter';
 import Spinner from '../utils/spinner';
+import EmptyCart from './emptyCart';
 
 const Cart = (props) => {
   const[cart, setCart] = useGlobal('cart');
@@ -53,11 +54,13 @@ const Cart = (props) => {
     }
 
     if(cart.length === 0)
-        return <div className ='empty'> Your shopping Cart is empty! </div>
+        return( 
+            <EmptyCart history= {props.history} />
+        )
     return (
     <div>
         {
-            showContactModal ? <ContactForm cart = {cart} user = {currentUser}/> : ''
+            showContactModal && <ContactForm cart = {cart} user = {currentUser}/> 
         }
         {loading ? <Spinner /> :
         <div>

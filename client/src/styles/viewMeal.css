@@ -1,0 +1,16 @@
+.meal-details {
+    margin-top: 20px;
+}
+.meal-image  {
+    max-width: 300px;
+    max-height: 300px;
+    display: block;
+    margin: auto;
+}
+.meal-review {
+    margin-top: 10px;
+}
+.reviewer-name {
+    font-weight: bold;
+    color: grey;
+}

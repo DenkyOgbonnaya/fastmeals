@@ -32,7 +32,7 @@ const OrderView = ({orders}) => {
                         <td>{order.meals.length} </td>
                         <td>{formatter.format( orderHelper.getTotalPrice(order) )} </td>
                         <td>{order.returned} </td>
-                        <td><Link to= {`/order/${order._id}` }>Edit</Link> </td>
+                        <td><Link to= {`/order/${order._id}` }>Update</Link> </td>
                     </tr>
                 )
             }

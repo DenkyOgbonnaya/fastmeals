@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useGlobal} from 'reactn';
 import NavBar from './components/navs/navBar';
-import Container from './components/container';
+import Pages from './components/container';
 import SideNav from './components/navs/sideNav';
 import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
@@ -9,6 +9,8 @@ import Can from './components/utils/can';
 import {withRouter} from 'react-router-dom';
 import './App.css';
 import Footer from './components/footer';
+import {Container} from 'reactstrap';
+
 const App = props => {
     const[showSideNav, setShowSideNav] = useGlobal('showSideNav');
     const[currentUser, setCurrentUser] = useGlobal('currentUser');
@@ -55,22 +57,23 @@ const App = props => {
     return(
         <div className= 'App' >
             <div className='Wrapper' > 
-                <div className= {showSideNav ? 'showSideNav' : 'hideSideNav'} onClick= {() => setShowSideNav(false)} > 
+                <aside className= {showSideNav ? 'showSideNav' : 'hideSideNav'} onClick= {() => setShowSideNav(false)} > 
                     <Can 
                     role= {currentUser ? currentUser.isAdmin : 0}
                     perform= 'admin-board:visit'
                     yes= {() => <SideNav />}
                     />
-                </div>
-                    <div className= 'Content'> 
-                        <div className = 'NavBar' >
-                            <NavBar />
-                        </div >
-                        <div className = 'Container'>
-                            <Container />
-                            <br />
-                            <Footer />
-                        </div>
+                </aside>
+                <div className= 'Content'> 
+                    <header className = 'NavBar' >
+                        <NavBar />
+                    </header >
+                    <Container className = 'Container'>
+                        <Pages />
+                    </Container>
+                    <footer>  
+                        <Footer />
+                    </footer>
                 </div>
             </div>
             

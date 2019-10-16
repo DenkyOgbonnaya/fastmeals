@@ -9,6 +9,7 @@ const CategRouter = require('./server/routes/categoRoutes');
 const deptRouter = require('./server/routes/department');
 const orderRouter = require('./server/routes/orderRoutes');
 const oauthRouter = require('./server/routes/oauth');
+const reviewsRouter = require('./server/routes/reviewsRoute');
 const paystackRouter = require('./server/routes/paystackRoute')
 const passport = require('passport');
 const passport_setup = require('./server/services/passport_setup');
@@ -20,17 +21,17 @@ app.use(express.json());
 //app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors({credentials:true, origin: 'http://localhost:3000'}));
 app.options('*', cors());
-//app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use('*', cloudinaryConfig)
-app.use(UserRouter);
+/*app.use(UserRouter);
 app.use(MealRouter);
 app.use(CartRouter);
 app.use(CategRouter);
 app.use(orderRouter);
 app.use(deptRouter);
 app.use(oauthRouter);
-app.use(paystackRouter);
+app.use(paystackRouter);*/
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(express.static(__dirname + '/client/public'));
 
@@ -40,6 +41,7 @@ app.use('/api', CartRouter);
 app.use('/api', CategRouter);
 app.use('/api', orderRouter);
 app.use('/api', deptRouter);
+app.use('/api', reviewsRouter);
 app.use('/auth', oauthRouter);
 app.use('/paystack', paystackRouter);
 
@@ -50,7 +52,7 @@ if(process.env.NODE_ENV === 'production'){
     })
 }
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/public/build/index.html'));
+    res.sendFile(path.join(__dirname, '/client/public/index.html'));
 })
 const PORT = process.env.PORT || 8080;
 

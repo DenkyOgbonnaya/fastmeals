@@ -33,14 +33,11 @@ const mealApi = {
         })
         .catch(err => console.log(err))
     },
-    updateMeal(id, data){
+    updateMeal(id, data, headers){
         return fetch(`/api/meals/${id}`, {
             method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.userToken}`
-            },
-            body: JSON.stringify(data)
+            headers: headers,
+            body: data
           })
           .then(res => {
             return res.json();
@@ -66,6 +63,59 @@ const mealApi = {
         return fetch(`/api/meal?search=${search}&category=${category}`)
         .then(res => {
             return res.json()
+        })
+        .catch(err => console.log(err))
+    },
+    getReviews(mealId) {
+        return fetch(`/api/reviews/${mealId}`)
+        .then(res => {
+            if(res.status === 200)
+            return res.json();
+        })
+        .catch(err => console.log(err) )
+    },
+    addReview(mealId, customerName, text){
+        return fetch(`/api/reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.userToken}`
+            },
+            body: JSON.stringify({mealId, customerName, text})
+        })
+        .then(res => {
+        
+            return res.json();
+        })
+        .catch(err => console.log(err))
+
+    },
+    upvote(reviewId, customerId){
+        return fetch(`/api/reviews/${reviewId}/${customerId}/upvote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.userToken}`
+            }
+        })
+        .then(res => {
+            return res.json();
+        })
+        .catch(err => console.log(err))
+    },
+    downvote(reviewId, customerId){
+        return fetch(`/api/reviews/${reviewId}/${customerId}/downvote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.userToken}`
+            }
+        })
+        .then(res => {
+            return res.json();
         })
         .catch(err => console.log(err))
     }

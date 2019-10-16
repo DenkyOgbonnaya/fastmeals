@@ -24,7 +24,7 @@ mealRouter.post('/meals', multerUploads, isLoggedIn, isAdmin, addMeal)
 mealRouter.get('/meals', getMeals)
 
 mealRouter.route('/meals/:mealId')
-    .put(isLoggedIn, isAdmin, validateMealInput, validateMealId, updateMeal)
+    .put(multerUploads, isLoggedIn, isAdmin, validateMealInput, validateMealId, updateMeal)
     .delete(isLoggedIn, isAdmin, validateMealId, deleteMeal)
     .get(validateMealId, getMeal)
 mealRouter.get('/meal', searchMeal);

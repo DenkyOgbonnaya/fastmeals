@@ -17,16 +17,16 @@ async addMeal(req, res){
     const{name, price, quantity, category, description} = req.body;
     if(req.file){
         try{
-            const file = dataUri(req).content;
-            const result = await uploader.upload(file);
+            //const file = dataUri(req).content;
+            //const result = await uploader.upload(file);
             const meal = await Meals.create({
                 name,
                 price,
                 quantity,
                 category,
                 description, 
-                image: result.url,
-                publicId: result.public_id
+                image: `/uploads/${req.file.filename}` //result.url,
+                //publicId: result.public_id
             })
             return res.status(201).send({message: 'meal added', meal:meal})
         }catch(err){
@@ -46,11 +46,32 @@ async addMeal(req, res){
  */
 updateMeal(req, res){
     const mealId = req.params.mealId;
-    Meals.findByIdAndUpdate(mealId, {$set : req.body})
+    if(!req.file){
+        Meals.findByIdAndUpdate(mealId, {$set : req.body}, {new: true})
+            .then(meal => {
+                res.status(200).send({message: 'meal updated', meal})
+            })
+            .catch(err => res.status(500).send(err));
+    }else{
+        const{name, price, quantity, category, description} = req.body;
+        //const file = dataUri(req).content;
+        //const result = await uploader.upload(file);
+        console.log('The file', req.file.filename)
+        const editedMeal = {
+            name,
+            price,
+            quantity,
+            category,
+            description, 
+            image: `/uploads/${req.file.filename}` //result.url,
+            //publicId: result.public_id
+        }
+        Meals.findByIdAndUpdate(mealId, {$set : editedMeal}, {new: true})
         .then(meal => {
             res.status(200).send({message: 'meal updated', meal})
         })
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send(err)); 
+    }
 },
 
  /**
@@ -64,10 +85,11 @@ deleteMeal(req, res){
     const mealId = req.params.mealId
     Meals.findByIdAndRemove(mealId)
     .then((meal) => {
-        uploader.destroy(meal.publicId, (err, result) => {
+       /* uploader.destroy(meal.publicId, (err, result) => {
             if(err) res.status(400).send(err);
             res.status(200).send({message: 'meal deleted', meal});
-        });
+        });*/
+        return res.status(200).send({message: 'meal deleted', meal});
         
     })
     .catch(err => {console.log(err),res.status(500).send(err)})

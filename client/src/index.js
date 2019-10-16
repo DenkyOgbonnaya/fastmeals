@@ -19,6 +19,7 @@ setGlobal({
     showContactModal: false,
     showSideNav: false,
     showMealModal: false,
+    isProcessing: false
 })
 ReactDOM.render(
     <Router> 

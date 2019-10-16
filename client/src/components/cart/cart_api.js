@@ -1,7 +1,7 @@
 const cartApi = {
     getCart(){
         const cartId = localStorage.cartId;
-        return fetch(`cart/${cartId}`)
+        return fetch(`api/cart/${cartId}`)
         .then(res => {
           if(res.status === 200)
             return res.json();

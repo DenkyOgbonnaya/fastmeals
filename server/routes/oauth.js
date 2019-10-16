@@ -15,7 +15,7 @@ oauthRouter.get('/auth/google/redirect', passport.authenticate('google', {sessio
         if(err){
             res.sendStatus(500);
         } else {
-            res.redirect(`http://localhost:3000?token=${token}`)
+            res.redirect(`https://fastmeals.herokuapp.com?token=${token}`)
         }
     });
 })

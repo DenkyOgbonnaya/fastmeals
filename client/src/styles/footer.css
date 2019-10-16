@@ -1,6 +1,6 @@
 .footer {
     background: #ecf0f1;
-    margin: 20px;
+    margin-top: auto
   }
   .contacts > ul > li > a, .quicklinks > ul > li > a {
       color: #8bc34a;
